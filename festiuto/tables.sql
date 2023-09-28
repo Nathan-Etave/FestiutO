@@ -19,7 +19,7 @@ CREATE TABLE FESTIVAL(
     nomF VARCHAR(50),
     dateDebF DATE,
     dateFinF DATE,
-    descriptionF VARCHAR(250),
+    descriptionF VARCHAR(150),
     PRIMARY KEY (idF)
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE JOUER(
 CREATE TABLE GROUPE(
     idG INT,
     nomG VARCHAR(50),
-    descriptionG VARCHAR(50),
+    descriptionG VARCHAR(150),
     reseauxG VARCHAR(250),
     videosG VARCHAR(250),
     idH INT,
@@ -126,7 +126,7 @@ CREATE TABLE CONCERT(
 CREATE TABLE ACTIVITEANNEXE(
     idAct INT,
     nomAct VARCHAR(50),
-    descriptionAct VARCHAR(50),
+    descriptionAct VARCHAR(150),
     dateDebAct DATE,
     dateFinAct DATE,
     idL INT,
@@ -135,4 +135,49 @@ CREATE TABLE ACTIVITEANNEXE(
     FOREIGN KEY (idL) REFERENCES LIEU(idL)
 );
 
--- créer les tables billet, typebillet, rservation, vidéo et réseauxsociaux
+CREATE TABLE TYPEBILLET(
+    idT INT,
+    prixT FLOAT,
+    descriptionT VARCHAR(150),
+    PRIMARY KEY (idT)
+);
+
+CREATE TABLE BILLET(
+    idB INT,
+    idT INT,
+    idU INT,
+    idF INT,
+    -- dateDebB date, ?
+    -- dateFinB date, ?
+    PRIMARY KEY (idB),
+    FOREIGN KEY (idT) REFERENCES TYPEBILLET(idT),
+    FOREIGN KEY (idU) REFERENCES UTILISATEUR(idU),
+    FOREIGN KEY (idF) REFERENCES FESTIVAL(idF)
+);
+-- voir pour la date si elle est stockée dans le billet (pour ceux qui ne durent pas tout le festival)
+-- selection dans un menu pendant l'achat et ajout de la date dans le billet ?
+
+CREATE TABLE RESERVATION(
+    idRes INT,
+    idC INT,
+    idU INT,
+    PRIMARY KEY (idRes),
+    FOREIGN KEY (idC) REFERENCES CONCERT(idC),
+    FOREIGN KEY (idU) REFERENCES UTILISATEUR(idU),
+);
+-- 1 réservation par personne par concert ? -> clé primaire devient idC et idU et on peut enlever idRes
+
+CREATE TABLE VIDEO(
+    idV INT,
+    lienV VARCHAR(250),
+    PRIMARY KEY (idV)
+);
+
+CREATE TABLE RESEAUSOCIAL(
+    idRs INT,
+    lienRs VARCHAR(250),
+    PRIMARY KEY (idRs)
+);
+
+-- 1 utilisateur peut réserver plusieurs places (pour des amis/famille/...) sur son compte ?
+-- si oui autoriser plusieurs réservations ou indiquer un nombre de place dans la réservation
