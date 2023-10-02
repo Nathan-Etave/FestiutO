@@ -1,3 +1,9 @@
+DROP TABLE LOGER CASCADE CONSTRAINTS;
+DROP TABLE RESEAUSOCIAL CASCADE CONSTRAINTS;
+DROP TABLE VIDEO CASCADE CONSTRAINTS;
+DROP TABLE RESERVATION CASCADE CONSTRAINTS;
+DROP TABLE BILLET CASCADE CONSTRAINTS;
+DROP TABLE TYPEBILLET CASCADE CONSTRAINTS;
 DROP TABLE ACTIVITEANNEXE CASCADE CONSTRAINTS;
 DROP TABLE FAVORIS CASCADE CONSTRAINTS;
 DROP TABLE CONCERT CASCADE CONSTRAINTS;
@@ -87,14 +93,12 @@ CREATE TABLE JOUER(
     idA INT,
     idI INT,
     PRIMARY KEY (idA,idI)
-)
+);
 
 CREATE TABLE GROUPE(
     idG INT,
     nomG VARCHAR(50),
     descriptionG VARCHAR(150),
-    reseauxG VARCHAR(250),
-    videosG VARCHAR(250),
     idH INT,
     PRIMARY KEY (idG),
     FOREIGN KEY (idH) REFERENCES HEBERGEMENT(idH)
@@ -103,7 +107,7 @@ CREATE TABLE GROUPE(
 CREATE TABLE FAVORIS(
     idU INT,
     idG INT,
-    PRIMARY KEY (idU,idG)
+    PRIMARY KEY (idU,idG),
     FOREIGN KEY (idU) REFERENCES UTILISATEUR(idU),
     FOREIGN KEY (idG) REFERENCES GROUPE(idG)
 );
@@ -117,6 +121,7 @@ CREATE TABLE CONCERT(
     dateFinC DATE,
     dureeMontageC TIME,
     dureeDemontageC TIME,
+    estGratuit BOOLEAN,
     PRIMARY KEY (idC),
     FOREIGN KEY (idF) REFERENCES FESTIVAL(idF),
     FOREIGN KEY (idG) REFERENCES GROUPE(idG),
@@ -130,9 +135,11 @@ CREATE TABLE ACTIVITEANNEXE(
     dateDebAct DATE,
     dateFinAct DATE,
     idL INT,
+    idF INT,
     estPublique BOOLEAN,
     PRIMARY KEY (idAct),
-    FOREIGN KEY (idL) REFERENCES LIEU(idL)
+    FOREIGN KEY (idL) REFERENCES LIEU(idL),
+    FOREIGN KEY (idF) REFERENCES FESTIVAL(idF)
 );
 
 CREATE TABLE TYPEBILLET(
@@ -147,15 +154,13 @@ CREATE TABLE BILLET(
     idT INT,
     idU INT,
     idF INT,
-    -- dateDebB date, ?
-    -- dateFinB date, ?
+    dateDebB date,
+    dateFinB date,
     PRIMARY KEY (idB),
     FOREIGN KEY (idT) REFERENCES TYPEBILLET(idT),
     FOREIGN KEY (idU) REFERENCES UTILISATEUR(idU),
     FOREIGN KEY (idF) REFERENCES FESTIVAL(idF)
 );
--- voir pour la date si elle est stockée dans le billet (pour ceux qui ne durent pas tout le festival)
--- selection dans un menu pendant l'achat et ajout de la date dans le billet ?
 
 CREATE TABLE RESERVATION(
     idRes INT,
@@ -163,21 +168,32 @@ CREATE TABLE RESERVATION(
     idU INT,
     PRIMARY KEY (idRes),
     FOREIGN KEY (idC) REFERENCES CONCERT(idC),
-    FOREIGN KEY (idU) REFERENCES UTILISATEUR(idU),
+    FOREIGN KEY (idU) REFERENCES UTILISATEUR(idU)
 );
--- 1 réservation par personne par concert ? -> clé primaire devient idC et idU et on peut enlever idRes
 
 CREATE TABLE VIDEO(
     idV INT,
+    idG INT,
     lienV VARCHAR(250),
-    PRIMARY KEY (idV)
+    PRIMARY KEY (idV),
+    FOREIGN KEY (idG) REFERENCES GROUPE(idG)
 );
 
 CREATE TABLE RESEAUSOCIAL(
     idRs INT,
+    idG INT,
     lienRs VARCHAR(250),
-    PRIMARY KEY (idRs)
+    PRIMARY KEY (idRs),
+    FOREIGN KEY (idG) REFERENCES GROUPE(idG)
 );
 
--- 1 utilisateur peut réserver plusieurs places (pour des amis/famille/...) sur son compte ?
--- si oui autoriser plusieurs réservations ou indiquer un nombre de place dans la réservation
+CREATE TABLE LOGER(
+    idH INT,
+    idG INT,
+    nbMembresH INT,
+    dateDebH DATE,
+    dateFinH DATE,
+    PRIMARY KEY (idH,idG),
+    FOREIGN KEY (idH) REFERENCES HEBERGEMENT(idH),
+    FOREIGN KEY (idG) REFERENCES GROUPE(idG)
+);
