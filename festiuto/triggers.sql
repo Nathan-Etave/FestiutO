@@ -1,3 +1,4 @@
+-- RESERVATION
 -- trigger vérication nombre de places dans un concert
 delimiter |
 create or replace trigger verifNbPlacesConcert before insert on RESERVATION for each row
@@ -14,6 +15,7 @@ begin
 end |
 demiliter ;
 
+-- CONCERT
 -- trigger vérication date de concert/act dans un meme lieu (pas de concert en meme temps dans un meme lieu)
 delimiter |
 create or replace trigger verifDateConcert before insert on CONCERT for each row
@@ -21,19 +23,6 @@ begin
     declare nbConcertsMemeDate int;
     select count(*) into nbConcertsMemeDate from CONCERT where idL=new.idL and not (new.dateDebC-new.dureeMontageC>=dateFinC+dureeDemontageC or new.dateFinC+new.dureeDemontageC<=dateDebC-dureeMontageC);
     select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebC-new.dureeMontageC>=dateFinAct or new.dateFinC+new.dureeDemontageC<=dateDebAct);
-    if nbConcertsMemeDate>=1 then
-        signal SQLSTATE '45000' set MESSAGE_TEXT="date de concert déjà prise dans ce lieu";
-    end if;
-end |
-demiliter ;
-
--- trigger vérication date de concert/act dans un meme lieu (pas d'act en meme temps dans un meme lieu)
-delimiter |
-create or replace trigger verifDateConcert before insert on ACTIVITEANNEXE for each row
-begin
-    declare nbConcertsMemeDate int;
-    select count(*) into nbConcertsMemeDate from CONCERT where idL=new.idL and not (new.dateDebAct>=dateFinC+dureeDemontageC or new.dateFinAct<=dateDebC-dureeMontageC);
-    select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebAct>=dateFinAct or new.dateFinAct<=dateDebAct);
     if nbConcertsMemeDate>=1 then
         signal SQLSTATE '45000' set MESSAGE_TEXT="date de concert déjà prise dans ce lieu";
     end if;
@@ -68,6 +57,21 @@ begin
 end |
 demiliter ;
 
+--ACTIVITEANNEXE
+-- trigger vérication date de concert/act dans un meme lieu (pas d'act en meme temps dans un meme lieu)
+delimiter |
+create or replace trigger verifDateConcert before insert on ACTIVITEANNEXE for each row
+begin
+    declare nbConcertsMemeDate int;
+    select count(*) into nbConcertsMemeDate from CONCERT where idL=new.idL and not (new.dateDebAct>=dateFinC+dureeDemontageC or new.dateFinAct<=dateDebC-dureeMontageC);
+    select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebAct>=dateFinAct or new.dateFinAct<=dateDebAct);
+    if nbConcertsMemeDate>=1 then
+        signal SQLSTATE '45000' set MESSAGE_TEXT="date de concert déjà prise dans ce lieu";
+    end if;
+end |
+demiliter ;
+
+--LOGER
 -- trigger vérification assez de places pour un groupe dans un hébergement
 delimiter |
 create or replace trigger verifPlacesHebergement before insert on LOGER for each row -- pas fini
@@ -81,4 +85,3 @@ begin
     end if;
 end |
 delimiter ;
-
