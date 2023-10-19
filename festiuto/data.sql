@@ -94,6 +94,38 @@ INSERT INTO INSTRUMENT (idI, nomL) VALUES
     (29, "Didgeridoo"),
     (30, "Guimbarde");
 
+INSERT INTO HEBERGEMENT (idH, nomH, adresseH, nbPlacesH) VALUES
+    (1, "nomH", "adresseH", 50),
+    (2, "nomH", "adresseH", 50),
+    (3, "nomH", "adresseH", 50),
+    (4, "nomH", "adresseH", 50),
+    (5, "nomH", "adresseH", 50),
+    (6, "nomH", "adresseH", 50),
+    (7, "nomH", "adresseH", 50),
+    (8, "nomH", "adresseH", 50),
+    (9, "nomH", "adresseH", 50),
+    (10, "nomH", "adresseH", 50),
+    (11, "nomH", "adresseH", 50),
+    (12, "nomH", "adresseH", 50),
+    (13, "nomH", "adresseH", 50),
+    (14, "nomH", "adresseH", 50),
+    (15, "nomH", "adresseH", 50),
+    (16, "nomH", "adresseH", 50),
+    (17, "nomH", "adresseH", 50),
+    (18, "nomH", "adresseH", 50),
+    (19, "nomH", "adresseH", 50),
+    (20, "nomH", "adresseH", 50),
+    (21, "nomH", "adresseH", 50),
+    (22, "nomH", "adresseH", 50),
+    (23, "nomH", "adresseH", 50),
+    (24, "nomH", "adresseH", 50),
+    (25, "nomH", "adresseH", 50),
+    (26, "nomH", "adresseH", 50),
+    (27, "nomH", "adresseH", 50),
+    (28, "nomH", "adresseH", 50),
+    (29, "nomH", "adresseH", 50),
+    (30, "nomH", "adresseH", 50);
+
 INSERT INTO GROUPE (idG, nomG, descriptionG, idH) VALUES 
     (1, "Les Harmoniques", "Un groupe musical polyvalent offrant une expérience sonore unique.", 1),
     (2, "Rythmes Envoûtants", "Un groupe captivant avec des rythmes qui vous feront danser toute la nuit.", 2),

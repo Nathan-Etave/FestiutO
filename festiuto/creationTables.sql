@@ -3,7 +3,7 @@ CREATE TABLE FESTIVAL(
     nomF VARCHAR(50),
     dateDebF DATE,
     dateFinF DATE,
-    descriptionF VARCHAR(150),
+    descriptionF VARCHAR(200),
     PRIMARY KEY (idF)
 )ENGINE=InnoDB;
 
