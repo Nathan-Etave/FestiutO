@@ -365,53 +365,88 @@ INSERT INTO CONCERT (idC, idF, idG, idL, dateDebC, dateFinC, dureeMontageC, dure
 
 INSERT INTO ROLEUTI (idR, nomR) VALUES
     (1, "spectateur"),
-    (2, "organisateur"),
-    (3, "artiste");
+    (2, "organisateur");
 
-INSERT INTO STYLEMUSICAL (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO STYLEMUSICAL (idS, nomS) VALUES
+    (1, "electro"),
+    (2, "rock"),
+    (3, "pop"),
+    (4, "jazz"),
+    (5, "classique");
 
-INSERT INTO PHOTO (id, nom) VALUES
+INSERT INTO PHOTO (idP, img) VALUES
     (1, "nom"),
-    (2, "nom");
+    (2, "nom"),
+    (3, "nom"),
+    (4, "nom"),
+    (5, "nom");
 
-INSERT INTO UTILISATEUR (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO UTILISATEUR (idU, nomU, prenomU, mailU, mdpU, idR) VALUES
+    (1, "Jean", "Dupont", "jean.dupont@orange.fr", "jeandupont", 1),
+    (2, "Marie", "Martin", "marie.martin@gmail.com", "mariemartin", 1),
+    (3, "Pierre", "Durand", "pierre.durand@live.fr", "pierredurand", 1),
+    (4, "Julie", "Lefebvre", "julie.lefebvre@gmail.com", "julielefebvre", 2),
+    (5, "Thomas", "Leroy", "thomas.leroy@orange.fr", "thomasleroy", 2);
 
-INSERT INTO ARTISTE (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO ARTISTE (idA, nomA, prenomA, idP) VALUES
+    (1, "nom", "prenom", 1),
+    (2, "nom", "prenom", 1),
+    (3, "nom", "prenom", 1),
+    (4, "nom", "prenom", 1),
+    (5, "nom", "prenom", 1);
 
-INSERT INTO JOUER (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO JOUER (idA, idI) VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5);
 
-INSERT INTO FAVORIS (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO FAVORIS (idU, idG) VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
+    (5, 5);
 
-INSERT INTO ACTIVITEANNEXE (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO ACTIVITEANNEXE (idAct, nomAct, descriptionAct, dateDebAct, dateFinAct, idL, idF, estPublique) VALUES
+    (1, "nom", "description", 1/1/2000, 1/1/2000, 1, 1, TRUE),
+    (2, "nom", "description", 1/1/2000, 1/1/2000, 2, 2, TRUE),
+    (3, "nom", "description", 1/1/2000, 1/1/2000, 3, 3, TRUE),
+    (4, "nom", "description", 1/1/2000, 1/1/2000, 4, 4, TRUE),
+    (5, "nom", "description", 1/1/2000, 1/1/2000, 5, 5, TRUE);
 
-INSERT INTO TYPEBILLET (id, nom) VALUES
-    (1, "nom"),
-    (2, "nom");
+INSERT INTO TYPEBILLET (idT, prixT, descriptionT) VALUES
+    (1, 10, "description"),
+    (2, 10, "description"),
+    (3, 10, "description"),
+    (4, 10, "description"),
+    (5, 10, "description");
 
 INSERT INTO BILLET (id, nom) VALUES
     (1, "nom"),
-    (2, "nom");
+    (2, "nom"),
+    (3, "nom"),
+    (4, "nom"),
+    (5, "nom");
 
 INSERT INTO RESERVATION (id, nom) VALUES
     (1, "nom"),
-    (2, "nom");
+    (2, "nom"),
+    (3, "nom"),
+    (4, "nom"),
+    (5, "nom");
 
 INSERT INTO VIDEO (id, nom) VALUES
     (1, "nom"),
-    (2, "nom");
+    (2, "nom"),
+    (3, "nom"),
+    (4, "nom"),
+    (5, "nom");
 
 INSERT INTO LOGER (id, nom) VALUES
     (1, "nom"),
-    (2, "nom");
+    (2, "nom"),
+    (3, "nom"),
+    (4, "nom"),
+    (5, "nom");
