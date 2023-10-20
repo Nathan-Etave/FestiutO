@@ -502,12 +502,12 @@ INSERT INTO FAVORIS (idU, idG) VALUES
     (3, 1),
     (3, 4);
 
-INSERT INTO ACTIVITEANNEXE (idAct, nomAct, descriptionAct, dateDebAct, dateFinAct, idL, idF, estPublique) VALUES
-    (1, "interview 1", "une interview", 1/1/2000, 1/1/2000, 1, 1, TRUE),
-    (2, "interview 2", "une autre interview", 1/1/2000, 1/1/2000, 2, 2, TRUE),
-    (3, "show case", "un show case", 1/1/2000, 1/1/2000, 3, 3, TRUE),
-    (4, "activite 1", "une activite", 1/1/2000, 1/1/2000, 4, 4, TRUE),
-    (5, "activite 2", "une autre activite", 1/1/2000, 1/1/2000, 5, 5, TRUE);
+INSERT INTO ACTIVITEANNEXE (idAct, nomAct, descriptionAct, dateDebAct, dateFinAct, idL, idF, idG, estPublique) VALUES
+    (1, "interview 1", "une interview", "2024-11-25", "2024-11-25", 1, 1, 1, TRUE),
+    (2, "interview 2", "une autre interview", "2024-11-25", "2024-11-25", 2, 2, 2, TRUE),
+    (3, "show case", "un show case", "2024-11-25", "2024-11-25", 3, 3, 3, TRUE),
+    (4, "activite 1", "une activite", "2024-11-25", "2024-11-25", 4, 4, 4, TRUE),
+    (5, "activite 2", "une autre activite", "2024-11-25", "2024-11-25", 5, 5, 5, TRUE);
 
 INSERT INTO TYPEBILLET (idT, prixT, descriptionT) VALUES
     (1, 10, "Accès standard au festival"),

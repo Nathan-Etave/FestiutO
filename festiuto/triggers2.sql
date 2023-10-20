@@ -99,3 +99,5 @@ begin
     end if;
 end |
 delimiter ;
+
+-- si suppression d'un groupe, gérer le fait que ses membres auront un problème de clé étrangère.
