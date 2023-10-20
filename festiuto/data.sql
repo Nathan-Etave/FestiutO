@@ -362,3 +362,56 @@ INSERT INTO CONCERT (idC, idF, idG, idL, dateDebC, dateFinC, dureeMontageC, dure
     -- Groupe 30
     (71, 27, 30, 5, '2023-10-26', '2023-10-26', '02:30:00', '02:00:00', TRUE),
     (72, 28, 30, 5, '2023-10-30', '2023-10-30', '02:30:00', '02:00:00', TRUE);
+
+INSERT INTO ROLEUTI (idR, nomR) VALUES
+    (1, "spectateur"),
+    (2, "organisateur"),
+    (3, "artiste");
+
+INSERT INTO STYLEMUSICAL (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO PHOTO (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO UTILISATEUR (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO ARTISTE (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO JOUER (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO FAVORIS (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO ACTIVITEANNEXE (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO TYPEBILLET (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO BILLET (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO RESERVATION (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO VIDEO (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
+
+INSERT INTO LOGER (id, nom) VALUES
+    (1, "nom"),
+    (2, "nom");
