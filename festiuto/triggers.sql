@@ -21,9 +21,10 @@ delimiter |
 create or replace trigger verifDateConcert before insert on CONCERT for each row
 begin
     declare nbConcertsMemeDate int;
+    declare nbActiviteMemeDate int;
     select count(*) into nbConcertsMemeDate from CONCERT where idL=new.idL and not (new.dateDebC-new.dureeMontageC>=dateFinC+dureeDemontageC or new.dateFinC+new.dureeDemontageC<=dateDebC-dureeMontageC);
-    select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebC-new.dureeMontageC>=dateFinAct or new.dateFinC+new.dureeDemontageC<=dateDebAct);
-    if nbConcertsMemeDate>=1 then
+    select count(*) into nbActiviteMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebC-new.dureeMontageC>=dateFinAct or new.dateFinC+new.dureeDemontageC<=dateDebAct);
+    if nbConcertsMemeDate+nbActiviteMemeDate>=1 then
         signal SQLSTATE '45000' set MESSAGE_TEXT="date de concert déjà prise dans ce lieu";
     end if;
 end |
@@ -36,7 +37,7 @@ begin
     declare nbConcertsMemeDate int;
     declare nbActivitesMemeDate int;
     select count(*) into nbConcertsMemeDate from CONCERT where idG=new.idG and not (new.dateDebC-new.dureeMontageC>=dateFinC+dureeDemontageC or new.dateFinC+new.dureeDemontageC<=dateDebC-dureeMontageC);
-    select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idG=new.idG and not (new.dateDebC-new.dureeMontageC>=dateFinAct or new.dateFinC+new.dureeDemontageC<=dateDebAct);
+    select count(*) into nbActiviteMemeDate from ACTIVITEANNEXE where idG=new.idG and not (new.dateDebC-new.dureeMontageC>=dateFinAct or new.dateFinC+new.dureeDemontageC<=dateDebAct);
     if nbConcertsMemeDate+nbActivitesMemeDate>=1 then
         signal SQLSTATE '45000' set MESSAGE_TEXT="le groupe joue déjà à cette date";
     end if;
@@ -50,7 +51,7 @@ begin
     declare nbConcertsMemeDate int;
     declare nbActivitesMemeDate int;
     select count(*) into nbConcertsMemeDate from CONCERT where idG=new.idG and not (new.dateDebAct>=dateFinC+dureeDemontageC or new.dateFinAct<=dateDebC-dureeMontageC);
-    select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idG=new.idG and not (new.dateDebAct>=dateFinAct or new.dateFinAct<=dateDebAct);
+    select count(*) into nbActivitesMemeDate from ACTIVITEANNEXE where idG=new.idG and not (new.dateDebAct>=dateFinAct or new.dateFinAct<=dateDebAct);
     if nbConcertsMemeDate+nbActivitesMemeDate>=1 then
         signal SQLSTATE '45000' set MESSAGE_TEXT="le groupe joue déjà à cette date";
     end if;
@@ -59,13 +60,15 @@ demiliter ;
 
 --ACTIVITEANNEXE
 -- trigger vérication date de concert/act dans un meme lieu (pas d'act en meme temps dans un meme lieu)
+
 delimiter |
 create or replace trigger verifDateConcert before insert on ACTIVITEANNEXE for each row
 begin
     declare nbConcertsMemeDate int;
+    declare nbActivitesMemeDate int;
     select count(*) into nbConcertsMemeDate from CONCERT where idL=new.idL and not (new.dateDebAct>=dateFinC+dureeDemontageC or new.dateFinAct<=dateDebC-dureeMontageC);
-    select count(*) into nbConcertsMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebAct>=dateFinAct or new.dateFinAct<=dateDebAct);
-    if nbConcertsMemeDate>=1 then
+    select count(*) into nbActivitesMemeDate from ACTIVITEANNEXE where idL=new.idL and not (new.dateDebAct>=dateFinAct or new.dateFinAct<=dateDebAct);
+    if nbConcertsMemeDate+nbActivitesMemeDate>=1 then
         signal SQLSTATE '45000' set MESSAGE_TEXT="date de concert déjà prise dans ce lieu";
     end if;
 end |
@@ -78,10 +81,32 @@ create or replace trigger verifPlacesHebergement before insert on LOGER for each
 begin
     declare nbPersonnesHebergee int;
     declare nbPlacesHebergement int;
-    select count(*) into nbPersonnesHebergement from GROUPE NATURAL JOIN ARTISTE where idG=new.idG;
+    declare nbPersonnesGroupe int;
+    select count(*) into nbPersonnesGroupe from GROUPE NATURAL JOIN ARTISTE where idG=new.idG;
+    select count(*) into nbPersonnesHebergee from ARTISTE natural join LOGER where idH=new.idH;
     select nbPlacesH into nbPlacesHebergement from HEBERGEMENT where idH=new.idH;
-    if nbPersonnesHebergement>nbPlacesHebergement then
+    if nbPersonnesHebergee+nbPersonnesGroupe>nbPlacesHebergement then
         signal SQLSTATE '45000' set MESSAGE_TEXT="pas assez de places dans cet hébergement";
+    end if;
+end |
+delimiter ;
+
+-- Concert
+-- Festival
+-- Hebergement
+-- Billet
+-- Activite
+
+delimiter |
+create or replace trigger veridDateConcert before insert on CONCERT for each row
+begin
+    -- declare hDebut datetime;
+    -- declare hFin datetime;
+    -- select dateDebC, dateFinC into hDebut, hFin from CONCERT where idC = new.idC; 
+    if new.dateDebC < NOW() then
+        signal SQLSTATE '45000' set MESSAGE_TEXT="le concert ne peux pas débuter antérieurement";
+    elseif new.dateDebC > new.dateFinC then
+        signal SQLSTATE '45000' set MESSAGE_TEXT="le concert ne peux pas être terminer avant d'avoir commencé";
     end if;
 end |
 delimiter ;
