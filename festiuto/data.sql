@@ -62,7 +62,7 @@ INSERT INTO LIEU (idL, nomL, adresseL, nbPlacesL) VALUES
     (29, "Théâtre Mélodique", "1212 Avenue des Instruments, Mélodia", 3700),
     (30, "Parc Harmonique", "2323 Boulevard des Artistes, Harmonie-sur-Mer", 4800);
 
-INSERT INTO INSTRUMENT (idI, nomL) VALUES 
+INSERT INTO INSTRUMENT (idI, nomI) VALUES 
     (1, "Guitare"),
     (2, "Batterie"),
     (3, "Piano"),
