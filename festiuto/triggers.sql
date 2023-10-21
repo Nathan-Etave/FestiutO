@@ -1,12 +1,12 @@
--- RESERVATION
+-- RESERVATION_CONCERT
 -- trigger vérication nombre de places dans un concert
 delimiter |
-create or replace trigger verifNbPlacesConcert before insert on RESERVATION for each row
+create or replace trigger verifNbPlacesConcert before insert on RESERVATION_CONCERT for each row
 begin
     declare nbPersonnesInscrites int;
     declare nbPersonnesBillet int;
     declare nbPlacesLieu int;
-    select count(*) into nbPersonnesInscrites from RESERVATION where idC=new.idC;
+    select count(*) into nbPersonnesInscrites from RESERVATION_CONCERT where idC=new.idC;
     select count(*) into nbPersonnesBillet from BILLET NATURAL JOIN FESTIVAL NATURAL JOIN CONCERT where idC=new.idC and dateDebC>=dateDebB and dateFinC<=dateFinB;
     select nbPlacesL into nbPlacesLieu from LIEU natural join CONCERT where idC=new.idC;
     if nbPersonnesInscrites+nbPersonnesBillet>=nbPlacesLieu or nbPlacesLieu<0 then

@@ -96,11 +96,11 @@ end |
 delimiter ;
 
 delimiter |
-create or replace procedure addReservation (idConcert INT, idUtilisateur INT)
+create or replace procedure addReservationConcert (idConcert INT, idUtilisateur INT)
 begin
     declare newIdReservation int;
-    select max(idRes)+1 into newIdReservation from RESERVATION;
-    insert into RESERVATION (idRes, idC, idU) values (newIdReservation, idConcert, idUtilisateur);
+    select max(idRes)+1 into newIdReservation from RESERVATION_CONCERT;
+    insert into RESERVATION_CONCERT (idRes, idC, idU) values (newIdReservation, idConcert, idUtilisateur);
 end |
 delimiter ;
 
@@ -250,9 +250,9 @@ end |
 delimiter ;
 
 delimiter |
-create or replace procedure deleteReservation (idReservation INT)
+create or replace procedure deleteReservationConcert (idReservation INT)
 begin
-    delete from RESERVATION where idRes=idReservation;
+    delete from RESERVATION_CONCERT where idRes=idReservation;
 end |
 delimiter ;
 

@@ -1,6 +1,7 @@
 delete from LOGER;
 delete from RESEAUSOCIAL;
-delete from RESERVATION;
+delete from RESERVATION_CONCERT;
+delete from RESERVATION_ACTIVITEANNEXE;
 delete from BILLET;
 delete from TYPEBILLET;
 delete from ACTIVITEANNEXE;

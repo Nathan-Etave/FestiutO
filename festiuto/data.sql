@@ -504,7 +504,7 @@ INSERT INTO FAVORIS (idU, idG) VALUES
 
 INSERT INTO ACTIVITEANNEXE (idAct, nomAct, descriptionAct, dateDebAct, dateFinAct, idL, idF, idG, estPublique) VALUES
     (1, "interview 1", "une interview", "2024-11-25", "2024-11-25", 1, 1, 1, TRUE),
-    (2, "interview 2", "une autre interview", "2024-11-25", "2024-11-25", 2, 2, 2, TRUE),
+    (2, "interview 2", "une autre interview", "2024-11-25", "2024-11-25", 2, 2, 2, FALSE),
     (3, "show case", "un show case", "2024-11-25", "2024-11-25", 3, 3, 3, TRUE),
     (4, "activite 1", "une activite", "2024-11-25", "2024-11-25", 4, 4, 4, TRUE),
     (5, "activite 2", "une autre activite", "2024-11-25", "2024-11-25", 5, 5, 5, TRUE);
@@ -523,12 +523,16 @@ INSERT INTO BILLET (idB, idT, idU, idF, dateDebB, dateFinB) VALUES
     (4, 1, 4, 2, '2023-10-26', '2023-10-31'),
     (5, 2, 5, 1, '2023-10-28', '2023-11-02');
 
-INSERT INTO RESERVATION (idRes, idC, idU) VALUES
+INSERT INTO RESERVATION_CONCERT (idRes, idC, idU) VALUES
     (1, 1, 1),
     (2, 2, 2),
     (3, 3, 3),
     (4, 1, 4),
     (5, 2, 5);
+
+INSERT INTO RESERVATION_ACTIVITEANNEXE (idRes, idAct, idU) VALUES
+    (1, 1, 1),
+    (2, 3, 2);
 
 INSERT INTO LOGER (idH, idG, dateDebH, dateFinH) VALUES
     (1, 1, '2023-10-20', '2023-10-25'),
