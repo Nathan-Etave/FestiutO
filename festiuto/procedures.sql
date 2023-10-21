@@ -104,6 +104,14 @@ begin
 end |
 delimiter ;
 
+create or replace procedure addReservationAnnexActivity (idActivite INT, idUtilisateur INT)
+begin
+    declare newIdReservation int;
+    select max(idRes)+1 into newIdReservation from RESERVATION_ACTIVITEANNEXE;
+    insert into RESERVATION_ACTIVITEANNEXE (idRes, idAct, idU) values (newIdReservation, idActivite, idUtilisateur);
+end |
+delimiter ;
+
 delimiter |
 create or replace procedure addTypeBillet (nomTypeBillet VARCHAR(50), prixTypeBillet FLOAT, descriptionTypeBillet VARCHAR(150))
 begin
@@ -256,6 +264,11 @@ begin
 end |
 delimiter ;
 
+create or replace procedure deleteReservationAnnexActivity (idReservation INT)
+begin
+    delete from RESERVATION_ACTIVITEANNEXE where idRes=idReservation;
+end |
+
 delimiter |
 create or replace procedure updateTicketDate (idBillet INT, dateDebBillet DATE, dateFinBillet DATE)
 begin
@@ -359,5 +372,19 @@ delimiter |
 create or replace procedure deleteInstrument (idInstrument INT)
 begin
     delete from INSTRUMENT where idI=idInstrument;
+end |
+delimiter ;
+
+delimiter |
+create or replace procedure addFavorite (idUtilisateur INT, idGroupe INT)
+begin
+    insert into FAVORIS (idU, idG) values (idUtilisateur, idGroupe);
+end |
+delimiter ;
+
+delimiter |
+create or replace procedure deleteFavorite (idUtilisateur INT, idGroupe INT)
+begin
+    delete from FAVORIS where idU=idUtilisateur and idG=idGroupe;
 end |
 delimiter ;
