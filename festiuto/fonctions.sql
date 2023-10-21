@@ -138,3 +138,30 @@ begin
     return list;
 end |
 delimiter ;
+
+delimiter |
+create or replace function getFestivalRemainingTime(idFestival int) returns varchar(1000)
+begin 
+    declare remainingTime varchar(1000);
+    select datediff(dateFinF, now()) into remainingTime from FESTIVAL where idF = idFestival;
+    return remainingTime;
+end |
+delimiter ;
+
+delimiter |
+create or replace function getConcertRemainingTime(idConcert int) returns varchar(1000)
+begin 
+    declare remainingTime varchar(1000);
+    select datediff(dateFinC, now()) into remainingTime from CONCERT where idC = idConcert;
+    return remainingTime;
+end |
+delimiter ;
+
+delimiter |
+create or replace function getActiviteAnnexeRemainingTime(idActiviteAnnexe int) returns varchar(1000)
+begin 
+    declare remainingTime varchar(1000);
+    select datediff(dateFinAct, now()) into remainingTime from ACTIVITEANNEXE where idAct = idActiviteAnnexe;
+    return remainingTime;
+end |
+delimiter ;
