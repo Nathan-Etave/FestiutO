@@ -917,3 +917,14 @@ begin
     end if;
 end |
 delimiter ;
+
+delimiter |
+create or replace trigger verifDateFestival before insert on FESTIVAL for each row
+begin
+    if new.dateDebF < NOW() then
+        signal SQLSTATE '45000' set MESSAGE_TEXT="le festival ne peux pas débuter antérieurement";
+    elseif new.dateDebF > new.dateFinF then
+        signal SQLSTATE '45000' set MESSAGE_TEXT="le festival ne peux pas être terminer avant d'avoir commencé";
+    end if;
+end |
+delimiter ;
