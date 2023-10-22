@@ -1,34 +1,34 @@
 INSERT INTO FESTIVAL (idF, nomF, dateDebF, dateFinF, descriptionF) VALUES 
-    (1, "Festival de Musique en Plein Air", "2023-07-15", "2023-07-17", "Un festival de musique en plein air avec des performances live de différents artistes et groupes."),
-    (2, "Festival de Jazz et de Blues", "2023-08-10", "2023-08-12", "Un festival de jazz et de blues mettant en vedette des musiciens légendaires et des talents émergents."),
-    (3, "Festival Électro Beats", "2023-09-05", "2023-09-07", "Une expérience électrisante avec des DJs internationaux et des artistes de musique électronique."),
-    (4, "Festival Folklorique Traditionnel", "2023-06-20", "2023-06-22", "Un voyage au cœur de la culture avec des danses traditionnelles, de la musique folklorique et des expositions artisanales."),
-    (5, "Festival Rock Énergique", "2023-10-01", "2023-10-03", "Un festival rock énergique présentant des groupes de légende et des nouveaux talents, avec des performances spectaculaires."),
-    (6, "Festival de Musique Classique", "2023-11-12", "2023-11-14", "Un rendez-vous magique avec les chefs-d œuvre classiques interprétés par des orchestres renommés et des solistes exceptionnels."),
-    (7, "Festival de Musique du Monde", "2023-12-05", "2023-12-07", "Une célébration de la diversité musicale du monde entier avec des musiciens traditionnels et des fusions musicales uniques."),
-    (8, "Festival de Hip-Hop Urbain", "2023-05-25", "2023-05-27", "Une immersion dans la culture hip-hop urbaine avec des battles de danse, des rappeurs talentueux et des graffeurs renommés."),
-    (9, "Festival de Musique Expérimentale", "2023-04-08", "2023-04-10", "Un voyage sonore exploratoire avec des expérimentations musicales, des installations sonores et des performances avant-gardistes."),
-    (10, "Festival de Musique Country", "2023-03-15", "2023-03-17", "Une célébration de l'authenticité et de la tradition avec des artistes de musique country primés et des activités western passionnantes."),
-    (11, "Festival de Musique Indie", "2023-08-25", "2023-08-27", "Un festival mettant en vedette des groupes et des artistes indépendants émergents, offrant une plate-forme pour la créativité musicale."),
-    (12, "Festival de Musique du Cinéma", "2023-09-18", "2023-09-20", "Une célébration des bandes sonores emblématiques du cinéma, avec des performances orchestrales en direct et des projections de films classiques."),
-    (13, "Festival de Musique Rétro", "2023-06-05", "2023-06-07", "Un voyage dans le temps avec des performances musicales rétro, des costumes d'époque et une ambiance nostalgique des décennies passées."),
-    (14, "Festival de Musique Contemporaine", "2023-11-05", "2023-11-07", "Une exploration des frontières de la musique contemporaine avec des compositeurs innovants, des expérimentations sonores et des performances avant-gardistes."),
-    (15, "Festival de Musique de l'Asie", "2023-07-30", "2023-08-01", "Un festin musical multiculturel mettant en avant la richesse des traditions musicales de l'Asie, avec des concerts, des ateliers et des démonstrations."),
-    (16, "Festival de Musique Celtique", "2023-10-12", "2023-10-14", "Une célébration enjouée de la musique celtique avec des groupes de musique traditionnelle, des danses folkloriques et des légendes celtiques."),
-    (17, "Festival de Musique de la Nature", "2023-05-08", "2023-05-10", "Une expérience sonore immersive intégrant les sons de la nature dans la musique, avec des performances en plein air et des conférences sur la biodiversité."),
-    (18, "Festival de Musique de l'Espace", "2023-12-02", "2023-12-04", "Un voyage musical intergalactique avec des compositions inspirées de l'espace, des projections astronomiques et des activités éducatives sur l'astronomie."),
-    (19, "Festival de Musique de la Renaissance", "2023-04-20", "2023-04-22", "Un retour aux racines de la musique avec des instruments anciens, des chants médiévaux et des reconstitutions historiques d'ensembles musicaux de l'époque."),
-    (20, "Festival de Musique de la Diversité", "2023-02-15", "2023-02-17", "Une célébration de la diversité musicale mondiale, mettant en lumière des genres musicaux variés, des artistes émergents et des collaborations interculturelles."),
-    (21, "Festival de Musique Alternative", "2023-09-28", "2023-09-30", "Une célébration de l'expérimentation musicale avec des artistes de la scène alternative, des installations artistiques et des performances uniques."),
-    (22, "Festival de Musique du Futur", "2023-11-28", "2023-11-30", "Une exploration audacieuse des nouvelles frontières de la musique, mettant en avant des technologies musicales innovantes et des artistes pionniers."),
-    (23, "Festival de Musique Acoustique", "2023-10-05", "2023-10-07", "Un festival intime mettant en vedette des performances acoustiques émouvantes, des chanteurs-compositeurs et des musiciens virtuoses."),
-    (24, "Festival de Musique Africaine", "2023-07-12", "2023-07-14", "Une célébration rythmique de la diversité musicale de l'Afrique avec des percussions envoûtantes, des danses traditionnelles et des mélodies envoûtantes."),
-    (25, "Festival de Musique de l'Océanie", "2023-03-08", "2023-03-10", "Un voyage musical à travers les îles de l'Océanie avec des chants tribaux, des instruments traditionnels et des légendes marines."),
-    (26, "Festival de Musique de l'Âme", "2023-12-18", "2023-12-20", "Une célébration de la musique de l'âme, du R&B et du funk avec des voix puissantes, des grooves entraînants et des performances émotionnelles."),
-    (27, "Festival de Musique de la Renaissance", "2023-06-16", "2023-06-18", "Un retour à l'ère de la Renaissance avec des compositions classiques, des instruments d'époque et des costumes élaborés."),
-    (28, "Festival de Musique de la Forêt", "2023-05-22", "2023-05-24", "Une expérience musicale au cœur de la nature, avec des concerts en plein air, des chants d'oiseaux et le murmure des arbres."),
-    (29, "Festival de Musique de la Lune", "2023-08-08", "2023-08-10", "Un voyage musical onirique inspiré par la lune, avec des sonorités éthérées, des projections lunaires et des performances nocturnes envoûtantes."),
-    (30, "Festival de Musique de l'Aube", "2023-01-05", "2023-01-07", "Une célébration musicale du lever du soleil, avec des concerts matinaux, des mélodies apaisantes et une ambiance paisible pour accueillir la journée.");
+    (1, "Festival de Musique en Plein Air", "2024-07-15", "2024-07-17", "Un festival de musique en plein air avec des performances live de différents artistes et groupes."),
+    (2, "Festival de Jazz et de Blues", "2024-08-10", "2024-08-12", "Un festival de jazz et de blues mettant en vedette des musiciens légendaires et des talents émergents."),
+    (3, "Festival Électro Beats", "2024-09-05", "2024-09-07", "Une expérience électrisante avec des DJs internationaux et des artistes de musique électronique."),
+    (4, "Festival Folklorique Traditionnel", "2024-06-20", "2024-06-22", "Un voyage au cœur de la culture avec des danses traditionnelles, de la musique folklorique et des expositions artisanales."),
+    (5, "Festival Rock Énergique", "2024-10-01", "2024-10-03", "Un festival rock énergique présentant des groupes de légende et des nouveaux talents, avec des performances spectaculaires."),
+    (6, "Festival de Musique Classique", "2024-11-12", "2024-11-14", "Un rendez-vous magique avec les chefs-d œuvre classiques interprétés par des orchestres renommés et des solistes exceptionnels."),
+    (7, "Festival de Musique du Monde", "2024-12-05", "2024-12-07", "Une célébration de la diversité musicale du monde entier avec des musiciens traditionnels et des fusions musicales uniques."),
+    (8, "Festival de Hip-Hop Urbain", "2024-05-25", "2024-05-27", "Une immersion dans la culture hip-hop urbaine avec des battles de danse, des rappeurs talentueux et des graffeurs renommés."),
+    (9, "Festival de Musique Expérimentale", "2024-04-08", "2024-04-10", "Un voyage sonore exploratoire avec des expérimentations musicales, des installations sonores et des performances avant-gardistes."),
+    (10, "Festival de Musique Country", "2024-03-15", "2024-03-17", "Une célébration de l'authenticité et de la tradition avec des artistes de musique country primés et des activités western passionnantes."),
+    (11, "Festival de Musique Indie", "2024-08-25", "2024-08-27", "Un festival mettant en vedette des groupes et des artistes indépendants émergents, offrant une plate-forme pour la créativité musicale."),
+    (12, "Festival de Musique du Cinéma", "2024-09-18", "2024-09-20", "Une célébration des bandes sonores emblématiques du cinéma, avec des performances orchestrales en direct et des projections de films classiques."),
+    (13, "Festival de Musique Rétro", "2024-06-05", "2024-06-07", "Un voyage dans le temps avec des performances musicales rétro, des costumes d'époque et une ambiance nostalgique des décennies passées."),
+    (14, "Festival de Musique Contemporaine", "2024-11-05", "2024-11-07", "Une exploration des frontières de la musique contemporaine avec des compositeurs innovants, des expérimentations sonores et des performances avant-gardistes."),
+    (15, "Festival de Musique de l'Asie", "2024-07-30", "2024-08-01", "Un festin musical multiculturel mettant en avant la richesse des traditions musicales de l'Asie, avec des concerts, des ateliers et des démonstrations."),
+    (16, "Festival de Musique Celtique", "2024-10-12", "2024-10-14", "Une célébration enjouée de la musique celtique avec des groupes de musique traditionnelle, des danses folkloriques et des légendes celtiques."),
+    (17, "Festival de Musique de la Nature", "2024-05-08", "2024-05-10", "Une expérience sonore immersive intégrant les sons de la nature dans la musique, avec des performances en plein air et des conférences sur la biodiversité."),
+    (18, "Festival de Musique de l'Espace", "2024-12-02", "2024-12-04", "Un voyage musical intergalactique avec des compositions inspirées de l'espace, des projections astronomiques et des activités éducatives sur l'astronomie."),
+    (19, "Festival de Musique de la Renaissance", "2024-04-20", "2024-04-22", "Un retour aux racines de la musique avec des instruments anciens, des chants médiévaux et des reconstitutions historiques d'ensembles musicaux de l'époque."),
+    (20, "Festival de Musique de la Diversité", "2024-02-15", "2024-02-17", "Une célébration de la diversité musicale mondiale, mettant en lumière des genres musicaux variés, des artistes émergents et des collaborations interculturelles."),
+    (21, "Festival de Musique Alternative", "2024-09-28", "2024-09-30", "Une célébration de l'expérimentation musicale avec des artistes de la scène alternative, des installations artistiques et des performances uniques."),
+    (22, "Festival de Musique du Futur", "2024-11-28", "2024-11-30", "Une exploration audacieuse des nouvelles frontières de la musique, mettant en avant des technologies musicales innovantes et des artistes pionniers."),
+    (23, "Festival de Musique Acoustique", "2024-10-05", "2024-10-07", "Un festival intime mettant en vedette des performances acoustiques émouvantes, des chanteurs-compositeurs et des musiciens virtuoses."),
+    (24, "Festival de Musique Africaine", "2024-07-12", "2024-07-14", "Une célébration rythmique de la diversité musicale de l'Afrique avec des percussions envoûtantes, des danses traditionnelles et des mélodies envoûtantes."),
+    (25, "Festival de Musique de l'Océanie", "2024-03-08", "2024-03-10", "Un voyage musical à travers les îles de l'Océanie avec des chants tribaux, des instruments traditionnels et des légendes marines."),
+    (26, "Festival de Musique de l'Âme", "2024-12-18", "2024-12-20", "Une célébration de la musique de l'âme, du R&B et du funk avec des voix puissantes, des grooves entraînants et des performances émotionnelles."),
+    (27, "Festival de Musique de la Renaissance", "2024-06-16", "2024-06-18", "Un retour à l'ère de la Renaissance avec des compositions classiques, des instruments d'époque et des costumes élaborés."),
+    (28, "Festival de Musique de la Forêt", "2024-05-22", "2024-05-24", "Une expérience musicale au cœur de la nature, avec des concerts en plein air, des chants d'oiseaux et le murmure des arbres."),
+    (29, "Festival de Musique de la Lune", "2024-08-08", "2024-08-10", "Un voyage musical onirique inspiré par la lune, avec des sonorités éthérées, des projections lunaires et des performances nocturnes envoûtantes."),
+    (30, "Festival de Musique de l'Aube", "2024-01-05", "2024-01-07", "Une célébration musicale du lever du soleil, avec des concerts matinaux, des mélodies apaisantes et une ambiance paisible pour accueillir la journée.");
 
 INSERT INTO LIEU (idL, nomL, adresseL, nbPlacesL) VALUES 
     (1, "Parc Central", "123 Rue Principale, Villeville", 5000),
@@ -240,136 +240,136 @@ INSERT INTO RESEAUSOCIAL (idRs, lienRs) VALUES
 INSERT INTO CONCERT (idC, idF, idG, idL, dateDebC, dateFinC, dureeMontageC, dureeDemontageC, estGratuit) VALUES
 
     -- Groupe 1
-    (1, 1, 1, 1, '2023-10-25', '2023-10-25', '02:00:00', '01:30:00', TRUE),
-    (2, 2, 1, 1, '2023-09-12', '2023-09-12', '02:00:00', '01:30:00', TRUE),
-    (3, 3, 1, 1, '2023-09-14', '2023-09-14', '02:00:00', '01:30:00', TRUE),
+    (1, 1, 1, 1, '2024-10-25', '2024-10-25', '02:00:00', '01:30:00', TRUE),
+    (2, 2, 1, 1, '2024-09-12', '2024-09-12', '02:00:00', '01:30:00', TRUE),
+    (3, 3, 1, 1, '2024-09-14', '2024-09-14', '02:00:00', '01:30:00', TRUE),
 
     -- Groupe 2
-    (4, 4, 2, 2, '2023-09-11', '2023-09-11', '01:30:00', '01:00:00', FALSE),
-    (5, 5, 2, 2, '2023-09-13', '2023-09-13', '01:30:00', '01:00:00', FALSE),
-    (6, 6, 2, 2, '2023-09-15', '2023-09-15', '01:30:00', '01:00:00', FALSE),
+    (4, 4, 2, 2, '2024-09-11', '2024-09-11', '01:30:00', '01:00:00', FALSE),
+    (5, 5, 2, 2, '2024-09-13', '2024-09-13', '01:30:00', '01:00:00', FALSE),
+    (6, 6, 2, 2, '2024-09-15', '2024-09-15', '01:30:00', '01:00:00', FALSE),
 
     -- Groupe 3
-    (7, 7, 3, 3, '2023-09-11', '2023-09-11', '01:45:00', '01:15:00', TRUE),
-    (8, 8, 3, 3, '2023-09-16', '2023-09-16', '01:45:00', '01:15:00', TRUE),
+    (7, 7, 3, 3, '2024-09-11', '2024-09-11', '01:45:00', '01:15:00', TRUE),
+    (8, 8, 3, 3, '2024-09-16', '2024-09-16', '01:45:00', '01:15:00', TRUE),
     
     -- Groupe 4
-    (9, 9, 4, 4, '2023-09-12', '2023-09-12', '02:15:00', '01:45:00', FALSE),
-    (10, 10, 4, 4, '2023-09-17', '2023-09-17', '02:15:00', '01:45:00', FALSE),
+    (9, 9, 4, 4, '2024-09-12', '2024-09-12', '02:15:00', '01:45:00', FALSE),
+    (10, 10, 4, 4, '2024-09-17', '2024-09-17', '02:15:00', '01:45:00', FALSE),
 
     -- Groupe 5
-    (11, 11, 5, 5, '2023-09-13', '2023-09-13', '02:30:00', '02:00:00', TRUE),
-    (12, 12, 5, 5, '2023-09-18', '2023-09-18', '02:30:00', '02:00:00', TRUE),
+    (11, 11, 5, 5, '2024-09-13', '2024-09-13', '02:30:00', '02:00:00', TRUE),
+    (12, 12, 5, 5, '2024-09-18', '2024-09-18', '02:30:00', '02:00:00', TRUE),
 
     -- Groupe 6
-    (13, 1, 6, 1, '2023-09-11', '2023-09-11', '02:00:00', '01:30:00', TRUE),
-    (14, 2, 6, 1, '2023-09-13', '2023-09-13', '02:00:00', '01:30:00', TRUE),
-    (15, 3, 6, 1, '2023-09-15', '2023-09-15', '02:00:00', '01:30:00', TRUE),
+    (13, 1, 6, 1, '2024-09-11', '2024-09-11', '02:00:00', '01:30:00', TRUE),
+    (14, 2, 6, 1, '2024-09-13', '2024-09-13', '02:00:00', '01:30:00', TRUE),
+    (15, 3, 6, 1, '2024-09-15', '2024-09-15', '02:00:00', '01:30:00', TRUE),
 
     -- Groupe 7
-    (16, 4, 7, 2, '2023-09-12', '2023-09-12', '01:30:00', '01:00:00', FALSE),
-    (17, 5, 7, 2, '2023-09-14', '2023-09-14', '01:30:00', '01:00:00', FALSE),
-    (18, 6, 7, 2, '2023-09-16', '2023-09-16', '01:30:00', '01:00:00', FALSE),
+    (16, 4, 7, 2, '2024-09-12', '2024-09-12', '01:30:00', '01:00:00', FALSE),
+    (17, 5, 7, 2, '2024-09-14', '2024-09-14', '01:30:00', '01:00:00', FALSE),
+    (18, 6, 7, 2, '2024-09-16', '2024-09-16', '01:30:00', '01:00:00', FALSE),
 
     -- Groupe 8
-    (19, 7, 8, 3, '2023-09-13', '2023-09-13', '01:45:00', '01:15:00', TRUE),
-    (20, 8, 8, 3, '2023-09-17', '2023-09-17', '01:45:00', '01:15:00', TRUE),
+    (19, 7, 8, 3, '2024-09-13', '2024-09-13', '01:45:00', '01:15:00', TRUE),
+    (20, 8, 8, 3, '2024-09-17', '2024-09-17', '01:45:00', '01:15:00', TRUE),
 
     -- Groupe 9
-    (21, 9, 9, 4, '2023-09-14', '2023-09-14', '02:15:00', '01:45:00', FALSE),
-    (22, 10, 9, 4, '2023-09-18', '2023-09-18', '02:15:00', '01:45:00', FALSE),
+    (21, 9, 9, 4, '2024-09-14', '2024-09-14', '02:15:00', '01:45:00', FALSE),
+    (22, 10, 9, 4, '2024-09-18', '2024-09-18', '02:15:00', '01:45:00', FALSE),
 
     -- Groupe 10
-    (23, 11, 10, 5, '2023-09-15', '2023-09-15', '02:30:00', '02:00:00', TRUE),
-    (24, 12, 10, 5, '2023-09-19', '2023-09-19', '02:30:00', '02:00:00', TRUE),
+    (23, 11, 10, 5, '2024-09-15', '2024-09-15', '02:30:00', '02:00:00', TRUE),
+    (24, 12, 10, 5, '2024-09-19', '2024-09-19', '02:30:00', '02:00:00', TRUE),
 
     -- Groupe 11
-    (25, 12, 11, 1, '2023-09-20', '2023-09-20', '02:00:00', '01:30:00', TRUE),
-    (26, 13, 11, 1, '2023-09-22', '2023-09-22', '02:00:00', '01:30:00', TRUE),
-    (27, 14, 11, 1, '2023-09-24', '2023-09-24', '02:00:00', '01:30:00', TRUE),
+    (25, 12, 11, 1, '2024-09-20', '2024-09-20', '02:00:00', '01:30:00', TRUE),
+    (26, 13, 11, 1, '2024-09-22', '2024-09-22', '02:00:00', '01:30:00', TRUE),
+    (27, 14, 11, 1, '2024-09-24', '2024-09-24', '02:00:00', '01:30:00', TRUE),
 
     -- Groupe 12
-    (28, 12, 12, 2, '2023-09-21', '2023-09-21', '01:30:00', '01:00:00', FALSE),
-    (29, 13, 12, 2, '2023-09-23', '2023-09-23', '01:30:00', '01:00:00', FALSE),
-    (30, 14, 12, 2, '2023-09-25', '2023-09-25', '01:30:00', '01:00:00', FALSE),
+    (28, 12, 12, 2, '2024-09-21', '2024-09-21', '01:30:00', '01:00:00', FALSE),
+    (29, 13, 12, 2, '2024-09-23', '2024-09-23', '01:30:00', '01:00:00', FALSE),
+    (30, 14, 12, 2, '2024-09-25', '2024-09-25', '01:30:00', '01:00:00', FALSE),
 
     -- Groupe 13
-    (31, 15, 13, 3, '2023-09-22', '2023-09-22', '01:45:00', '01:15:00', TRUE),
-    (32, 16, 13, 3, '2023-09-26', '2023-09-26', '01:45:00', '01:15:00', TRUE),
+    (31, 15, 13, 3, '2024-09-22', '2024-09-22', '01:45:00', '01:15:00', TRUE),
+    (32, 16, 13, 3, '2024-09-26', '2024-09-26', '01:45:00', '01:15:00', TRUE),
 
     -- Groupe 14
-    (33, 17, 14, 4, '2023-09-23', '2023-09-23', '02:15:00', '01:45:00', FALSE),
-    (34, 18, 14, 4, '2023-09-27', '2023-09-27', '02:15:00', '01:45:00', FALSE),
+    (33, 17, 14, 4, '2024-09-23', '2024-09-23', '02:15:00', '01:45:00', FALSE),
+    (34, 18, 14, 4, '2024-09-27', '2024-09-27', '02:15:00', '01:45:00', FALSE),
 
     -- Groupe 15
-    (35, 19, 15, 5, '2023-09-24', '2023-09-24', '02:30:00', '02:00:00', TRUE),
-    (36, 20, 15, 5, '2023-09-28', '2023-09-28', '02:30:00', '02:00:00', TRUE),
+    (35, 19, 15, 5, '2024-09-24', '2024-09-24', '02:30:00', '02:00:00', TRUE),
+    (36, 20, 15, 5, '2024-09-28', '2024-09-28', '02:30:00', '02:00:00', TRUE),
 
     -- Groupe 16
-    (37, 17, 16, 1, '2023-09-30', '2023-09-30', '02:00:00', '01:30:00', TRUE),
-    (38, 18, 16, 1, '2023-10-02', '2023-10-02', '02:00:00', '01:30:00', TRUE),
-    (39, 19, 16, 1, '2023-10-04', '2023-10-04', '02:00:00', '01:30:00', TRUE),
+    (37, 17, 16, 1, '2024-09-30', '2024-09-30', '02:00:00', '01:30:00', TRUE),
+    (38, 18, 16, 1, '2024-10-02', '2024-10-02', '02:00:00', '01:30:00', TRUE),
+    (39, 19, 16, 1, '2024-10-04', '2024-10-04', '02:00:00', '01:30:00', TRUE),
 
     -- Groupe 17
-    (40, 17, 17, 2, '2023-10-01', '2023-10-01', '01:30:00', '01:00:00', FALSE),
-    (41, 18, 17, 2, '2023-10-03', '2023-10-03', '01:30:00', '01:00:00', FALSE),
-    (42, 19, 17, 2, '2023-10-05', '2023-10-05', '01:30:00', '01:00:00', FALSE),
+    (40, 17, 17, 2, '2024-10-01', '2024-10-01', '01:30:00', '01:00:00', FALSE),
+    (41, 18, 17, 2, '2024-10-03', '2024-10-03', '01:30:00', '01:00:00', FALSE),
+    (42, 19, 17, 2, '2024-10-05', '2024-10-05', '01:30:00', '01:00:00', FALSE),
 
     -- Groupe 18
-    (43, 20, 18, 3, '2023-10-02', '2023-10-02', '01:45:00', '01:15:00', TRUE),
-    (44, 21, 18, 3, '2023-10-06', '2023-10-06', '01:45:00', '01:15:00', TRUE),
+    (43, 20, 18, 3, '2024-10-02', '2024-10-02', '01:45:00', '01:15:00', TRUE),
+    (44, 21, 18, 3, '2024-10-06', '2024-10-06', '01:45:00', '01:15:00', TRUE),
     
     -- Groupe 19
-    (45, 22, 19, 4, '2023-10-03', '2023-10-03', '02:15:00', '01:45:00', FALSE),
-    (46, 23, 19, 4, '2023-10-07', '2023-10-07', '02:15:00', '01:45:00', FALSE),
+    (45, 22, 19, 4, '2024-10-03', '2024-10-03', '02:15:00', '01:45:00', FALSE),
+    (46, 23, 19, 4, '2024-10-07', '2024-10-07', '02:15:00', '01:45:00', FALSE),
 
     -- Groupe 20
-    (47, 24, 20, 5, '2023-10-04', '2023-10-04', '02:30:00', '02:00:00', TRUE),
-    (48, 25, 20, 5, '2023-10-08', '2023-10-08', '02:30:00', '02:00:00', TRUE),
+    (47, 24, 20, 5, '2024-10-04', '2024-10-04', '02:30:00', '02:00:00', TRUE),
+    (48, 25, 20, 5, '2024-10-08', '2024-10-08', '02:30:00', '02:00:00', TRUE),
 
     -- Groupe 21
-    (49, 22, 21, 1, '2023-10-12', '2023-10-12', '02:00:00', '01:30:00', TRUE),
-    (50, 23, 21, 1, '2023-10-14', '2023-10-14', '02:00:00', '01:30:00', TRUE),
-    (51, 24, 21, 1, '2023-10-16', '2023-10-16', '02:00:00', '01:30:00', TRUE),
+    (49, 22, 21, 1, '2024-10-12', '2024-10-12', '02:00:00', '01:30:00', TRUE),
+    (50, 23, 21, 1, '2024-10-14', '2024-10-14', '02:00:00', '01:30:00', TRUE),
+    (51, 24, 21, 1, '2024-10-16', '2024-10-16', '02:00:00', '01:30:00', TRUE),
 
     -- Groupe 22
-    (52, 22, 22, 2, '2023-10-13', '2023-10-13', '01:30:00', '01:00:00', FALSE),
-    (53, 23, 22, 2, '2023-10-15', '2023-10-15', '01:30:00', '01:00:00', FALSE),
-    (54, 24, 22, 2, '2023-10-17', '2023-10-17', '01:30:00', '01:00:00', FALSE),
+    (52, 22, 22, 2, '2024-10-13', '2024-10-13', '01:30:00', '01:00:00', FALSE),
+    (53, 23, 22, 2, '2024-10-15', '2024-10-15', '01:30:00', '01:00:00', FALSE),
+    (54, 24, 22, 2, '2024-10-17', '2024-10-17', '01:30:00', '01:00:00', FALSE),
 
     -- Groupe 23
-    (55, 25, 23, 3, '2023-10-14', '2023-10-14', '01:45:00', '01:15:00', TRUE),
-    (56, 26, 23, 3, '2023-10-18', '2023-10-18', '01:45:00', '01:15:00', TRUE),
+    (55, 25, 23, 3, '2024-10-14', '2024-10-14', '01:45:00', '01:15:00', TRUE),
+    (56, 26, 23, 3, '2024-10-18', '2024-10-18', '01:45:00', '01:15:00', TRUE),
 
     -- Groupe 24
-    (57, 27, 24, 4, '2023-10-15', '2023-10-15', '02:15:00', '01:45:00', FALSE),
-    (58, 28, 24, 4, '2023-10-19', '2023-10-19', '02:15:00', '01:45:00', FALSE),
+    (57, 27, 24, 4, '2024-10-15', '2024-10-15', '02:15:00', '01:45:00', FALSE),
+    (58, 28, 24, 4, '2024-10-19', '2024-10-19', '02:15:00', '01:45:00', FALSE),
 
     -- Groupe 25
-    (59, 29, 25, 5, '2023-10-16', '2023-10-16', '02:30:00', '02:00:00', TRUE),
-    (60, 30, 25, 5, '2023-10-20', '2023-10-20', '02:30:00', '02:00:00', TRUE),
+    (59, 29, 25, 5, '2024-10-16', '2024-10-16', '02:30:00', '02:00:00', TRUE),
+    (60, 30, 25, 5, '2024-10-20', '2024-10-20', '02:30:00', '02:00:00', TRUE),
     
     -- Groupe 26
-    (61, 20, 26, 1, '2023-10-22', '2023-10-22', '02:00:00', '01:30:00', TRUE),
-    (62, 21, 26, 1, '2023-10-24', '2023-10-24', '02:00:00', '01:30:00', TRUE),
-    (63, 22, 26, 1, '2023-10-26', '2023-10-26', '02:00:00', '01:30:00', TRUE),
+    (61, 20, 26, 1, '2024-10-22', '2024-10-22', '02:00:00', '01:30:00', TRUE),
+    (62, 21, 26, 1, '2024-10-24', '2024-10-24', '02:00:00', '01:30:00', TRUE),
+    (63, 22, 26, 1, '2024-10-26', '2024-10-26', '02:00:00', '01:30:00', TRUE),
 
     -- Groupe 27
-    (64, 20, 27, 2, '2023-10-23', '2023-10-23', '01:30:00', '01:00:00', FALSE),
-    (65, 21, 27, 2, '2023-10-25', '2023-10-25', '01:30:00', '01:00:00', FALSE),
-    (66, 22, 27, 2, '2023-10-27', '2023-10-27', '01:30:00', '01:00:00', FALSE),
+    (64, 20, 27, 2, '2024-10-23', '2024-10-23', '01:30:00', '01:00:00', FALSE),
+    (65, 21, 27, 2, '2024-10-25', '2024-10-25', '01:30:00', '01:00:00', FALSE),
+    (66, 22, 27, 2, '2024-10-27', '2024-10-27', '01:30:00', '01:00:00', FALSE),
 
     -- Groupe 28
-    (67, 23, 28, 3, '2023-10-24', '2023-10-24', '01:45:00', '01:15:00', TRUE),
-    (68, 24, 28, 3, '2023-10-28', '2023-10-28', '01:45:00', '01:15:00', TRUE),
+    (67, 23, 28, 3, '2024-10-24', '2024-10-24', '01:45:00', '01:15:00', TRUE),
+    (68, 24, 28, 3, '2024-10-28', '2024-10-28', '01:45:00', '01:15:00', TRUE),
 
     -- Groupe 29
-    (69, 25, 29, 4, '2023-10-25', '2023-10-25', '02:15:00', '01:45:00', FALSE),
-    (70, 26, 29, 4, '2023-10-29', '2023-10-29', '02:15:00', '01:45:00', FALSE),
+    (69, 25, 29, 4, '2024-10-25', '2024-10-25', '02:15:00', '01:45:00', FALSE),
+    (70, 26, 29, 4, '2024-10-29', '2024-10-29', '02:15:00', '01:45:00', FALSE),
 
     -- Groupe 30
-    (71, 27, 30, 5, '2023-10-26', '2023-10-26', '02:30:00', '02:00:00', TRUE),
-    (72, 28, 30, 5, '2023-10-30', '2023-10-30', '02:30:00', '02:00:00', TRUE);
+    (71, 27, 30, 5, '2024-10-26', '2024-10-26', '02:30:00', '02:00:00', TRUE),
+    (72, 28, 30, 5, '2024-10-30', '2024-10-30', '02:30:00', '02:00:00', TRUE);
 
 INSERT INTO ROLEUTI (idR, nomR) VALUES
     (1, "spectateur"),
@@ -503,11 +503,11 @@ INSERT INTO FAVORIS (idU, idG) VALUES
     (3, 4);
 
 INSERT INTO ACTIVITEANNEXE (idAct, nomAct, descriptionAct, dateDebAct, dateFinAct, idL, idF, idG, estPublique) VALUES
-    (1, "interview 1", "une interview", "2024-11-25", "2024-11-25", 1, 1, 1, TRUE),
-    (2, "interview 2", "une autre interview", "2024-11-25", "2024-11-25", 2, 2, 2, FALSE),
-    (3, "show case", "un show case", "2024-11-25", "2024-11-25", 3, 3, 3, TRUE),
-    (4, "activite 1", "une activite", "2024-11-25", "2024-11-25", 4, 4, 4, TRUE),
-    (5, "activite 2", "une autre activite", "2024-11-25", "2024-11-25", 5, 5, 5, TRUE);
+    (1, "interview 1", "une interview", "2024-07-16", "2024-07-16", 1, 1, 1, TRUE),
+    (2, "interview 2", "une autre interview", "2024-08-10", "2024-08-11", 2, 2, 2, FALSE),
+    (3, "show case", "un show case", "2024-09-06", "2024-09-06", 3, 3, 3, TRUE),
+    (4, "activite 1", "une activite", "2024-06-21", "2024-06-21", 4, 4, 4, TRUE),
+    (5, "activite 2", "une autre activite", "2024-10-01", "2024-10-02", 5, 5, 5, TRUE);
 
 INSERT INTO TYPEBILLET (idT, prixT, descriptionT) VALUES
     (1, 10, "Accès standard au festival"),
@@ -517,11 +517,11 @@ INSERT INTO TYPEBILLET (idT, prixT, descriptionT) VALUES
     (5, 30, "Forfait ultime avec accès illimité et cadeaux exclusifs");
 
 INSERT INTO BILLET (idB, idT, idU, idF, dateDebB, dateFinB) VALUES
-    (1, 1, 1, 1, '2023-10-20', '2023-10-25'),
-    (2, 2, 2, 2, '2023-10-22', '2023-10-27'),
-    (3, 3, 3, 1, '2023-10-24', '2023-10-29'),
-    (4, 1, 4, 2, '2023-10-26', '2023-10-31'),
-    (5, 2, 5, 1, '2023-10-28', '2023-11-02');
+    (1, 1, 1, 1, '2024-10-20', '2024-10-25'),
+    (2, 2, 2, 2, '2024-10-22', '2024-10-27'),
+    (3, 3, 3, 1, '2024-10-24', '2024-10-29'),
+    (4, 1, 4, 2, '2024-10-26', '2024-10-31'),
+    (5, 2, 5, 1, '2024-10-28', '2024-11-02');
 
 INSERT INTO RESERVATION_CONCERT (idRes, idC, idU) VALUES
     (1, 1, 1),
@@ -535,11 +535,11 @@ INSERT INTO RESERVATION_ACTIVITEANNEXE (idRes, idAct, idU) VALUES
     (2, 3, 2);
 
 INSERT INTO LOGER (idH, idG, dateDebH, dateFinH) VALUES
-    (1, 1, '2023-10-20', '2023-10-25'),
-    (2, 2, '2023-10-22', '2023-10-27'),
-    (1, 3, '2023-10-24', '2023-10-29'),
-    (1, 4, '2023-10-26', '2023-10-31'),
-    (5, 2, '2023-10-28', '2023-11-02');
+    (1, 1, '2024-10-20', '2024-10-25'),
+    (2, 2, '2024-10-22', '2024-10-27'),
+    (1, 3, '2024-10-24', '2024-10-29'),
+    (1, 4, '2024-10-26', '2024-10-31'),
+    (5, 2, '2024-10-28', '2024-11-02');
 
 INSERT INTO IMAGER_GROUPE(idG, idP) VALUES
     (1, 6),
