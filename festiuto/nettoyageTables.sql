@@ -1,5 +1,4 @@
 delete from LOGER;
-delete from RESEAUSOCIAL;
 delete from RESERVATION_CONCERT;
 delete from RESERVATION_ACTIVITEANNEXE;
 delete from BILLET;
@@ -8,6 +7,7 @@ delete from ACTIVITEANNEXE;
 delete from FAVORIS;
 delete from IMAGER_GROUPE;
 delete from VIDEO_GROUPE;
+delete from RESEAUSOCIAL_GROUPE;
 delete from CONCERT;
 delete from JOUER;
 delete from ARTISTE;
@@ -21,3 +21,4 @@ delete from STYLEMUSICAL;
 delete from INSTRUMENT;
 delete from LIEU;
 delete from FESTIVAL;
+delete from RESEAUSOCIAL;

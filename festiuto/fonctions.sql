@@ -165,3 +165,12 @@ begin
     return remainingTime;
 end |
 delimiter ;
+
+delimiter |
+create or replace function getGroupSocialNetwork(idGroup int) returns varchar(1000)
+begin 
+    declare socialNetwork varchar(1000);
+    select group_concat(lienRs) into socialNetwork from RESEAUSOCIAL_GROUPE RG natural join RESEAUSOCIAL where RG.idG = idGroup;
+    return socialNetwork;
+end |
+delimiter ;

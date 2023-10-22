@@ -78,6 +78,16 @@ end |
 delimiter ;
 
 delimiter |
+create or replace procedure addGroupSocialNetwork (lienSocialNetwork VARCHAR(150), idGroupe INT)
+begin
+    declare newIdSocialNetwork int;
+    select max(idRs)+1 into newIdSocialNetwork from RESEAUSOCIAL;
+    insert into RESEAUSOCIAL (idRs, lienRs) values (newIdSocialNetwork, lienSocialNetwork);
+    insert into RESEAUSOCIAL_GROUPE (idG, idRs) values (idGroupe, newIdSocialNetwork);
+end |
+delimiter ;
+
+delimiter |
 create or replace procedure addFestival (nomFestival VARCHAR(50), dateDebFestival DATE, dateFinFestival DATE, descriptionFestival VARCHAR(200))
 begin
     declare newIdFestival int;
@@ -104,6 +114,7 @@ begin
 end |
 delimiter ;
 
+delimiter |
 create or replace procedure addReservationAnnexActivity (idActivite INT, idUtilisateur INT)
 begin
     declare newIdReservation int;
@@ -179,6 +190,14 @@ end |
 delimiter ;
 
 delimiter |
+create or replace procedure updateGroupSocialNetwork (idSocialNetwork INT, lienSocialNetwork VARCHAR(150), idGroupe INT)
+begin
+    update RESEAUSOCIAL set lienRs=lienSocialNetwork where idRs=idSocialNetwork;
+    update RESEAUSOCIAL_GROUPE set idG=idGroupe where idRs=idSocialNetwork;
+end |
+delimiter ;
+
+delimiter |
 create or replace procedure updateFestival (idFestival INT, nomFestival VARCHAR(50), dateDebFestival DATE, dateFinFestival DATE, descriptionFestival VARCHAR(200))
 begin
     update FESTIVAL set nomF=nomFestival, dateDebF=dateDebFestival, dateFinF=dateFinFestival, descriptionF=descriptionFestival where idF=idFestival;
@@ -244,6 +263,14 @@ end |
 delimiter ;
 
 delimiter |
+create or replace procedure deleteGroupSocialNetwork (idSocialNetwork INT)
+begin
+    delete from RESEAUSOCIAL where idRs=idSocialNetwork;
+    delete from RESEAUSOCIAL_GROUPE where idRs=idSocialNetwork;
+end |
+delimiter ;
+
+delimiter |
 create or replace procedure deleteFestival (idFestival INT)
 begin
     delete from FESTIVAL where idF=idFestival;
@@ -264,10 +291,12 @@ begin
 end |
 delimiter ;
 
+delimiter |
 create or replace procedure deleteReservationAnnexActivity (idReservation INT)
 begin
     delete from RESERVATION_ACTIVITEANNEXE where idRes=idReservation;
 end |
+delimiter ;
 
 delimiter |
 create or replace procedure updateTicketDate (idBillet INT, dateDebBillet DATE, dateFinBillet DATE)
