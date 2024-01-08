@@ -81,9 +81,9 @@ def billeterie():
 
 @app.route('/programme')
 def programme():
-    print(requetes.test())
     return render_template(
         'programme.html',
+        test = requetes.test()
     )
 
 @app.route('/concert/<int:id>',methods=['GET','POST'])
