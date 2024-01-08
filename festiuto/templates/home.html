@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="header-container" id="header">
+    <div class="middle-side">
+        <h1>festiut'o</h1>
+        <p>soyez prêt pour une expérience <span>immersive</span></p>
+    </div>
+    <div class="bottom-side">
+        <div>
+            <a href="{{ url_for('about') }}">en savoir plus</a>
+        </div>
+        <div>
+            <a href="#search-content">rechercher</a>
+            <a href="{{ url_for('programme') }}">programme</a>
+        </div>
+        
+    </div>
+</div>
+
+<main id="search-content">
+
+    <section class="search-container">
+        <div class="search-content">
+            <p>votre concert, accessible dès maintenant !</p>
+            <div class="search-utils">
+                <input type="text" placeholder="artiste, groupe, lieu, concert"/>
+                <input type="button" value="rechercher"/>
+            </div>
+        </div>
+    </section>
+
+    <section class="result-container">
+        <div class="cards-content">
+        {% for concert in concerts %}      
+            <a href="{{ url_for('concert',id=concert['id']) }}"> 
+                <div class="card">
+                    <h3>{{ concert["artist"] }}</h3>
+                    <div class="date">
+                        <p>{{ concert["start-date"].split("/")[0] + " - " + concert["start-date"].split("/")[1] + " - " + concert["start-date"].split("/")[2]}}</p>
+                        <div><span></span></div>
+                        <p>{{ concert["end-date"].split("/")[0] + " - " + concert["end-date"].split("/")[1] + " - " + concert["end-date"].split("/")[2]}}</p>
+                    </div>
+                    <p>{{ concert["style"] }}</p>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='./js/test.js') }}"></script>
+{% endblock %}

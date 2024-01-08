@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/billeterie.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+
+        <h1>réservez votre billet dès maintenant ! </h1>
+
+        <div class="type-billet-container">
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('config_billet',id=1) }}`">
+                <h3>1 jour</h3>
+                <p>accès au festival pour une journée de planning</p>
+                <p>20 €</p>
+            </div>
+
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('config_billet',id=2) }}`">
+                <h3>2 jours</h3>
+                <p>accès au festival pour 2 journées de planning</p>
+                <p>35 €</p>
+            </div>
+
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('config_billet',id=3) }}`">
+                <h3>illimité</h3>
+                <p>accès illimité au festival</p>
+                <p>90 €</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

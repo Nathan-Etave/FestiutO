@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='./css/base.css') }}">
+    <link rel="icon" type="image/x-icon" href="../static/images/icon.png">
+    {% block styles %}
+    <!-- css -->
+    {% endblock %}
+    <title>Festiut'O</title>
+</head>
+    <body>
+        <header>
+            <a href="#header"><img src="../static/images/icon.png" alt="icon" id="icon"></a>
+            <!-- <p>festiut'o©</p> -->
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">accueil</a></li>
+                    <li><a href="{{ url_for('programme') }}">programme</a></li>
+                    <li><a href="{{ url_for('billeterie') }}">billeterie</a></li>
+                    <li><a href="{{ url_for('login') }}">connexion</a></li>
+                </ul>
+            </nav>
+        </header>
+         
+        {% block content %}
+        <!-- content -->
+        {% endblock %}
+
+        <footer>
+            <div class="main-content">
+            
+            </div>
+            <div class="footer-content">
+                <p>© 2023 - 2024 festiut'o. tous droits réservés</p>
+            </div>
+        </footer>
+
+        {% block scripts %}
+        <!-- js -->
+        {% endblock %}
+        
+    </body>
+</html>

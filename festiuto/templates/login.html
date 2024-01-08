@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+
+        <h1>se connecter</h1>
+        
+        <div class="config-container">
+            <div class="props-login">
+                <form class="form-login" id="form-login" role="form" method="POST" action="{{ url_for('index') }}">
+                    {{ LoginForm.hidden_tag() }}
+                    <div class="config">
+                        <label for="email">email</label>
+                        {{ LoginForm.email(class="form-control", id="email") }}
+                    </div>
+                    <div class="config">
+                        <label for="password">mot de passe</label>
+                        {{ LoginForm.password(class="form-control", id="password") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="submit-container">
+            <a href="{{ url_for('register') }}" id="register-button">vous n'avez pas de compte ?</a>
+            {{ LoginForm.submit(class="form-control", id="submit-form", form="form-login") }}
+        </div>
+    </div>
+
+</main>
+{% endblock %}

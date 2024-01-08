@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+
+        <h1>en savoir plus</h1>
+
+        <section class="q-r">
+            <ul>
+                <li class="question">
+                    <h3 onclick="toggle_info(1)">qui sommes-nous ?</h3>
+                    <p id="1">festiut'o est un festival de musique qui se déroule chaque année dans la ville de Toulouse. Il a pour but de faire découvrir de nouveaux artistes et de faire vivre la musique dans la ville rose.</p>
+                </li>
+                <li class="question">
+                    <h3 onclick="toggle_info(2)">quelles sont les dates du festival ?</h3>
+                    <p id="2">17 mai 2024 au 24 mai 2024</p>
+                </li>
+            </ul>
+        </section>
+        
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='./js/about.js') }}"></script>
+{% endblock %}
+

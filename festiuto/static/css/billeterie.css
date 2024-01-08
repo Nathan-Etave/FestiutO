@@ -1,0 +1,63 @@
+main {
+    min-height: 100vh; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.type-billet-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 50px;
+    margin-top: 100px;
+
+    & > .billet-card {
+        width: 300px;
+        height: 300px;
+        padding: 0 5%;
+        border: 1px solid var(--accent);
+        background-color: var(--accent-hover);
+        color: var(--text);
+        transition: .2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        &:hover {
+            background-color: var(--accent);
+            transition: .2s;
+            cursor: pointer;
+            scale: 1.05;
+        }
+
+        & > h3 {
+            font-size: 30px;
+            font-family: black-italic;
+        }
+        
+        & > p {
+            text-align: center;
+            font-family: regular;
+            color: var(--text);
+
+            &:last-of-type {
+                font-family: black-italic;
+                font-size: 25px;
+            }
+        }
+    }
+}
