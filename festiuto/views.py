@@ -2,8 +2,8 @@ from flask import render_template
 from flask_wtf import FlaskForm
 from wtforms import DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired
-from .app import app #, db
-
+from festiuto import app #, db
+from festiuto import requetes
 
 class BilletForm(FlaskForm):
     nom = StringField('Nom', validators=[DataRequired()])
@@ -81,9 +81,9 @@ def billeterie():
 
 @app.route('/programme')
 def programme():
+    print(requetes.test())
     return render_template(
-        # des trucs
-        'programme.html'
+        'programme.html',
     )
 
 @app.route('/concert/<int:id>',methods=['GET','POST'])
