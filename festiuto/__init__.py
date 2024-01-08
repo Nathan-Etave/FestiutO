@@ -1,4 +1,5 @@
 from .app import app
-import Festiuto.views
-import Festiuto.commands
-import Festiuto.models
+import festiuto.views
+import festiuto.commands
+import festiuto.models
+import festiuto.requetes
