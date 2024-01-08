@@ -91,7 +91,6 @@ def concert(id:int):
     return render_template(
         'concert.html',
         idC = id
-
     )
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
