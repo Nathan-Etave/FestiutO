@@ -34,7 +34,7 @@ def index():
     return render_template(
         'home.html',
         mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
-        concerts = requetes.get_all_concerts()[0:8]
+        concerts = requetes.get_all_concerts()
     )
 
 @app.route('/billeterie')
@@ -46,21 +46,21 @@ def billeterie():
 @app.route('/programme')
 def programme():
     return render_template(
-        'programme.html'
+        'programme.html',
+        concerts = requetes.get_all_concerts()
     )
 
 @app.route('/concert/<int:id>',methods=['GET','POST'])
-def concert(id:int):
+def concert(idC:int):
     return render_template(
         'concert.html',
-        idC = id,
-        data_concert = requetes.get_groupe_by_idC(id)
+        idC = idC,
+        data_concert = requetes.get_groupe_by_idC(idC)
     )
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
 def config_billet(id):
     return render_template(
-        # f = BilletForm()
         'config_billet.html',
         BilletForm = BilletForm(),
         id = id

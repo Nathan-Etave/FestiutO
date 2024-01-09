@@ -185,10 +185,6 @@
         background-color: var(--accent);
         color: var(--text);
         transition: .2s;
-
-        & > h3 {
-            color: var(--secondary);
-        }
     }
 
     & > h3 {

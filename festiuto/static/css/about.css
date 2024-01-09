@@ -31,18 +31,21 @@ main {
     color: var(--text);
     font-family: medium-italic;
     border: 1px solid var(--accent);
+    border-left: 10px solid var(--accent);
 
     & h3 {
         font-size: 40px;
         color: var(--accent);
         font-family: medium-italic;
         cursor: pointer;
+        user-select: none;
     }
 
     & p {
         display: none;
         font-family: medium-italic;
         font-size: 25px;
+        user-select: none;
     }
 }
 

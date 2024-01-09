@@ -12,7 +12,7 @@ def test():
 
 def get_all_concerts():
     try:
-        result = cnx.execute(text("select * from CONCERT natural join GROUPE natural join STYLEMUSICAL order by idC;"))
+        result = cnx.execute(text("select * from CONCERT natural join GROUPE natural join STYLEMUSICAL order by dateDebC;"))
         data = []
         for row in result: data.append(row)
         return data
