@@ -34,43 +34,7 @@ def index():
     return render_template(
         'home.html',
         mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
-        concerts = [
-            {
-                "id": 1,
-                "artist": "imagine dragons",
-                "start-date": "12/2/2019 20:00",
-                "end-date": "12/2/2019 23:00",
-                "style": "pop",
-             },
-             {
-                "id": 2,
-                "artist": "4am-liam",  
-                "start-date": "12/10/2019 20:00",
-                "end-date": "12/10/2019 23:00",
-                "style": "pop",
-             },
-             {
-                "id": 3,
-                "artist": "daft punk",
-                "start-date": "12/7/2019 20:00",
-                "end-date": "12/7/2019 23:00",
-                "style": "pop",
-             },
-             {
-                "id": 4,
-                "artist": "damso",
-                "start-date": "12/8/2019 20:00",
-                "end-date": "12/8/2019 23:00",
-                "style": "pop",
-             },
-              {
-                "id": 5,
-                "artist": "kordhell",
-                "start-date": "12/8/2019 20:00",
-                "end-date": "12/8/2019 23:00",
-                "style": "phonk",
-             }
-        ]
+        concerts = requetes.get_all_concerts()[0:8]
     )
 
 @app.route('/billeterie')
@@ -82,16 +46,15 @@ def billeterie():
 @app.route('/programme')
 def programme():
     return render_template(
-        'programme.html',
-        test = requetes.test()
+        'programme.html'
     )
 
 @app.route('/concert/<int:id>',methods=['GET','POST'])
 def concert(id:int):
     return render_template(
         'concert.html',
-        idC = id
-
+        idC = id,
+        data_concert = requetes.get_groupe_by_idC(id)
     )
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
