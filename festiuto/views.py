@@ -29,8 +29,8 @@ class RegisterForm(FlaskForm):
     # statut = SelectField('ComboBox', choices=choices)
     next = HiddenField()
 
-@app.route('/')
-def index():
+@app.route('/',methods=['GET','POST'])
+def home():
     return render_template(
         'home.html',
         mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
