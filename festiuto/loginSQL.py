@@ -1,7 +1,7 @@
 login = "lavenant_fest" # pip install pymysql
 passwd = "lavenant"
 serveur= "mysql-lavenant.alwaysdata.net"
-bd = "lavenant_1"
+bd = "lavenant_2"
 
 def getLogin():
     return login

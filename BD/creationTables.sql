@@ -52,7 +52,7 @@ CREATE TABLE UTILISATEUR(
     nomU VARCHAR(50),
     prenomU VARCHAR(50),
     mailU VARCHAR(50),
-    mdpU VARCHAR(50),
+    mdpU VARCHAR(100),
     idR INT,
     PRIMARY KEY (idU),
     CONSTRAINT FK_Utilisateur FOREIGN KEY(idR) REFERENCES ROLEUTI(idR)

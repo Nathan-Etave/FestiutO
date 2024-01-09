@@ -10,6 +10,28 @@ def test():
         print("erreur de l'id")
         raise
 
+def get_user_by_email(email):
+    try:
+        result = cnx.execute(text(f"select idU, nomU, prenomU, mailU, idR from UTILISATEUR where mailU = '{email}';"))
+        result = result.first()
+        return result
+    except:
+        print("erreur de l'id")
+        raise
+
+def get_mdp_by_email(email):
+    try:
+        result = cnx.execute(text(f"select mdpU from UTILISATEUR where mailU = '{email}';"))
+        result = result.first()
+        return result[0]
+    except:
+        print("erreur de l'id")
+        raise
+
+def hasher_mdp(mdp):
+    import hashlib
+    return hashlib.sha256(mdp.encode()).hexdigest()
+
 def get_all_concerts():
     try:
         result = cnx.execute(text("select * from CONCERT natural join GROUPE natural join STYLEMUSICAL order by dateDebC;"))

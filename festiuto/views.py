@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired
@@ -20,6 +20,27 @@ class LoginForm(FlaskForm):
     password = PasswordField('password', validators=[DataRequired()])
     submit = SubmitField('se connecter')
     next = HiddenField()
+
+    def get_authenticated_user(self):
+        """
+        Récupère l'utilisateur authentifié.
+
+        Cette méthode récupère l'utilisateur authentifié en utilisant l'adresse e-mail fournie.
+        Elle vérifie également si le mot de passe fourni correspond au mot de passe enregistré pour cet utilisateur.
+
+        Returns:
+            L'utilisateur authentifié si l'adresse e-mail et le mot de passe sont valides, sinon None.
+        """
+        user = requetes.get_user_by_email(self.email.data)
+        print(user)
+        mdp = requetes.get_mdp_by_email(self.email.data)
+        if user is None:
+            return None
+        passwd = requetes.hasher_mdp(self.password.data)
+        print(mdp)
+        print(passwd)
+        # print(str(mdp)+" == "+str(passwd))
+        return user if passwd == mdp else None
 
 class RegisterForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
@@ -68,9 +89,24 @@ def config_billet(id):
 
 @app.route('/login',methods=['GET','POST'])
 def login():
+    f = LoginForm()
+    if f.validate_on_submit():
+        try:
+            print("test",f.get_authenticated_user())
+            idU, nomU, prenomU, mailU, idR = f.get_authenticated_user()
+            user = idU, nomU, prenomU, mailU, idR
+            if user != None:
+                idUt = user[0]
+                session['user'] = user
+                return redirect(url_for('home'))
+        except:
+            return render_template(
+                'login.html',
+                LoginForm = f
+            )
     return render_template(
         'login.html',
-        LoginForm = LoginForm()
+        LoginForm = f
     )
 
 @app.route('/register',methods=['GET','POST'])
