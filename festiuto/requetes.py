@@ -1,15 +1,6 @@
 from sqlalchemy import text
 from festiuto import cnx
 
-def test():
-    try:
-        result = cnx.execute(text("select * from FESTIVAL;"))
-        result = result.first()
-        return result
-    except:
-        print("erreur de l'id")
-        raise
-
 def get_user_by_email(email):
     try:
         result = cnx.execute(text(f"select idU, nomU, prenomU, mailU, idR from UTILISATEUR where mailU = '{email}';"))
@@ -48,4 +39,21 @@ def get_groupe_by_idC(idC):
         return result
     except:
         print("erreur de l'id")
+        raise
+
+def get_roles():
+    try:
+        result = cnx.execute(text("select * from ROLEUTI;"))
+        data = []
+        for row in result: data.append(row)
+        return data
+    except:
+        raise
+
+def get_last_idU():
+    try:
+        result = cnx.execute(text("select max(idU) from UTILISATEUR;"))
+        result = result.first()
+        return result[0]
+    except:
         raise

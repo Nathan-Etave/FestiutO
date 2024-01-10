@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/profil.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+
+        <h1>profil</h1>
+
+        <div class="btns">
+            <a href="#">mes informations</a>
+            <a href="#">mes billets</a>
+            <a href="#">mes favoris</a>
+            <a href="{{ url_for('logout') }}">déconnexion</a>
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='./js/about.js') }}"></script>
+{% endblock %}
+

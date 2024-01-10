@@ -19,7 +19,11 @@
                     <li><a href="{{ url_for('home') }}">accueil</a></li>
                     <li><a href="{{ url_for('programme') }}">programme</a></li>
                     <li><a href="{{ url_for('billeterie') }}">billeterie</a></li>
+                    {% if 'user' in session %}
+                    <li><a href="{{ url_for('profil') }}">profil</a></li>
+                    {% else %}
                     <li><a href="{{ url_for('login') }}">connexion</a></li>
+                    {% endif %}
                     <!-- Ici faire condition pour afficher le pseudo -->
                 </ul>
             </nav>

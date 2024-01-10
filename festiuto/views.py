@@ -45,9 +45,10 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
-    email = StringField('email', validators=[DataRequired()])
-    # choices = [('professeur', 'Professeur'), ('gestionnaire', 'Gestionnaire'), ('laborantin', 'Laborantin')]
-    # statut = SelectField('ComboBox', choices=choices)
+    mail = StringField('email', validators=[DataRequired()])
+    mdp = PasswordField('password', validators=[DataRequired()])
+    mdpConfirm = PasswordField('password', validators=[DataRequired()])
+    submit = SubmitField("s'enregistrer")
     next = HiddenField()
 
 @app.route('/',methods=['GET','POST'])
@@ -113,7 +114,20 @@ def login():
 def register():
     return render_template(
         'register.html',
+        roles = requetes.get_roles(),
         RegisterForm = RegisterForm()
+    )
+
+@app.route('/logout',methods=['GET','POST'])
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('login'))
+
+
+@app.route('/profil',methods=['GET','POST'])
+def profil():
+    return render_template(
+        'profil.html'
     )
 
 @app.route('/about',methods=['GET','POST'])
