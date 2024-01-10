@@ -24,19 +24,31 @@ main {
     gap: 40px;
     justify-content: space-between;
 
-    & > .config {
+    & .inputs {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        & .left-side,.right-side {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+    }
+
+    & .config {
         display: grid;
         grid-template-rows: 1fr 2fr;
         gap: 5px;
 
-        & > label {
+        & label {
             font-family: black-italic;
             font-size: 25px;
             color: var(--text);
             align-self: center;
         }
 
-        & > input {
+        & input {
             padding: 5px 15px;
             background-color: transparent;
             border: 1px var(--text) solid;
@@ -73,4 +85,27 @@ main {
             }
         }
     }
+}
+
+.submit-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+
+#submit-form {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: 1px var(--accent) solid;
+    font-size: 30px;
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#submit-form:hover {
+    background-color: var(--accent-hover);  
+    color: var(--accent);
 }

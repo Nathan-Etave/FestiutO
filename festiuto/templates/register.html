@@ -13,33 +13,40 @@
         
         <div class="config-container">
             <div class="props-register">
-                <form class="form-regiter" id="form-regiter" role="form" method="POST" action="{{ url_for('login') }}">
+                <form class="form-register" id="form-register" role="form" method="POST" action="{{ url_for('login') }}">
                     {{ RegisterForm.hidden_tag() }}
-                    <div class="config">
-                        <label for="prenom">prenom</label>
-                        {{ RegisterForm.prenom(class="form-control", id="prenom") }}
-                    </div>
-                    <div class="config">
-                        <label for="nom">nom</label>
-                        {{ RegisterForm.nom(class="form-control", id="nom") }}
-                    </div>
                     <div class="config">
                         <label for="mail">email</label>
                         {{ RegisterForm.mail(class="form-control", id="mail") }}
                     </div>
-                    <div class="config">
-                        <label for="mdp">mot de passe</label>
-                        {{ RegisterForm.mdp(class="form-control", id="mdp") }}
+                    <div class="inputs">
+                        <div class="left-side">
+                            <div class="config">
+                                <label for="prenom">prenom</label>
+                                {{ RegisterForm.prenom(class="form-control", id="prenom") }}
+                            </div>
+                            <div class="config">
+                                <label for="nom">nom</label>
+                                {{ RegisterForm.nom(class="form-control", id="nom") }}
+                            </div>
+                        </div>
+                        <div class="right-side">
+                            <div class="config">
+                                <label for="mdp">mot de passe</label>
+                                {{ RegisterForm.mdp(class="form-control", id="mdp") }}
+                            </div>
+                            <div class="config">
+                                <label for="mdpconfirm">confirmez le mot de passe</label>
+                                {{ RegisterForm.mdpConfirm(class="form-control", id="mdpconfirm") }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="config">
-                        <label for="mdpconfirm">confirmez le mot de passe</label>
-                        {{ RegisterForm.mdpConfirm(class="form-control", id="mdpconfirm") }}
-                    </div>
-                    {{ RegisterForm.submit(class="form-control", id="submit-form") }}
                 </form>
             </div>
         </div>
-        
+        <div class="submit-container">
+            {{ RegisterForm.submit(class="form-control", id="submit-form", form="form-register") }}
+        </div>
     </div>
 
 </main>
