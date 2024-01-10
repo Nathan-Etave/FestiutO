@@ -51,6 +51,14 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("s'enregistrer")
     next = HiddenField()
 
+    def get_information():
+        nom = self.nom.data
+        prenom = self.prenom.data
+        mail = self.mail.data
+        mdp = requetes.hasher_mdp(self.mdp.data)
+        mdpConfirm = requetes.hasher_mdp(self.mdpConfirm.data)
+        return nom, prenom, mail, mdp, mdpConfirm
+
 @app.route('/',methods=['GET','POST'])
 def home():
     return render_template(
@@ -117,6 +125,24 @@ def register():
         roles = requetes.get_roles(),
         RegisterForm = RegisterForm()
     )
+
+@app.route('/add_user',methods=['GET','POST'])
+def add_user():
+    nom = request.form.get('nom')
+    prenom = request.form.get('prenom')
+    mail = request.form.get('mail')
+    mdp = requetes.hasher_mdp(request.form.get('mdp'))
+    mdpConfirm = requetes.hasher_mdp(request.form.get('mdpConfirm'))
+    if mdp == mdpConfirm:
+        print("confirm")
+        requetes.insert_user(mail, prenom, nom, mdp)
+        return redirect(url_for('login'))
+    else:
+        return render_template(
+            'register.html',
+            erreur = "les mots de passes ne correspondent pas",
+            RegisterForm = RegisterForm()
+        )
 
 @app.route('/logout',methods=['GET','POST'])
 def logout():

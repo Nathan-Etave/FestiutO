@@ -13,7 +13,7 @@
         <div class="config-container">
             <div class="props-billet">
                 <h3>selectionnez votre date</h3>
-                <form class="form-config-billet" id="form-config-billet" role="form" method="POST" action="{{ url_for('index') }}">
+                <form class="form-config-billet" id="form-config-billet" role="form" method="POST" action="{{ url_for('home') }}">
                     {{ BilletForm.hidden_tag() }}
                     {% if id != 3 %}
                     <div class="config">

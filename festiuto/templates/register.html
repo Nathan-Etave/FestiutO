@@ -13,7 +13,7 @@
         
         <div class="config-container">
             <div class="props-register">
-                <form class="form-register" id="form-register" role="form" method="POST" action="{{ url_for('login') }}">
+                <form class="form-register" id="form-register" role="form" method="POST" action="{{ url_for('add_user') }}">
                     {{ RegisterForm.hidden_tag() }}
                     <div class="config">
                         <label for="mail">email</label>

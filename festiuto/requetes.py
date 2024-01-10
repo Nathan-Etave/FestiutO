@@ -57,3 +57,18 @@ def get_last_idU():
         return result[0]
     except:
         raise
+
+def insert_user(mail,prenom,nom,mdp):
+    try:
+        idU = get_last_idU() + 1
+        mailU = mail
+        prenomU = prenom
+        nomU = nom
+        mdpU = mdp
+        idR = 3
+        cnx.execute(text("INSERT INTO UTILISATEUR (idU, nomU, prenomU, mailU, mdpU, idR) VALUES (" + str(idU) + ", '" + str(nomU) + "', '" + str(prenomU) + "', '" + str(mailU) + "', '" + str(mdpU) + "', " + str(idR) + ");"))
+        cnx.commit()
+        print(f"Utilisateur {idU} ajouté")
+    except:
+        print("Erreur lors de l'ajout de l'utilisateur")
+        raise
