@@ -1,19 +1,32 @@
 from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
-from wtforms import DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
+from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired
 from festiuto import app #, db
 from festiuto import requetes
 
 class BilletForm(FlaskForm):
-    nom = StringField('Nom', validators=[DataRequired()])
-    prenom = StringField('Prénom', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired()])
+    monday = BooleanField('lundi')
+    tuesday = BooleanField('mardi')
+    wednesday = BooleanField('mercredi')
+    thursday = BooleanField('jeudi')
+    friday = BooleanField('vendredi')
+    saturday = BooleanField('samedi')
+    sunday = BooleanField('dimanche')
     tel = TelField('Téléphone', validators=[DataRequired()])
-    date_d = DateField('Date de réservation', validators=[DataRequired()])
-    date_f = DateField('Date de réservation', validators=[DataRequired()])
     submit = SubmitField('commander')
     next = HiddenField()
+
+    def get_information(self):
+        monday = self.monday.data
+        tuesday = self.tuesday.data
+        wednesday = self.wednesday.data
+        thursday = self.thursday.data
+        friday = self.friday.data
+        saturday = self.saturday.data
+        sunday = self.sunday.data
+        tel = self.tel.data
+        return (monday, tuesday, wednesday, thursday, friday, saturday, sunday, tel)
     
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
@@ -90,9 +103,41 @@ def concert(idC:int):
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
 def config_billet(id):
+    f = BilletForm()
+    if f.validate_on_submit():
+        data = f.get_information()
+        print(data)
+        print(data.count(True))
+        if id == 1:
+            if data.count(True) != 1:
+                return render_template(
+                    'config_billet.html',
+                    BilletForm = f,
+                    id = id,
+                    error = "vous devez choisir 1 jour"
+                )
+            else:
+                # Ici insérer billet à l'utilisateur
+                return redirect(url_for('home'))
+        elif id == 2:
+            if data.count(True) != 2:
+                return render_template(
+                    'config_billet.html',
+                    BilletForm = f,
+                    id = id,
+                    error = "vous devez choisir 2 jours"
+                )
+            else:
+                # Ici insérer billet à l'utilisateur
+                return redirect(url_for('home'))
+        else:
+            # Ici insérer billet à l'utilisateur
+            return redirect(url_for('home'))
+
+
     return render_template(
         'config_billet.html',
-        BilletForm = BilletForm(),
+        BilletForm = f,
         id = id
     )
 

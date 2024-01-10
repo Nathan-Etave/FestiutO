@@ -22,7 +22,7 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
     gap: 50px;
     margin-top: 100px;
 
@@ -58,7 +58,6 @@ main {
     }
 
     & > .props-billet {
-
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -89,9 +88,13 @@ main {
             font-size: 25px;
             color: var(--text);
             align-self: center;
+            cursor: pointer;
+            width: auto;
+            user-select: none;
+            padding: 0 10px;
         }
 
-        & > input {
+        & input[type="tel"] {
             padding: 5px 15px;
             background-color: transparent;
             border: 1px var(--text) solid;
@@ -130,6 +133,31 @@ main {
     }
 }
 
+.date {
+    display: flex;
+    flex-direction: column;
+
+    & > label {
+        font-family: black-italic;
+        font-size: 25px;
+        color: var(--text);
+        cursor: pointer;
+        width: auto;
+        user-select: none;
+        padding: 0 10px;
+    }
+}
+
+.day {
+    visibility: hidden;
+}
+
+.props-recap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .submit-container {
     display: flex;
     justify-content: flex-end;
@@ -153,3 +181,15 @@ main {
     color: var(--accent);
 }
 
+#error-container {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+#error {
+    color: #D35252;
+    font-size: 30px;
+    font-family: medium-italic;
+}

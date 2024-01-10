@@ -10,64 +10,101 @@
     <div class="Container">
         <h1>configurez votre billet</h1>
 
-        <div class="config-container">
+        <div class="config-container" onload="disableCheckboxs()">
             <div class="props-billet">
                 <h3>selectionnez votre date</h3>
-                <form class="form-config-billet" id="form-config-billet" role="form" method="POST" action="{{ url_for('home') }}">
+                <form class="form-config-billet" id="form-config-billet" role="form" method="POST" action="{{ url_for('config_billet',id=id) }}">
                     {{ BilletForm.hidden_tag() }}
                     {% if id != 3 %}
-                    <div class="config">
-                        <label for="date_d">date</label>
-                        {{ BilletForm.date_d(class="form-control", id="date_d") }}
+                    <div class="date">
+                        <label for="monday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">lundi 13 mai 2024</label>
+                        {{ BilletForm.monday(class="form-control day", id="monday", onchange="changeLabelColor(this)") }}
+                    </div>
+                    <div class="date">
+                        <label for="tuesday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">mardi 14 mai 2024</label>
+                        {{ BilletForm.tuesday(class="form-control day", id="tuesday", onchange="changeLabelColor(this)") }}
+                    </div>
+                    <div class="date">
+                        <label for="wednesday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">mercredi 15 mai 2024</label>
+                        {{ BilletForm.wednesday(class="form-control day", id="wednesday", onchange="changeLabelColor(this)") }}
+                    </div>
+                    <div class="date">
+                        <label for="thursday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">jeudi 16 mai 2024</label>
+                        {{ BilletForm.thursday(class="form-control day", id="thursday", onchange="changeLabelColor(this)") }}
+                    </div>
+                    <div class="date">
+                        <label for="friday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">vendredi 17 mai 2024</label>
+                        {{ BilletForm.friday(class="form-control day", id="friday", onchange="changeLabelColor(this)") }}
+                    </div>
+                    <div class="date">
+                        <label for="saturday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">samedi 18 mai 2024</label>
+                        {{ BilletForm.saturday(class="form-control day", id="saturday", onchange="changeLabelColor(this)") }}
+                    </div>
+                    <div class="date">
+                        <label for="sunday" style="color: #e2f3f2; border: 1px solid #e2f3f2;">dimanche 19 mai 2024</label>
+                        {{ BilletForm.sunday(class="form-control day", id="sunday", onchange="changeLabelColor(this)") }}
                     </div>
                     {% endif %}
-                    <div class="config">
-                        <label for="nom">nom</label>
-                        {{ BilletForm.nom(class="form-control", id="nom") }}
-                    </div>
-                    <div class="config">
-                        <label for="prenom">prénom</label>
-                        {{ BilletForm.prenom(class="form-control", id="prenom") }}
-                    </div>
-                    <div class="config">
-                        <label for="email">email</label>
-                        {{ BilletForm.email(class="form-control", id="email") }}
-                    </div>
                     <div class="config">
                         <label for="tel">téléphone</label>
                         {{ BilletForm.tel(class="form-control", id="tel") }}
                     </div>
                 </form>
             </div>
+            <div class="props-recap">
+                {% if id == 1 %}
+                <div class="billet-card">  
+                    <h3>1 jour</h3>
+                    <p>accès au festival pour une journée de planning</p>
+                    <p>20 €</p>
+                </div>
+                {% endif %}
 
-            {% if id == 1 %}
-            <div class="billet-card">  
-                <h3>1 jour</h3>
-                <p>accès au festival pour une journée de planning</p>
-                <p>20 €</p>
-            </div>
-            {% endif %}
+                {% if id == 2 %}
+                <div class="billet-card">
+                    <h3>2 jours</h3>
+                    <p>accès au festival pour 2 journées de planning</p>
+                    <p>35 €</p>
+                </div>
+                {% endif %}
 
-            {% if id == 2 %}
-            <div class="billet-card">
-                <h3>2 jours</h3>
-                <p>accès au festival pour 2 journées de planning</p>
-                <p>35 €</p>
-            </div>
-            {% endif %}
+                {% if id == 3 %}
+                <div class="billet-card">
+                    <h3>illimité</h3>
+                    <p>accès illimité au festival</p>
+                    <p>90 €</p>
+                </div>
+                {% endif %}
 
-            {% if id == 3 %}
-            <div class="billet-card">
-                <h3>illimité</h3>
-                <p>accès illimité au festival</p>
-                <p>90 €</p>
+                <div class="submit-container">
+                    {{ BilletForm.submit(class="form-control", form="form-config-billet", id="submit-form") }}
+                </div>
             </div>
-            {% endif %}
         </div>
-
-        <div class="submit-container">
-            {{ BilletForm.submit(class="form-control", form="form-config-billet", id="submit-form") }}
+        <div id="error-container">
+            <p id="error">{{ error }}</p>
         </div>
     </div>
 </main> 
+{% endblock %}
+{% block scripts %}
+<script>
+    function changeLabelColor(element) {
+        var checkbox = element;
+        var label = element.previousElementSibling;
+        if (checkbox.checked) {
+            label.style.color = '#4b50b4';
+            label.style.border = '1px solid #4b50b4';
+        } else {
+            label.style.color = '#e2f3f2'; 
+            label.style.border = '1px solid #e2f3f2';
+        }
+    }
+
+    var checkboxs = document.querySelectorAll('.day');
+    for (var i = 0; i < checkboxs.length; i++) {
+        checkboxs[i].checked = false;
+    }
+
+</script>
 {% endblock %}
