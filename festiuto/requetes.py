@@ -1,23 +1,29 @@
-from sqlalchemy import text
-from festiuto import cnx
+from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT, FAVORIS, FESTIVAL, GROUPE, HEBERGEMENT,
+                             IMAGER_GROUPE, INSTRUMENT, JOUER, LIEU, LOGER, PHOTO, RESEAU_SOCIAL, RESEAU_SOCIAL_GROUPE,
+                             RESERVATION_ACTIVITE_ANNEXE, RESERVATION_CONCERT, ROLE_UTILISATEUR, STYLE_MUSICAL, TYPE_BILLET,
+                             UTILISATEUR, VIDEO, VIDEO_GROUPE)
 
 def get_user_by_email(email):
     try:
-        result = cnx.execute(text(f"select idU, nomU, prenomU, mailU, idR from UTILISATEUR where mailU = '{email}';"))
-        result = result.first()
-        return result
+        session = Session()
+        user = session.query(UTILISATEUR).filter(UTILISATEUR.mailU == email).first()
+        return user
     except:
-        print("erreur de l'id")
+        print("L'utilisateur n'existe pas")
         raise
+    finally:
+        session.close()
 
 def get_mdp_by_email(email):
     try:
-        result = cnx.execute(text(f"select mdpU from UTILISATEUR where mailU = '{email}';"))
-        result = result.first()
-        return result[0]
+        session = Session()
+        user = session.query(UTILISATEUR).filter(UTILISATEUR.mailU == email).first()
+        return user.mdpU
     except:
-        print("erreur de l'id")
+        print("L'utilisateur n'existe pas")
         raise
+    finally:
+        session.close()
 
 def hasher_mdp(mdp):
     import hashlib
@@ -25,50 +31,51 @@ def hasher_mdp(mdp):
 
 def get_all_concerts():
     try:
-        result = cnx.execute(text("select * from CONCERT natural join GROUPE natural join STYLEMUSICAL order by dateDebC;"))
-        data = []
-        for row in result: data.append(row)
-        return data
+        session = Session()
+        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).order_by(CONCERT.dateDebC).all()
+        return concerts
     except:
         raise
+    finally:
+        session.close()
 
 def get_groupe_by_idC(idC):
     try:
-        result = cnx.execute(text(f"select * from CONCERT natural join GROUPE natural join STYLEMUSICAL where idC = {idC};"))
-        result = result.first()
-        return result
+        session = Session()
+        groupe = session.query(GROUPE, STYLE_MUSICAL).join(STYLE_MUSICAL).filter(GROUPE.idG == idC).first()
+        return groupe
     except:
-        print("erreur de l'id")
         raise
+    finally:
+        session.close()
 
 def get_roles():
     try:
-        result = cnx.execute(text("select * from ROLEUTI;"))
-        data = []
-        for row in result: data.append(row)
-        return data
+        session = Session()
+        roles = session.query(ROLE_UTILISATEUR).all()
+        return roles
     except:
         raise
+    finally:
+        session.close()
 
 def get_last_idU():
     try:
-        result = cnx.execute(text("select max(idU) from UTILISATEUR;"))
-        result = result.first()
-        return result[0]
+        session = Session()
+        result = session.query(UTILISATEUR).order_by(UTILISATEUR.idU.desc()).first()
+        return result.idU
     except:
         raise
+    finally:
+        session.close()
 
 def insert_user(mail,prenom,nom,mdp):
     try:
-        idU = get_last_idU() + 1
-        mailU = mail
-        prenomU = prenom
-        nomU = nom
-        mdpU = mdp
-        idR = 3
-        cnx.execute(text("INSERT INTO UTILISATEUR (idU, nomU, prenomU, mailU, mdpU, idR) VALUES (" + str(idU) + ", '" + str(nomU) + "', '" + str(prenomU) + "', '" + str(mailU) + "', '" + str(mdpU) + "', " + str(idR) + ");"))
-        cnx.commit()
-        print(f"Utilisateur {idU} ajouté")
+        session = Session()
+        user = UTILISATEUR(get_last_idU() + 1, nom, prenom, mail, mdp, 3)
+        session.add(user)
+        session.commit()
     except:
-        print("Erreur lors de l'ajout de l'utilisateur")
         raise
+    finally:
+        session.close()

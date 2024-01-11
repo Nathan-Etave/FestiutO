@@ -2,8 +2,9 @@ from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired
-from festiuto import app #, db
+from festiuto import app
 from festiuto import requetes
+from sqlalchemy import inspect
 
 class BilletForm(FlaskForm):
     monday = BooleanField('lundi')
@@ -45,14 +46,10 @@ class LoginForm(FlaskForm):
             L'utilisateur authentifié si l'adresse e-mail et le mot de passe sont valides, sinon None.
         """
         user = requetes.get_user_by_email(self.email.data)
-        print(user)
         mdp = requetes.get_mdp_by_email(self.email.data)
         if user is None:
             return None
         passwd = requetes.hasher_mdp(self.password.data)
-        print(mdp)
-        print(passwd)
-        # print(str(mdp)+" == "+str(passwd))
         return user if passwd == mdp else None
 
 class RegisterForm(FlaskForm):
@@ -65,15 +62,17 @@ class RegisterForm(FlaskForm):
     next = HiddenField()
 
     def get_information():
-        nom = self.nom.data
-        prenom = self.prenom.data
-        mail = self.mail.data
-        mdp = requetes.hasher_mdp(self.mdp.data)
-        mdpConfirm = requetes.hasher_mdp(self.mdpConfirm.data)
+        nom = nom.data
+        prenom = prenom.data
+        mail = mail.data
+        mdp = requetes.hasher_mdp(mdp.data)
+        mdpConfirm = requetes.hasher_mdp(mdpConfirm.data)
         return nom, prenom, mail, mdp, mdpConfirm
 
 @app.route('/',methods=['GET','POST'])
 def home():
+    c = requetes.get_all_concerts()[0]
+    print(c)
     return render_template(
         'home.html',
         mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
@@ -94,11 +93,11 @@ def programme():
     )
 
 @app.route('/concert/<int:id>',methods=['GET','POST'])
-def concert(idC:int):
+def concert(id:int):
     return render_template(
         'concert.html',
-        idC = idC,
-        data_concert = requetes.get_groupe_by_idC(idC)
+        id = id,
+        data_concert = requetes.get_groupe_by_idC(id)
     )
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
@@ -106,15 +105,13 @@ def config_billet(id):
     f = BilletForm()
     if f.validate_on_submit():
         data = f.get_information()
-        print(data)
-        print(data.count(True))
         if id == 1:
             if data.count(True) != 1:
                 return render_template(
                     'config_billet.html',
                     BilletForm = f,
                     id = id,
-                    error = "vous devez choisir 1 jour"
+                    error = "Vous devez choisir au moins un jour"
                 )
             else:
                 # Ici insérer billet à l'utilisateur
@@ -125,7 +122,7 @@ def config_billet(id):
                     'config_billet.html',
                     BilletForm = f,
                     id = id,
-                    error = "vous devez choisir 2 jours"
+                    error = "Vous devez choisir au moins deux jours"
                 )
             else:
                 # Ici insérer billet à l'utilisateur
@@ -146,11 +143,9 @@ def login():
     f = LoginForm()
     if f.validate_on_submit():
         try:
-            print("test",f.get_authenticated_user())
-            idU, nomU, prenomU, mailU, idR = f.get_authenticated_user()
-            user = idU, nomU, prenomU, mailU, idR
+            user = f.get_authenticated_user()
             if user != None:
-                idUt = user[0]
+                idUt = user.idU
                 session['user'] = user
                 return redirect(url_for('home'))
         except:
@@ -179,13 +174,12 @@ def add_user():
     mdp = requetes.hasher_mdp(request.form.get('mdp'))
     mdpConfirm = requetes.hasher_mdp(request.form.get('mdpConfirm'))
     if mdp == mdpConfirm:
-        print("confirm")
         requetes.insert_user(mail, prenom, nom, mdp)
         return redirect(url_for('login'))
     else:
         return render_template(
             'register.html',
-            erreur = "les mots de passes ne correspondent pas",
+            erreur = "Les mots de passes ne correspondent pas, veuillez réessayer.",
             RegisterForm = RegisterForm()
         )
 

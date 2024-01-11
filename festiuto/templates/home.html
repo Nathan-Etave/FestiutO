@@ -37,15 +37,15 @@
     <section class="result-container">
         <div class="cards-content">
         {% for concert in concerts %}      
-            <a href="{{ url_for('concert',id=concert[2]) }}" id="{{ concert[2] }}"> 
+            <a href="{{ url_for('concert',id=concert.CONCERT.idC) }}" id="{{ concert.CONCERT.idC }}"> 
                 <div class="card">
-                    <h3>{{ concert[10] }}</h3>
+                    <h3>{{ concert.GROUPE.nomG }}</h3>
                     <div class="date">
-                        <p>{{ concert[5] }}</p>
+                        <p>{{ concert.CONCERT.dataDebC }}</p>
                         <div><span></span></div>
-                        <p>{{ concert[6] }}</p>
+                        <p>{{ concert.CONCERT.dataFinC }}</p>
                     </div>
-                    <p>{{ concert[-1] }}</p>
+                    <p>{{ concert.STYLEMUSICAL.nomS }}</p>
                 </div>
             </a>
         {% endfor %}
