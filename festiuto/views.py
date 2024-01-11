@@ -114,7 +114,11 @@ def config_billet(id):
                     error = "Vous devez choisir au moins un jour"
                 )
             else:
-                # Ici insérer billet à l'utilisateur
+                for day in range(len(data[0:-2])):
+                    if data[day] is True:
+                        dated = f"2023-07-{day+13}"
+                        datef = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],dated,datef)
                 return redirect(url_for('home'))
         elif id == 2:
             if data.count(True) != 2:
@@ -125,12 +129,19 @@ def config_billet(id):
                     error = "Vous devez choisir au moins deux jours"
                 )
             else:
-                # Ici insérer billet à l'utilisateur
+                for day in range(len(data[0:-2])):
+                    if data[day] is True:
+                        dated = f"2023-07-{day+13}"
+                        datef = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],dated,datef)
                 return redirect(url_for('home'))
         else:
-            # Ici insérer billet à l'utilisateur
+            for day in range(len(data[0:-2])):
+                if data[day] is True:
+                    dated = f"2023-07-{day+13}"
+                    datef = f"2023-07-{day+13}"
+            requetes.insert_billet(id,session['user'][0],dated,datef)
             return redirect(url_for('home'))
-
 
     return render_template(
         'config_billet.html',
@@ -145,8 +156,8 @@ def login():
         try:
             user = f.get_authenticated_user()
             if user != None:
-                idUt = user.idU
-                session['user'] = user
+                session['user'] = (user.idU,user.idR)
+                print("session : ",session['user'])
                 return redirect(url_for('home'))
         except:
             return render_template(

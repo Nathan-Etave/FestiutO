@@ -1,8 +1,8 @@
 CREATE TABLE FESTIVAL(
     idF INT,
     nomF VARCHAR(50),
-    dateDebF DATE,
-    dateFinF DATE,
+    dateDebF DATETIME,
+    dateFinF DATETIME,
     descriptionF VARCHAR(200),
     PRIMARY KEY (idF)
 )ENGINE=InnoDB;
@@ -99,8 +99,8 @@ CREATE TABLE CONCERT(
     idF INT,
     idG INT,
     idL INT,
-    dateDebC DATE,
-    dateFinC DATE,
+    dateDebC DATETIME,
+    dateFinC DATETIME,
     dureeMontageC TIME,
     dureeDemontageC TIME,
     estGratuit BOOLEAN,
@@ -114,8 +114,8 @@ CREATE TABLE ACTIVITEANNEXE(
     idAct INT,
     nomAct VARCHAR(50),
     descriptionAct VARCHAR(150),
-    dateDebAct DATE,
-    dateFinAct DATE,
+    dateDebAct DATETIME,
+    dateFinAct DATETIME,
     idL INT,
     idF INT,
     idG INT,

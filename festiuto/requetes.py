@@ -63,7 +63,21 @@ def get_last_idU():
     try:
         session = Session()
         result = session.query(UTILISATEUR).order_by(UTILISATEUR.idU.desc()).first()
+        if result is None:
+            return 0
         return result.idU
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_last_idB():
+    try:
+        session = Session()
+        result = session.query(BILLET).order_by(BILLET.idB.desc()).first()
+        if result is None:
+            return 0
+        return result.idB
     except:
         raise
     finally:
@@ -72,8 +86,19 @@ def get_last_idU():
 def insert_user(mail,prenom,nom,mdp):
     try:
         session = Session()
-        user = UTILISATEUR(get_last_idU() + 1, nom, prenom, mail, mdp, 3)
+        user = UTILISATEUR(idU=get_last_idU() + 1, nomU=nom, prenomU=prenom, mailU=mail, mdpU=mdp, idR=3)
         session.add(user)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_billet(idT,idU,dateDebB, dateFinB):
+    try:
+        session = Session()
+        billet = BILLET(idB=get_last_idB() + 1, idT=idT, idU=idU, idF=1, dateDebB=dateDebB, dateFinB=dateFinB)
+        session.add(billet)
         session.commit()
     except:
         raise
