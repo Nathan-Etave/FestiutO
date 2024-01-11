@@ -94,6 +94,17 @@ def insert_user(mail,prenom,nom,mdp):
     finally:
         session.close()
 
+def insert_billet(idT,idU,dateDebB, dateFinB):
+    try:
+        session = Session()
+        billet = BILLET(idB=get_last_idB() + 1, idT=idT, idU=idU, idF=1, dateDebB=dateDebB, dateFinB=dateFinB)
+        session.add(billet)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_concerts_by_datetime(datetime):
     """Récupère tous les concerts en cours ou à l'horaire donné
 
