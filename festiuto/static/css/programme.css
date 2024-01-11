@@ -68,7 +68,6 @@ main {
 }
 
 .concert-props {
-
     padding-left: 20px;
 
     & p {
@@ -81,5 +80,27 @@ main {
         display: flex;
         flex-direction: row;
         gap: 10px;
+    }
+}
+
+.redirect-container {
+    display: flex;
+    justify-content: flex-end;
+
+    & a {
+        background-color: var(--accent);
+        color: var(--secondary);
+        border: 1px var(--accent) solid;
+        font-size: 20px;
+        /* border-radius: 20px; */
+        padding: 10px 50px;
+        outline: none;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover {
+            background-color: var(--accent-hover);  
+            color: var(--accent);
+        }
     }
 }

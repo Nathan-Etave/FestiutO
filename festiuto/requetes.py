@@ -42,7 +42,7 @@ def get_all_concerts():
 def get_groupe_by_idC(idC):
     try:
         session = Session()
-        groupe = session.query(GROUPE, STYLE_MUSICAL).join(STYLE_MUSICAL).filter(GROUPE.idG == idC).first()
+        groupe = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(CONCERT.idC == idC).first()
         return groupe
     except:
         raise
@@ -138,7 +138,7 @@ def get_concerts_by_day(day):
     finally:
         session.close()
 
-def get_concert_with_search(search):
+def get_concerts_with_search(search):
     try:
         session = Session()
         concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.nomG.like("%" + search + "%")).order_by(CONCERT.dateDebC).all()
@@ -148,12 +148,63 @@ def get_concert_with_search(search):
     finally:
         session.close()
 
-# def get_all_concerts():
-#     try:
-#         session = Session()
-#         concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).order_by(CONCERT.dateDebC).all()
-#         return concerts
-#     except:
-#         raise
-#     finally:
-#         session.close()
+def get_concerts_with_id(id):
+    try:
+        session = Session()
+        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(CONCERT.idC == id).first()
+        return concerts
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_concerts_idC():
+    try:
+        session = Session()
+        concerts = session.query(CONCERT.idC).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).all()
+        return concerts
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_concerts_with_idG(idG):
+    try:
+        session = Session()
+        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.idG == idG).all()
+        return concerts
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_artistes_with_idG(idG):
+    try:
+        session = Session()
+        artistes = session.query(ARTISTE).filter(ARTISTE.idG == idG).all()
+        return artistes
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_groupe_with_idG(idG):
+    try:
+        session = Session()
+        groupe = session.query(GROUPE).filter(GROUPE.idG == idG).first()
+        return groupe
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_groupe_related(idG):
+    try:
+        style_musical = get_groupe_with_idG(idG).idS
+        session = Session()
+        groupe = session.query(GROUPE).filter(GROUPE.idS == style_musical).filter(GROUPE.idG != idG).all() #.limit(2) pour limiter les résultats
+        return groupe
+    except:
+        raise
+    finally:
+        session.close()

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/groupe.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        <h1>{{ groupe.GROUPE.nomG }}</h1>
+        <p>{{ groupe.GROUPE.idG }}</p>
+
+        <div>
+        {% for artiste in artistes %}
+            <p>{{ artiste.nomA }} {{ artiste.prenomA }}</p>
+        {% endfor %}
+        </div>
+        
+        <div>
+        {% for concert in concerts_associated %}
+            <p>{{ concert.CONCERT.idC }}</p>
+        {% endfor %}
+        </div>
+
+        <div>
+        {% for groupe_related in groupes_related %}
+            <p>{{ groupe_related.nomG }}</p>
+        {% endfor %}
+        </div>
+</main>
+{% endblock %}

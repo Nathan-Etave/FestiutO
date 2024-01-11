@@ -404,4 +404,10 @@ INSERT INTO TYPEBILLET(idT, prixT, descriptionT) VALUES
     (1, 20, "accès au festival pour une journée de planning"),
     (2, 35, "accès au festival pour deux journées de planning"),
     (3, 90, "accès au festival illimité");
-    
+
+INSERT INTO ARTISTE (idA, nomA, prenomA, idP, idG) VALUES
+    (1, "Darwin", "Charles", 1, 19),
+    (2, "Dupres", "Francoise", 2, 19),
+    (3, "Roussel", "Roger", 3, 19),
+    (4, "Dupuis", "Anne", 4, 19),
+    (5, "Newton", "Claude", 5, 19);

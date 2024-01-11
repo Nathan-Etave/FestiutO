@@ -37,7 +37,7 @@
     <section class="result-container">
         <div class="cards-content">
         {% for concert in concerts %}      
-            <a href="{{ url_for('concert',id=concert.CONCERT.idC) }}" id="{{ concert.CONCERT.idC }}"> 
+            <a href="{{ url_for('groupe',id=concert.CONCERT.idC) }}" id="{{ concert.CONCERT.idC }}"> 
                 <div class="card">
                     <h3>{{ concert.GROUPE.nomG }}</h3>
                     <div class="date">

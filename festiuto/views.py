@@ -1,3 +1,4 @@
+import random
 from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
@@ -11,7 +12,7 @@ class RechercheGroupeForm(FlaskForm):
     submit = SubmitField('rechercher')
 
     def get_search(self):
-        return self.search.data
+        return None if self.search.data == "" else self.search.data
 
 class BilletForm(FlaskForm):
     monday = BooleanField('lundi')
@@ -80,19 +81,30 @@ class RegisterForm(FlaskForm):
 @csrf.exempt
 def home():
     f = RechercheGroupeForm()
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
     search = f.get_search()
-    if search is not None:
+    if search != None:
+        print("pas none")
         return render_template(
             'home.html',
-            mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
+            mois = mois,
             RechercheGroupeForm = f,
-            concerts = requetes.get_concert_with_search(search)
+            concerts = requetes.get_concerts_with_search(search)
         )
-    return render_template(
+    
+    # Génération aléatoire de concert
+    idCs = set()
+    all_idC = requetes.get_concerts_idC()
+    while len(idCs) < 8: idCs.add(all_idC[random.randint(0,len(all_idC)-1)][0])
+    concerts = []
+    for id in idCs:
+        concerts.append(requetes.get_concerts_with_id(id))
+
+    return render_template  (
         'home.html',
-        mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
+        mois = mois,
         RechercheGroupeForm = f,
-        concerts = requetes.get_all_concerts() # Display aléatoire
+        concerts = concerts
     )
 
 @app.route('/billeterie')
@@ -110,9 +122,10 @@ def programme():
     friday_concerts = requetes.get_concerts_by_day(17)
     saturday_concerts = requetes.get_concerts_by_day(18)
     sunday_concerts = requetes.get_concerts_by_day(19)
-    # 
+    # à optimiser
     concerts_day = [monday_concerts, tuesday_concerts, wednesday_concerts, thursday_concerts, friday_concerts, saturday_concerts, sunday_concerts]
     days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+
     return render_template(
         'programme.html',
         concerts_day = concerts_day,
@@ -120,12 +133,20 @@ def programme():
         days = days
     )
 
-@app.route('/concert/<int:id>',methods=['GET','POST'])
-def concert(id:int):
+@app.route('/groupe/<int:id>',methods=['GET','POST'])
+def groupe(id:int):
+    groupe = requetes.get_groupe_by_idC(id)
+    artistes = requetes.get_artistes_with_idG(groupe.GROUPE.idG)
+    concerts_associated = requetes.get_concerts_with_idG(groupe.GROUPE.idG)
+    groupes_related = requetes.get_groupe_related(groupe.GROUPE.idG)
+    
     return render_template(
-        'concert.html',
+        'groupe.html',
         id = id,
-        data_concert = requetes.get_groupe_by_idC(id)
+        artistes = artistes,
+        groupe = groupe,
+        concerts_associated = concerts_associated,
+        groupes_related = groupes_related
     )
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
