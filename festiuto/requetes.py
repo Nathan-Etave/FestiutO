@@ -123,3 +123,13 @@ def get_concerts_by_datetime(datetime):
         raise
     finally:
         session.close()
+
+def get_concerts_by_day(day):
+    try:
+        session = Session()
+        concerts = session.query(CONCERT, GROUPE).select_from(CONCERT).join(GROUPE).filter(CONCERT.dateDebC.day() == day).order_by(CONCERT.dateDebB).all()
+        return concerts
+    except:
+        raise
+    finally:
+        session.close()
