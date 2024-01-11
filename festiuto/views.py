@@ -61,12 +61,12 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("s'enregistrer")
     next = HiddenField()
 
-    def get_information():
-        nom = nom.data
-        prenom = prenom.data
-        mail = mail.data
-        mdp = requetes.hasher_mdp(mdp.data)
-        mdpConfirm = requetes.hasher_mdp(mdpConfirm.data)
+    def get_information(self):
+        nom = self.nom.data
+        prenom = self.prenom.data
+        mail = self.mail.data
+        mdp = requetes.hasher_mdp(self.mdp.data)
+        mdpConfirm = requetes.hasher_mdp(self.mdpConfirm.data)
         return nom, prenom, mail, mdp, mdpConfirm
 
 @app.route('/',methods=['GET','POST'])
