@@ -79,3 +79,22 @@ def insert_user(mail,prenom,nom,mdp):
         raise
     finally:
         session.close()
+
+def get_concerts_by_datetime(datetime):
+    """Récupère tous les concerts en cours ou à l'horaire donné
+
+    Args:
+        datetime (datetime): Date et heure de début du concert (YYYY-MM-DD HH:MM:SS)
+
+    Returns:
+        List: Liste des concerts
+    """
+    try:
+        session = Session()
+        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(
+            STYLE_MUSICAL).filter(CONCERT.dateDebC <= datetime).filter(CONCERT.dateFinC > datetime).all()
+        return concerts
+    except:
+        raise
+    finally:
+        session.close()

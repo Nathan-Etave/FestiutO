@@ -71,8 +71,6 @@ class RegisterForm(FlaskForm):
 
 @app.route('/',methods=['GET','POST'])
 def home():
-    c = requetes.get_all_concerts()[0]
-    print(c)
     return render_template(
         'home.html',
         mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
