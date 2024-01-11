@@ -137,3 +137,23 @@ def get_concerts_by_day(day):
         raise
     finally:
         session.close()
+
+def get_concert_with_search(search):
+    try:
+        session = Session()
+        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.nomG.like("%" + search + "%")).order_by(CONCERT.dateDebC).all()
+        return concerts
+    except:
+        raise
+    finally:
+        session.close()
+
+# def get_all_concerts():
+#     try:
+#         session = Session()
+#         concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).order_by(CONCERT.dateDebC).all()
+#         return concerts
+#     except:
+#         raise
+#     finally:
+#         session.close()

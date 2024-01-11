@@ -27,10 +27,10 @@
     <section class="search-container">
         <div class="search-content">
             <p>votre concert, accessible dès maintenant !</p>
-            <div class="search-utils">
-                <input type="text" placeholder="artiste, groupe, lieu, concert"/>
-                <input type="button" value="rechercher"/>
-            </div>
+            <form method="post" action="{{ url_for('home') }}" role="search">
+                {{ RechercheGroupeForm.search(size=50, type="text", placeholder="artiste, groupe, lieu, concert") }}
+                {{ RechercheGroupeForm.submit(type="button") }}
+            </form>
         </div>
     </section>
 

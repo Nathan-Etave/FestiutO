@@ -2,9 +2,16 @@ from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired
-from festiuto import app
+from festiuto import app, csrf
 from festiuto import requetes
 from sqlalchemy import inspect
+
+class RechercheGroupeForm(FlaskForm):
+    search = StringField('Recherche')
+    submit = SubmitField('rechercher')
+
+    def get_search(self):
+        return self.search.data
 
 class BilletForm(FlaskForm):
     monday = BooleanField('lundi')
@@ -70,11 +77,22 @@ class RegisterForm(FlaskForm):
         return nom, prenom, mail, mdp, mdpConfirm
 
 @app.route('/',methods=['GET','POST'])
+@csrf.exempt
 def home():
+    f = RechercheGroupeForm()
+    search = f.get_search()
+    if search is not None:
+        return render_template(
+            'home.html',
+            mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
+            RechercheGroupeForm = f,
+            concerts = requetes.get_concert_with_search(search)
+        )
     return render_template(
         'home.html',
         mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
-        concerts = requetes.get_all_concerts()
+        RechercheGroupeForm = f,
+        concerts = requetes.get_all_concerts() # Display aléatoire
     )
 
 @app.route('/billeterie')
