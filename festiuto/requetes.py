@@ -127,7 +127,11 @@ def get_concerts_by_datetime(datetime):
 def get_concerts_by_day(day):
     try:
         session = Session()
-        concerts = session.query(CONCERT, GROUPE).select_from(CONCERT).join(GROUPE).filter(CONCERT.dateDebC.day() == day).order_by(CONCERT.dateDebB).all()
+        all_concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL, LIEU).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).join(LIEU).order_by(CONCERT.dateDebC).all()
+        concerts = []
+        for concert in all_concerts:
+            if concert.CONCERT.dateDebC.day == day:
+                concerts.append(concert)
         return concerts
     except:
         raise

@@ -85,11 +85,21 @@ def billeterie():
 
 @app.route('/programme')
 def programme():
-    concert_precis = requetes.get_concerts_by_day(18)
+    monday_concerts = requetes.get_concerts_by_day(13)
+    tuesday_concerts = requetes.get_concerts_by_day(14)
+    wednesday_concerts = requetes.get_concerts_by_day(15)
+    thursday_concerts = requetes.get_concerts_by_day(16)
+    friday_concerts = requetes.get_concerts_by_day(17)
+    saturday_concerts = requetes.get_concerts_by_day(18)
+    sunday_concerts = requetes.get_concerts_by_day(19)
+    # 
+    concerts_day = [monday_concerts, tuesday_concerts, wednesday_concerts, thursday_concerts, friday_concerts, saturday_concerts, sunday_concerts]
+    days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
     return render_template(
         'programme.html',
-        concerts = requetes.get_all_concerts(),
-        concert_precis = concert_precis
+        concerts_day = concerts_day,
+        len_day = len(concerts_day),
+        days = days
     )
 
 @app.route('/concert/<int:id>',methods=['GET','POST'])
