@@ -221,7 +221,7 @@ def login():
         try:
             user = f.get_authenticated_user()
             if user != None:
-                session['user'] = (user.idU,user.idR)
+                session['user'] = (user.idU,user.idR,user.nomU)
                 return redirect(url_for('home'))
         except:
             return render_template(
