@@ -76,6 +76,11 @@
                 </div>
                 {% endif %}
 
+                <div class="config">
+                    <label for="quantite">quantité</label>
+                    {{ BilletForm.quantite(size=1, class="form-control", id="quantite") }}
+                </div>
+
                 <div class="submit-container">
                     {{ BilletForm.submit(class="form-control", form="form-config-billet", id="submit-form") }}
                 </div>

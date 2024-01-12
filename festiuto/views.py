@@ -2,7 +2,7 @@ import random
 from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 from festiuto import app, csrf
 from festiuto import requetes
 from sqlalchemy import inspect
@@ -23,10 +23,16 @@ class BilletForm(FlaskForm):
     saturday = BooleanField('samedi')
     sunday = BooleanField('dimanche')
     tel = TelField('Téléphone', validators=[DataRequired()])
+    quantite = IntegerField('Quantité', validators=[DataRequired(), NumberRange(min=1)], default=1)
     submit = SubmitField('commander')
     next = HiddenField()
 
     def get_information(self):
+        tel = self.tel.data
+        quantite = self.quantite.data
+        return (tel, quantite)
+    
+    def get_days(self):
         monday = self.monday.data
         tuesday = self.tuesday.data
         wednesday = self.wednesday.data
@@ -34,9 +40,8 @@ class BilletForm(FlaskForm):
         friday = self.friday.data
         saturday = self.saturday.data
         sunday = self.sunday.data
-        tel = self.tel.data
-        return (monday, tuesday, wednesday, thursday, friday, saturday, sunday, tel)
-    
+        return (monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
@@ -168,8 +173,9 @@ def config_billet(id):
     f = BilletForm()
     if f.validate_on_submit():
         data = f.get_information()
+        days = f.get_days()
         if id == 1:
-            if data.count(True) != 1:
+            if days.count(True) != 1 or days.count(True) == 0:
                 return render_template(
                     'config_billet.html',
                     BilletForm = f,
@@ -177,14 +183,15 @@ def config_billet(id):
                     error = "Vous devez choisir au moins un jour"
                 )
             else:
-                for day in range(len(data[0:-2])):
-                    if data[day] is True:
-                        dated = f"2023-07-{day+13}"
-                        datef = f"2023-07-{day+13}"
-                requetes.insert_billet(id,session['user'][0],dated,datef)
+                for day in range(len(days)):
+                    if days[day] is True:
+                        date_d = f"2023-07-{day+13}"
+                        date_f = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('home'))
         elif id == 2:
-            if data.count(True) != 2:
+            if days.count(True) != 2 or days.count(True) == 0:
+                print(data.count(True))
                 return render_template(
                     'config_billet.html',
                     BilletForm = f,
@@ -192,18 +199,18 @@ def config_billet(id):
                     error = "Vous devez choisir au moins deux jours"
                 )
             else:
-                for day in range(len(data[0:-2])):
-                    if data[day] is True:
-                        dated = f"2023-07-{day+13}"
-                        datef = f"2023-07-{day+13}"
-                requetes.insert_billet(id,session['user'][0],dated,datef)
+                for day in range(len(days)):
+                    if days[day] is True:
+                        date_d = f"2023-07-{day+13}"
+                        date_f = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('home'))
         else:
-            for day in range(len(data[0:-2])):
-                if data[day] is True:
-                    dated = f"2023-07-{day+13}"
-                    datef = f"2023-07-{day+13}"
-            requetes.insert_billet(id,session['user'][0],dated,datef)
+            for day in range(len(days)):
+                if days[day] is True:
+                    date_d = f"2023-07-{day+13}"
+                    date_f = f"2023-07-{day+13}"
+            requetes.insert_billet(id,session['user'][0],date_d,date_f,data[1])
             return redirect(url_for('home'))
 
     return render_template(

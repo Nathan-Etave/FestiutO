@@ -94,11 +94,12 @@ def insert_user(mail,prenom,nom,mdp):
     finally:
         session.close()
 
-def insert_billet(idT,idU,dateDebB, dateFinB):
+def insert_billet(idT,idU,dateDebB, dateFinB, quantite):
     try:
         session = Session()
-        billet = BILLET(idB=get_last_idB() + 1, idT=idT, idU=idU, idF=1, dateDebB=dateDebB, dateFinB=dateFinB)
-        session.add(billet)
+        for i in range(quantite):
+            billet = BILLET(idB=get_last_idB() + i + 1, idT=idT, idU=idU, idF=1, dateDebB=dateDebB, dateFinB=dateFinB)
+            session.add(billet)
         session.commit()
     except:
         raise
