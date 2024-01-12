@@ -1,0 +1,117 @@
+main {
+    min-height: 100vh; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+p {
+    color: var(--text);
+}
+
+.group-container {
+    padding: 1%;
+    margin: 0;
+    font-family: regular;
+    font-size: 30px;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    & .artists-container {
+        font-family: black-italic;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+
+        & p {
+            font-family: black-italic;
+        }
+    }
+
+    & .group-assets {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        & p {
+            flex-basis: 50%;
+        }
+    }
+
+    & h3 {
+        font-family: black-italic;
+        font-size: 35px;
+        color: var(--accent);
+    }
+}
+
+.all-concert-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.concert-props {
+    width: 400px;
+    height: auto;
+    background-color: var(--secondary-hover);
+    color: var(--accent);
+    border: 1px var(--accent) solid;
+    transition: .2s;
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    gap: 20px;
+    font-size: 25px;
+
+    &:hover {
+        background-color: var(--accent);
+        color: var(--text);
+        transition: .2s;
+        cursor: pointer;
+    }
+
+    & .lieu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    & .date {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        & div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 10px;   
+        }
+
+        & p {
+            font-family: black-italic;
+        }
+
+        & span {
+            width: 50px;
+            height: 15px;
+            border-left: 2px dotted var(--text);
+            border-right: 2px dotted var(--text);
+        }
+    }
+}

@@ -482,11 +482,11 @@ INSERt PHOTO (idP, img) VALUES
     (65, 'imageG30_2');
 
 INSERT INTO ARTISTE (idA, nomA, prenomA, idP, idG) VALUES
-    (1, "Darwin", "Charles", 1, 1),
-    (2, "Dupres", "Francoise", 2, 2),
-    (3, "Roussel", "Roger", 3, 3),
-    (4, "Dupuis", "Anne", 4, 3),
-    (5, "Newton", "Claude", 5, 3);
+    (1, "Darwin", "Charles", 1, 19),
+    (2, "Dupres", "Francoise", 2, 19),
+    (3, "Roussel", "Roger", 3, 19),
+    (4, "Dupuis", "Anne", 4, 19),
+    (5, "Newton", "Claude", 5, 19);
 
 INSERT INTO JOUER (idA, idI) VALUES
     (1, 1),

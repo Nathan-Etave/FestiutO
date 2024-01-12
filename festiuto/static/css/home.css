@@ -111,13 +111,13 @@
     font-family: black-italic;
 }
 
-.search-utils {
+form {
     display: flex;
     justify-content: space-between;
     gap: 50px;
 }
 
-.search-utils > input[type="text"] {
+form input[type="text"] {
     width: 100%;
     background-color: var(--accent-hover);
     color: rgba(255,255,255,.5);
@@ -127,14 +127,14 @@
     outline: none;
 }
 
-.search-utils > input[type="text"]:focus {
+form input[type="text"]:focus {
     color: var(--text)    ;
 }
 
-.search-utils > input[type="text"]:focus::placeholder {
+form input[type="text"]:focus::placeholder {
     color: transparent;
 }
-.search-utils > input[type="button"] {
+form input[type="button"] {
     background-color: var(--accent);
     color: var(--secondary);
     border: 1px var(--accent) solid;
@@ -146,7 +146,7 @@
     transition: .2s;
 }
 
-.search-utils > input[type="button"]:hover {
+form input[type="button"]:hover {
     background-color: var(--accent-hover);  
     color: var(--accent);
 }

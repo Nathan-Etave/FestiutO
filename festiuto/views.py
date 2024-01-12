@@ -1,9 +1,18 @@
+import random
 from flask import render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired
-from festiuto import app #, db
+from festiuto import app, csrf
 from festiuto import requetes
+from sqlalchemy import inspect
+
+class RechercheGroupeForm(FlaskForm):
+    search = StringField('Recherche')
+    submit = SubmitField('rechercher')
+
+    def get_search(self):
+        return None if self.search.data == "" else self.search.data
 
 class BilletForm(FlaskForm):
     monday = BooleanField('lundi')
@@ -45,14 +54,10 @@ class LoginForm(FlaskForm):
             L'utilisateur authentifié si l'adresse e-mail et le mot de passe sont valides, sinon None.
         """
         user = requetes.get_user_by_email(self.email.data)
-        print(user)
         mdp = requetes.get_mdp_by_email(self.email.data)
         if user is None:
             return None
         passwd = requetes.hasher_mdp(self.password.data)
-        print(mdp)
-        print(passwd)
-        # print(str(mdp)+" == "+str(passwd))
         return user if passwd == mdp else None
 
 class RegisterForm(FlaskForm):
@@ -64,7 +69,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("s'enregistrer")
     next = HiddenField()
 
-    def get_information():
+    def get_information(self):
         nom = self.nom.data
         prenom = self.prenom.data
         mail = self.mail.data
@@ -73,11 +78,33 @@ class RegisterForm(FlaskForm):
         return nom, prenom, mail, mdp, mdpConfirm
 
 @app.route('/',methods=['GET','POST'])
+@csrf.exempt
 def home():
-    return render_template(
+    f = RechercheGroupeForm()
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
+    search = f.get_search()
+    if search != None:
+        print("pas none")
+        return render_template(
+            'home.html',
+            mois = mois,
+            RechercheGroupeForm = f,
+            concerts = requetes.get_concerts_with_search(search)
+        )
+    
+    # Génération aléatoire de concert
+    idCs = set()
+    all_idC = requetes.get_concerts_idC()
+    while len(idCs) < 8: idCs.add(all_idC[random.randint(0,len(all_idC)-1)][0])
+    concerts = []
+    for id in idCs:
+        concerts.append(requetes.get_concerts_with_id(id))
+
+    return render_template  (
         'home.html',
-        mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
-        concerts = requetes.get_all_concerts()
+        mois = mois,
+        RechercheGroupeForm = f,
+        concerts = concerts
     )
 
 @app.route('/billeterie')
@@ -88,17 +115,38 @@ def billeterie():
 
 @app.route('/programme')
 def programme():
+    monday_concerts = requetes.get_concerts_by_day(13)
+    tuesday_concerts = requetes.get_concerts_by_day(14)
+    wednesday_concerts = requetes.get_concerts_by_day(15)
+    thursday_concerts = requetes.get_concerts_by_day(16)
+    friday_concerts = requetes.get_concerts_by_day(17)
+    saturday_concerts = requetes.get_concerts_by_day(18)
+    sunday_concerts = requetes.get_concerts_by_day(19)
+    # à optimiser
+    concerts_day = [monday_concerts, tuesday_concerts, wednesday_concerts, thursday_concerts, friday_concerts, saturday_concerts, sunday_concerts]
+    days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+
     return render_template(
         'programme.html',
-        concerts = requetes.get_all_concerts()
+        concerts_day = concerts_day,
+        len_day = len(concerts_day),
+        days = days
     )
 
-@app.route('/concert/<int:id>',methods=['GET','POST'])
-def concert(idC:int):
+@app.route('/groupe/<int:id>',methods=['GET','POST'])
+def groupe(id:int):
+    groupe = requetes.get_groupe_with_idG(id)
+    artistes = requetes.get_artistes_with_idG(id)
+    concerts_associated = requetes.get_concerts_with_idG(id)
+    groupes_related = requetes.get_groupe_related(id)
+    
     return render_template(
-        'concert.html',
-        idC = idC,
-        data_concert = requetes.get_groupe_by_idC(idC)
+        'groupe.html',
+        id = id,
+        artistes = artistes,
+        groupe = groupe,
+        concerts_associated = concerts_associated,
+        groupes_related = groupes_related
     )
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
@@ -106,18 +154,20 @@ def config_billet(id):
     f = BilletForm()
     if f.validate_on_submit():
         data = f.get_information()
-        print(data)
-        print(data.count(True))
         if id == 1:
             if data.count(True) != 1:
                 return render_template(
                     'config_billet.html',
                     BilletForm = f,
                     id = id,
-                    error = "vous devez choisir 1 jour"
+                    error = "Vous devez choisir au moins un jour"
                 )
             else:
-                # Ici insérer billet à l'utilisateur
+                for day in range(len(data[0:-2])):
+                    if data[day] is True:
+                        dated = f"2023-07-{day+13}"
+                        datef = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],dated,datef)
                 return redirect(url_for('home'))
         elif id == 2:
             if data.count(True) != 2:
@@ -125,15 +175,22 @@ def config_billet(id):
                     'config_billet.html',
                     BilletForm = f,
                     id = id,
-                    error = "vous devez choisir 2 jours"
+                    error = "Vous devez choisir au moins deux jours"
                 )
             else:
-                # Ici insérer billet à l'utilisateur
+                for day in range(len(data[0:-2])):
+                    if data[day] is True:
+                        dated = f"2023-07-{day+13}"
+                        datef = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],dated,datef)
                 return redirect(url_for('home'))
         else:
-            # Ici insérer billet à l'utilisateur
+            for day in range(len(data[0:-2])):
+                if data[day] is True:
+                    dated = f"2023-07-{day+13}"
+                    datef = f"2023-07-{day+13}"
+            requetes.insert_billet(id,session['user'][0],dated,datef)
             return redirect(url_for('home'))
-
 
     return render_template(
         'config_billet.html',
@@ -146,12 +203,10 @@ def login():
     f = LoginForm()
     if f.validate_on_submit():
         try:
-            print("test",f.get_authenticated_user())
-            idU, nomU, prenomU, mailU, idR = f.get_authenticated_user()
-            user = idU, nomU, prenomU, mailU, idR
+            user = f.get_authenticated_user()
             if user != None:
-                idUt = user[0]
-                session['user'] = user
+                session['user'] = (user.idU,user.idR)
+                print("session : ",session['user'])
                 return redirect(url_for('home'))
         except:
             return render_template(
@@ -179,13 +234,12 @@ def add_user():
     mdp = requetes.hasher_mdp(request.form.get('mdp'))
     mdpConfirm = requetes.hasher_mdp(request.form.get('mdpConfirm'))
     if mdp == mdpConfirm:
-        print("confirm")
         requetes.insert_user(mail, prenom, nom, mdp)
         return redirect(url_for('login'))
     else:
         return render_template(
             'register.html',
-            erreur = "les mots de passes ne correspondent pas",
+            erreur = "Les mots de passes ne correspondent pas, veuillez réessayer.",
             RegisterForm = RegisterForm()
         )
 

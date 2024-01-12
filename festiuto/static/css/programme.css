@@ -16,6 +16,91 @@ main {
     padding: 0 2rem;
 }
 
-p {
-    color: red;
+.schedule-container {
+    margin-top: 50px;
+}
+
+.day-container {
+
+    padding: 20px 0;
+
+    & h3 {
+        font-family: black-italic;
+        font-size: 35px;
+        color: var(--text);
+    }
+
+    & .concerts-container {
+        border-left: 4px dotted var(--text);
+        margin-left: 40px;
+        padding-left: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & .header-concert {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}
+
+.concert-container {
+    list-style: none;
+    padding: 1%;
+    margin: 0;
+    color: var(--text);
+    font-family: medium-italic;
+    border: 1px solid var(--accent);
+    border-left: 10px solid var(--accent);
+    user-select: none;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    & h4 {
+        font-family: black-italic;
+        font-size: 30px;
+        color: var(--text);
+    }
+}
+
+.concert-props {
+    padding-left: 20px;
+
+    & p {
+        font-family: regular;
+        font-size: 25px;
+        color: var(--text);
+    }
+
+    & .date, .lieu {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+}
+
+.redirect-container {
+    display: flex;
+    justify-content: flex-end;
+
+    & a {
+        background-color: var(--accent);
+        color: var(--secondary);
+        border: 1px var(--accent) solid;
+        font-size: 20px;
+        /* border-radius: 20px; */
+        padding: 10px 50px;
+        outline: none;
+        cursor: pointer;
+        transition: .2s;
+
+        &:hover {
+            background-color: var(--accent-hover);  
+            color: var(--accent);
+        }
+    }
 }
