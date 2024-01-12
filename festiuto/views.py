@@ -181,8 +181,8 @@ def config_billet(id):
                 date_f = ""
                 for day in range(len(days)):
                     if days[day] is True:
-                        date_d = f"2023-07-{day+13}"
-                        date_f = f"2023-07-{day+13}"
+                        date_d = f"2024-05-{day+13}"
+                        date_f = f"2024-05-{day+13}"
                 requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('home'))
             else:
@@ -194,12 +194,11 @@ def config_billet(id):
                 )
         elif id == 2:
             if days.count(True) == 2:
-                date_d = ""
-                date_f = ""
+                indexs = list()
                 for day in range(len(days)):
-                    if days[day] is True:
-                        date_d = f"2023-07-{day+13}"
-                        date_f = f"2023-07-{day+13}"
+                    if days[day] is True: indexs.append(day)
+                date_d = f"2024-05-{indexs[0]+13}"
+                date_f = f"2024-05-{indexs[1]+13}"
                 requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('home'))
             else:
