@@ -22,13 +22,14 @@ class BilletForm(FlaskForm):
     friday = BooleanField('vendredi')
     saturday = BooleanField('samedi')
     sunday = BooleanField('dimanche')
-    tel = TelField('Téléphone', validators=[DataRequired()])
-    quantite = IntegerField('Quantité', validators=[DataRequired(), NumberRange(min=1)], default=1)
+    tel = TelField('telephone', validators=[DataRequired()])
+    quantite = IntegerField('quantite', validators=[DataRequired(), NumberRange(min=1)], default=1)
     submit = SubmitField('commander')
     next = HiddenField()
 
     def get_information(self):
         tel = self.tel.data
+        print(self.quantite.data)
         quantite = self.quantite.data
         return (tel, quantite)
     
@@ -174,8 +175,6 @@ def config_billet(id):
     if f.validate_on_submit():
         data = f.get_information()
         days = f.get_days()
-        print(type(f.quantite.data))
-        print(data)
         if id == 1:
             if days.count(True) == 1:
                 date_d = ""
