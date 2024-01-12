@@ -155,12 +155,13 @@ def groupe(id:int):
 
 @app.route('/ajouter_favori/<int:id>',methods=['GET','POST'])
 def ajouter_fav(id:int):
+    requetes.ajouter_favori(session['user'][0],id)
     return redirect(url_for('groupe',id=id))
 
-@app.route('/supprimer_favori',methods=['GET','POST'])
-def supprimer_fav():
-    return redirect(url_for('home'))
-
+@app.route('/supprimer_favori/<int:id>',methods=['GET','POST'])
+def supprimer_fav(id:int):
+    requetes.supprimer_favori(session['user'][0],id)
+    return redirect(url_for('groupe',id=id))
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
 def config_billet(id):

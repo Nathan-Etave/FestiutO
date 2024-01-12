@@ -215,8 +215,7 @@ def get_groupe_related(idG):
 def ajouter_favori(idU,idG):
     try:
         session = Session()
-        favori = FAVORIS(idU=idU,idG=idG)
-        session.add(favori)
+        session.execute(FAVORIS.insert().values(idU=idU,idG=idG))
         session.commit()
     except:
         raise
@@ -224,10 +223,10 @@ def ajouter_favori(idU,idG):
         session.close()
 
 def supprimer_favori(idU,idG):
+    print("delete")
     try:
         session = Session()
-        favori = session.query(FAVORIS).filter(FAVORIS.idU == idU).filter(FAVORIS.idG == idG).all()
-        session.delete(favori)
+        session.execute(FAVORIS.delete().where(idU==idU).where(idG==idG))
         session.commit()
     except:
         raise
