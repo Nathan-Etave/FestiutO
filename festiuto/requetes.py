@@ -1,3 +1,4 @@
+from sqlalchemy.orm import joinedload
 from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT, FAVORIS, FESTIVAL, GROUPE, HEBERGEMENT,
                              IMAGER_GROUPE, INSTRUMENT, JOUER, LIEU, LOGER, PHOTO, RESEAU_SOCIAL, RESEAU_SOCIAL_GROUPE,
                              RESERVATION_ACTIVITE_ANNEXE, RESERVATION_CONCERT, ROLE_UTILISATEUR, STYLE_MUSICAL, TYPE_BILLET,
@@ -141,7 +142,15 @@ def get_concerts_by_day(day):
 def get_concerts_with_search(search):
     try:
         session = Session()
-        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.nomG.like("%" + search + "%")).order_by(CONCERT.dateDebC).all()
+        concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL) \
+            .options(joinedload(CONCERT.lieu), joinedload(CONCERT.groupe), \
+                     joinedload(CONCERT.festival), joinedload(CONCERT.reservation_concert_collection), \
+                     joinedload(GROUPE.stylemusical), joinedload(GROUPE.utilisateur_collection),
+                     joinedload(GROUPE.reseausocial_collection), joinedload(GROUPE.concert_collection), \
+                     joinedload(GROUPE.video_collection), joinedload(GROUPE.photo_collection),
+                     joinedload(GROUPE.artiste_collection), joinedload(GROUPE.loger_collection),
+                     joinedload(GROUPE.activiteannexe_collection), joinedload(STYLE_MUSICAL.groupe_collection)) \
+                                   .select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.nomG.like("%" + search + "%")).order_by(CONCERT.dateDebC).all()
         return concerts
     except:
         raise

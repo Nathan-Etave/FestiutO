@@ -134,7 +134,7 @@ form input[type="text"]:focus {
 form input[type="text"]:focus::placeholder {
     color: transparent;
 }
-form input[type="button"] {
+form input[type="submit"] {
     background-color: var(--accent);
     color: var(--secondary);
     border: 1px var(--accent) solid;
@@ -146,7 +146,7 @@ form input[type="button"] {
     transition: .2s;
 }
 
-form input[type="button"]:hover {
+form input[type="submit"]:hover {
     background-color: var(--accent-hover);  
     color: var(--accent);
 }
