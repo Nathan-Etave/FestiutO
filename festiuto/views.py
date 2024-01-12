@@ -294,3 +294,21 @@ def search():
         concerts = random_concerts
     serialized_concerts = [serialize_concert(concert) for concert in concerts]
     return jsonify(serialized_concerts)
+
+@app.route('/favoris',methods=['GET','POST'])
+def favoris():
+    return render_template(
+        'favoris.html'
+    )
+
+@app.route('/billets',methods=['GET','POST'])
+def billets():
+    return render_template(
+        'billets.html'
+    )
+
+@app.route('/informations',methods=['GET','POST'])
+def informations():
+    return render_template(
+        'informations.html'
+    )

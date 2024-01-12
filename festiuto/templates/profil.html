@@ -12,9 +12,9 @@
         <h1>profil</h1>
 
         <div class="btns">
-            <a href="#">mes informations</a>
-            <a href="#">mes billets</a>
-            <a href="#">mes favoris</a>
+            <a href="{{ url_for('informations') }}">mes informations</a>
+            <a href="{{ url_for('billets') }}">mes billets</a>
+            <a href="{{ url_for('favoris') }}">mes favoris</a>
             <a href="{{ url_for('logout') }}">déconnexion</a>
         </div>
 
