@@ -27,9 +27,9 @@
     <section class="search-container">
         <div class="search-content">
             <p>votre concert, accessible dès maintenant !</p>
-            <form method="post" action="{{ url_for('home') }}" role="search">
+            <form role="search" action="javascript:void(0);">
                 {{ RechercheGroupeForm.search(size=50, type="text", placeholder="artiste, groupe, lieu, concert") }}
-                {{ RechercheGroupeForm.submit(type="button") }}
+                {{ RechercheGroupeForm.submit(type="submit") }}
             </form>
         </div>
     </section>
@@ -56,5 +56,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='./js/test.js') }}"></script>
+<script src="{{ url_for('static', filename='./js/home.js') }}"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
 import random
-from flask import render_template, session, redirect, url_for, request
+from flask import jsonify, render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired, NumberRange
@@ -280,3 +280,22 @@ def about():
     return render_template(
         'about.html'
     )
+
+@app.route('/search',methods=['GET','POST'])
+@csrf.exempt
+def search():
+    def serialize_concert(concert_tuple):
+        concert, groupe, stylemusical = concert_tuple
+        return {
+            'concert': {attr: str(getattr(concert, attr)) for attr in inspect(concert).attrs.keys()},
+            'groupe': {attr: str(getattr(groupe, attr)) for attr in inspect(groupe).attrs.keys()},
+            'stylemusical': {attr: str(getattr(stylemusical, attr)) for attr in inspect(stylemusical).attrs.keys()},
+        }
+    search_term = request.get_json()['search_term']
+    concerts = requetes.get_concerts_with_search(search_term)
+    if search_term == "":
+        random_concerts = set()
+        while len(random_concerts) < 8: random_concerts.add(concerts[random.randint(0,len(concerts)-1)])
+        concerts = random_concerts
+    serialized_concerts = [serialize_concert(concert) for concert in concerts]
+    return jsonify(serialized_concerts)
