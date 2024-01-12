@@ -139,6 +139,9 @@ def groupe(id:int):
     artistes = requetes.get_artistes_with_idG(id)
     concerts_associated = requetes.get_concerts_with_idG(id)
     groupes_related = requetes.get_groupe_related(id)
+    print(id,session['user'][0])
+    favori = requetes.is_favori(session['user'][0],id)
+    print("res ",favori)
     
     return render_template(
         'groupe.html',
@@ -146,8 +149,18 @@ def groupe(id:int):
         artistes = artistes,
         groupe = groupe,
         concerts_associated = concerts_associated,
-        groupes_related = groupes_related
+        groupes_related = groupes_related,
+        favori = favori
     )
+
+@app.route('/ajouter_favori/<int:id>',methods=['GET','POST'])
+def ajouter_fav(id:int):
+    return redirect(url_for('groupe',id=id))
+
+@app.route('/supprimer_favori',methods=['GET','POST'])
+def supprimer_fav():
+    return redirect(url_for('home'))
+
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
 def config_billet(id):

@@ -211,3 +211,38 @@ def get_groupe_related(idG):
         raise
     finally:
         session.close()
+
+def ajouter_favori(idU,idG):
+    try:
+        session = Session()
+        favori = FAVORIS(idU=idU,idG=idG)
+        session.add(favori)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def supprimer_favori(idU,idG):
+    try:
+        session = Session()
+        favori = session.query(FAVORIS).filter(FAVORIS.idU == idU).filter(FAVORIS.idG == idG).all()
+        session.delete(favori)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def is_favori(idU,idG):
+    try:
+        session = Session()
+        all_fav = session.query(FAVORIS).filter_by(idU=idU).all()
+        for fav in all_fav:
+            if fav.idG == idG:
+                return True
+        return False
+    except:
+        raise
+    finally:
+        session.close()

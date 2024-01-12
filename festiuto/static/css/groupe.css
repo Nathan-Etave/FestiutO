@@ -2,12 +2,6 @@ main {
     min-height: 100vh; /*temp */
     padding: 15vh 0;
     background-color: var(--background);
-
-    & h1 {
-        font-family: black-italic;
-        font-size: 45px;
-        color: var(--text);
-    }
 }
 
 .Container {
@@ -18,6 +12,28 @@ main {
 
 p {
     color: var(--text);
+}
+
+.title-fav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & a {
+        display: flex;
+        align-items: center;
+    }
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+
+    #heart {
+        cursor: pointer;
+    }
 }
 
 .group-container {
