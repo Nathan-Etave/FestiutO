@@ -174,43 +174,44 @@ def config_billet(id):
     if f.validate_on_submit():
         data = f.get_information()
         days = f.get_days()
+        print(type(f.quantite.data))
+        print(data)
         if id == 1:
-            if days.count(True) != 1 or days.count(True) == 0:
+            if days.count(True) == 1:
+                date_d = ""
+                date_f = ""
+                for day in range(len(days)):
+                    if days[day] is True:
+                        date_d = f"2023-07-{day+13}"
+                        date_f = f"2023-07-{day+13}"
+                requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
+                return redirect(url_for('home'))
+            else:
                 return render_template(
                     'config_billet.html',
                     BilletForm = f,
                     id = id,
                     error = "Vous devez choisir au moins un jour"
                 )
-            else:
+        elif id == 2:
+            if days.count(True) == 2:
+                date_d = ""
+                date_f = ""
                 for day in range(len(days)):
                     if days[day] is True:
                         date_d = f"2023-07-{day+13}"
                         date_f = f"2023-07-{day+13}"
                 requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('home'))
-        elif id == 2:
-            if days.count(True) != 2 or days.count(True) == 0:
-                print(data.count(True))
+            else:
                 return render_template(
                     'config_billet.html',
                     BilletForm = f,
                     id = id,
                     error = "Vous devez choisir au moins deux jours"
                 )
-            else:
-                for day in range(len(days)):
-                    if days[day] is True:
-                        date_d = f"2023-07-{day+13}"
-                        date_f = f"2023-07-{day+13}"
-                requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
-                return redirect(url_for('home'))
         else:
-            for day in range(len(days)):
-                if days[day] is True:
-                    date_d = f"2023-07-{day+13}"
-                    date_f = f"2023-07-{day+13}"
-            requetes.insert_billet(id,session['user'][0],date_d,date_f,data[1])
+            requetes.insert_billet(id,session['user'][0],"2023-05-12","2023-05-19",data[1])
             return redirect(url_for('home'))
 
     return render_template(
