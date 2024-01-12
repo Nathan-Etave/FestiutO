@@ -9,24 +9,42 @@
 
     <div class="Container">
         <h1>{{ groupe.GROUPE.nomG }}</h1>
-        <p>{{ groupe.GROUPE.idG }}</p>
 
-        <div>
-        {% for artiste in artistes %}
-            <p>{{ artiste.nomA }} {{ artiste.prenomA }}</p>
-        {% endfor %}
+        <div class="group-container">
+            <div class="artists-container">
+                {% for artiste in artistes %}
+                <p>{{ artiste.nomA }} {{ artiste.prenomA }}</p>
+                {% endfor %}
+            </div>
+            <div class="group-assets">
+                <p>{{ groupe.GROUPE.descriptionG }}</p>
+                <p>style musical : {{ groupe.STYLEMUSICAL.nomS }}</p>
+            </div>
+            <h3>où les voir ?</h3>
+            <div class="all-concert-container">
+                {% for concert in concerts_associated %}
+                <div class="concert-props" id="{{ concert.CONCERT.idC }}">
+                    <div class="date">
+                        <p>{{ concert.CONCERT.dateDebC.strftime('%d %m %Y') }}</p>
+                        <div>
+                            <p>{{ concert.CONCERT.dateDebC.strftime('%H:%M') }}</p>
+                            <p>-</p>
+                            <p>{{ concert.CONCERT.dateFinC.strftime('%H:%M') }}</p>
+                        </div>
+                    </div>
+                    <p>{{ concert.LIEU.adresseL }}</p>
+                    <p>{{ concert.LIEU.nomL }}</p>    
+                </div>
+                {% endfor %}
+            </div>
+            
+            <h3>découvrez aussi ...</h3>
+            <div>
+                {% for groupe_related in groupes_related %}
+                <p>{{ groupe_related.nomG }}</p>
+                {% endfor %}
+            </div>
         </div>
-        
-        <div>
-        {% for concert in concerts_associated %}
-            <p>{{ concert.CONCERT.idC }}</p>
-        {% endfor %}
-        </div>
-
-        <div>
-        {% for groupe_related in groupes_related %}
-            <p>{{ groupe_related.nomG }}</p>
-        {% endfor %}
-        </div>
+    </div>
 </main>
 {% endblock %}

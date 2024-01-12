@@ -135,10 +135,10 @@ def programme():
 
 @app.route('/groupe/<int:id>',methods=['GET','POST'])
 def groupe(id:int):
-    groupe = requetes.get_groupe_by_idC(id)
-    artistes = requetes.get_artistes_with_idG(groupe.GROUPE.idG)
-    concerts_associated = requetes.get_concerts_with_idG(groupe.GROUPE.idG)
-    groupes_related = requetes.get_groupe_related(groupe.GROUPE.idG)
+    groupe = requetes.get_groupe_with_idG(id)
+    artistes = requetes.get_artistes_with_idG(id)
+    concerts_associated = requetes.get_concerts_with_idG(id)
+    groupes_related = requetes.get_groupe_related(id)
     
     return render_template(
         'groupe.html',
