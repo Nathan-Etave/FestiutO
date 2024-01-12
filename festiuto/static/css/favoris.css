@@ -1,0 +1,19 @@
+main {
+    min-height: 100vh; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+
