@@ -38,10 +38,12 @@
                 {% endfor %}
             </div>
             
-            <h3>découvrez aussi ...</h3>
-            <div>
+            <h3>dans le même style que {{ groupe.GROUPE.nomG }}</h3>
+            <div class="related-group">
                 {% for groupe_related in groupes_related %}
-                <p>{{ groupe_related.nomG }}</p>
+                <a href="{{ url_for('groupe',id=groupe_related.idG) }}" class="other-group-card">
+                    <p>{{ groupe_related.nomG }}</p>
+                </a>
                 {% endfor %}
             </div>
         </div>

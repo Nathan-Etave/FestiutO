@@ -62,11 +62,13 @@ p {
 .all-concert-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 30px;
 }
 
 .concert-props {
-    width: 400px;
+    width: 375px;
     height: auto;
     background-color: var(--secondary-hover);
     color: var(--accent);
@@ -78,12 +80,12 @@ p {
     gap: 20px;
     font-size: 25px;
 
-    &:hover {
+    /* &:hover {
         background-color: var(--accent);
         color: var(--text);
         transition: .2s;
         cursor: pointer;
-    }
+    } */
 
     & .lieu {
         display: flex;
@@ -113,5 +115,41 @@ p {
             border-left: 2px dotted var(--text);
             border-right: 2px dotted var(--text);
         }
+    }
+}
+
+.related-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.other-group-card {
+    width: 200px;
+    height: 200px;
+    background-color: var(--secondary-hover);
+    color: var(--accent);
+    border: 1px var(--accent) solid;
+    transition: .2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    /* gap: 20px; */
+    font-size: 25px;
+
+    & p {
+        text-align: center;
+        font-family: black-italic;
+    }
+
+    &:hover {
+        background-color: var(--accent);
+        color: var(--text);
+        transition: .2s;
+        cursor: pointer;
+        width: 250px;
     }
 }
