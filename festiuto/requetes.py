@@ -210,10 +210,7 @@ def get_groupe_with_idG(idG):
 
 def get_groupe_related(idG):
     try:
-        style_musical = 3
-        print("\n")
-        # print(get_groupe_with_idG(idG).STYLEMUSICAL)
-        print("\n")
+        style_musical = get_groupe_with_idG(idG).STYLEMUSICAL.idS
         session = Session()
         groupe = session.query(GROUPE).filter(GROUPE.idS == style_musical).filter(GROUPE.idG != idG).all() #.limit(2) pour limiter les résultats
         return groupe
@@ -233,7 +230,6 @@ def ajouter_favori(idU,idG):
         session.close()
 
 def supprimer_favori(idU,idG):
-    print("delete")
     try:
         session = Session()
         session.execute(FAVORIS.delete().where(idU==idU).where(idG==idG))

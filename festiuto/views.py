@@ -29,7 +29,6 @@ class BilletForm(FlaskForm):
 
     def get_information(self):
         tel = self.tel.data
-        print(self.quantite.data)
         quantite = self.quantite.data
         return (tel, quantite)
     
@@ -90,7 +89,6 @@ def home():
     mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
     search = f.get_search()
     if search != None:
-        print("pas none")
         return render_template(
             'home.html',
             mois = mois,
@@ -145,9 +143,7 @@ def groupe(id:int):
     artistes = requetes.get_artistes_with_idG(id)
     concerts_associated = requetes.get_concerts_with_idG(id)
     groupes_related = requetes.get_groupe_related(id)
-    print(id,session['user'][0])
     favori = requetes.is_favori(session['user'][0],id)
-    print("res ",favori)
     
     return render_template(
         'groupe.html',
@@ -226,7 +222,6 @@ def login():
             user = f.get_authenticated_user()
             if user != None:
                 session['user'] = (user.idU,user.idR)
-                print("session : ",session['user'])
                 return redirect(url_for('home'))
         except:
             return render_template(
