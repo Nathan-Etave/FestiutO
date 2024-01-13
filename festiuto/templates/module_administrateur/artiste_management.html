@@ -22,6 +22,8 @@
             <a href="{{ url_for('ajouter_artiste') }}" id="add-artiste">ajouter</a>
         </form>
 
+        <p id="resultats">{{ nb_resultat }} résultats</p>
+
         <div class="artistes-container">
             {% for artiste in artistes %}
             <div class="artiste-card">

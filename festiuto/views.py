@@ -2,7 +2,7 @@ import random
 from flask import jsonify, render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 import scipy as sp
-from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
+from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
 from festiuto import app, csrf
 from festiuto import requetes
@@ -19,6 +19,18 @@ class AjouterArtisteForm(FlaskForm):
         prenom = self.prenom.data
         groupe = self.groupe.data
         return nom, prenom, groupe
+    
+class AjouterGroupeForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    description = TextAreaField('description', validators=[DataRequired()])
+    style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.get_styles()], validators=[DataRequired()])
+    submit = SubmitField("ajouter le groupe")
+
+    def get_information(self):
+        nom = self.nom.data
+        description = self.description.data
+        style = self.style.data
+        return nom, description, style
 
 class RechercheGroupeForm(FlaskForm):
     search = StringField('Recherche')
@@ -359,10 +371,44 @@ def admin():
 
 @app.route('/groupe-management',methods=['GET','POST'])
 def groupe_management():
+    f = RechercheForm()
+    if f.validate_on_submit():
+        search = f.get_search()
+        print(search)
+        if search != None:
+            return render_template(
+                'module_administrateur/groupe_management.html',
+                groupes = requetes.get_groupes_with_search(search),
+                RechercheForm = f,
+                nb_resultat = len(requetes.get_groupes_with_search(search))
+            )
     return render_template(
         'module_administrateur/groupe_management.html',
-        groupes = requetes.get_groupes()
+        groupes = requetes.get_groupes(),
+        RechercheForm = f,
+        nb_resultat = len(requetes.get_groupes())
     )
+
+@app.route('/ajouter_groupe',methods=['GET','POST'])
+def ajouter_groupe():
+    f = AjouterGroupeForm()
+    return render_template(
+        'module_administrateur/ajouter_groupe.html',
+        AjouterGroupeForm = f
+    )
+
+@app.route('/ajouter_groupe_submit',methods=['GET','POST'])
+def ajouter_groupe_submit():
+    nom = request.form.get('nom')
+    style = request.form.get('style')
+    description = request.form.get('description')
+    requetes.insert_groupe(nom,style,description)
+    return redirect(url_for('groupe_management'))
+
+@app.route('/supprimer-groupe/<int:id>',methods=['GET','POST'])
+def supprimer_groupe(id:int):
+    requetes.delete_groupe(id)
+    return redirect(url_for('groupe_management'))
 
 @app.route('/artiste-management',methods=['GET','POST'])
 @csrf.exempt
@@ -370,18 +416,19 @@ def artiste_management():
     f = RechercheForm()
     if f.validate_on_submit():
         search = f.get_search()
-        print(search)
         if search != None:
             return render_template(
                 'module_administrateur/artiste_management.html',
                 artistes = requetes.get_artiste_with_search(search),
-                RechercheForm = f
+                RechercheForm = f,
+                nb_resultat = len(requetes.get_artiste_with_search(search))
             )
 
     return render_template(
         'module_administrateur/artiste_management.html',
         artistes = requetes.get_artistes(),
-        RechercheForm = f
+        RechercheForm = f,
+        nb_resultat = len(requetes.get_artistes())
     )
 
 @app.route('/ajouter_artiste',methods=['GET','POST'])
@@ -397,12 +444,12 @@ def ajouter_artiste_submit():
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
     groupe = request.form.get('groupe')
-    requetes.ajouter_artiste(nom, prenom, groupe)
+    requetes.insert_artiste(nom, prenom, groupe)
     return redirect(url_for('artiste_management'))
 
 @app.route('/supprimer-artiste/<int:id>',methods=['GET','POST'])
 def supprimer_artiste(id:int):
-    requetes.supprimer_artiste(id)
+    requetes.delete_artiste(id)
     return redirect(url_for('artiste_management'))
 
 @app.route('/spectateur-management',methods=['GET','POST'])
@@ -430,10 +477,4 @@ def billet_management():
 def ajouter_concert():
     return render_template(
         'module_administrateur/ajouter_concert.html'
-    )
-
-@app.route('/ajouter-groupe',methods=['GET','POST'])
-def ajouter_groupe():
-    return render_template(
-        'module_administrateur/ajouter_groupe.html'
     )

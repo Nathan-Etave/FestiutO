@@ -6,7 +6,6 @@
 
 {% block content %}
 <main>
-
     <div class="Container">
         
         <div class="header">
@@ -16,8 +15,27 @@
             <h1>gérer les groupes</h1>
         </div>
 
-    </div>
+        <form action="{{ url_for('groupe_management') }}" method="POST" role="search">
+            {{ RechercheForm.hidden_tag() }}
+            {{ RechercheForm.search(size=50, type="text", placeholder="groupe") }}
+            {{ RechercheForm.submit(type="submit") }}
+            <a href="{{ url_for('ajouter_groupe') }}" id="add-groupe">ajouter</a>
+        </form>
 
+        <p id="resultats">{{ nb_resultat }} résultats</p>
+
+        <div class="groupes-container">
+            {% for groupe in groupes %}
+            <div class="groupe-card">
+                <h3>{{ groupe.nomG }}</h3>
+                <a href="{{ url_for('supprimer_groupe', id=groupe.idG) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
 </main>
 {% endblock %}
 

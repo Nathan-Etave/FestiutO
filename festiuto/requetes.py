@@ -416,23 +416,20 @@ def insert_groupe(nomG,idS,descG):
     finally:
         session.close()
 
+def delete_groupe(idG):
+    try:
+        session = Session()
+        session.query(GROUPE).filter_by(idG=idG).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
 def insert_artiste(nomA,prenomA,idG):
     try:
         session = Session()
-        artiste = ARTISTE(idA=get_last_idA() + 1, nomA=nomA, prenomA=prenomA, idP="", idG=idG)
-        session.add(artiste)
-        session.commit()
-    except:
-        raise
-    finally:
-        session.close()
-
-def ajouter_artiste(nomA,prenomA,idG):
-    try:
-        session = Session()
-        print("ajouter")
         artiste = ARTISTE(idA=get_last_idA() + 1, nomA=nomA, prenomA=prenomA, idP=1, idG=idG)
-        print(artiste)
         session.add(artiste)
         session.commit()
     except:
@@ -440,7 +437,7 @@ def ajouter_artiste(nomA,prenomA,idG):
     finally:
         session.close()
 
-def supprimer_artiste(idA):
+def delete_artiste(idA):
     try:
         session = Session()
         session.query(ARTISTE).filter_by(idA=idA).delete()
@@ -461,4 +458,12 @@ def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGr
     finally:
         session.close()
 
-
+def get_styles():
+    try:
+        session = Session()
+        styles = session.query(STYLE_MUSICAL).all()
+        return styles
+    except:
+        raise
+    finally:
+        session.close()
