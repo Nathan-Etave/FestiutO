@@ -251,3 +251,36 @@ def is_favori(idU,idG):
         raise
     finally:
         session.close()
+
+def get_favoris(idU):
+    try:
+        session = Session()
+        all_fav = session.query(FAVORIS).filter_by(idU=idU).all()
+        favoris = []
+        for fav in all_fav:
+            favoris.append(get_groupe_with_idG(fav.idG))
+        return favoris
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_billets(idU):
+    try:
+        session = Session()
+        billets = session.query(BILLET, TYPE_BILLET).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).all()
+        return billets
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_user(idU):
+    try:
+        session = Session()
+        user = session.query(UTILISATEUR).filter(UTILISATEUR.idU == idU).first()
+        return user
+    except:
+        raise
+    finally:
+        session.close()

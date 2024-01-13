@@ -155,7 +155,7 @@ def groupe(id:int):
         favori = favori
     )
 
-@app.route('/ajouter_favori/<int:id>',methods=['GET','POST'])
+@app.route('/ajouter-favori/<int:id>',methods=['GET','POST'])
 def ajouter_fav(id:int):
     requetes.ajouter_favori(session['user'][0],id)
     return redirect(url_for('groupe',id=id))
@@ -241,7 +241,7 @@ def register():
         RegisterForm = RegisterForm()
     )
 
-@app.route('/add_user',methods=['GET','POST'])
+@app.route('/add-user',methods=['GET','POST'])
 def add_user():
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
@@ -298,17 +298,26 @@ def search():
 @app.route('/favoris',methods=['GET','POST'])
 def favoris():
     return render_template(
-        'favoris.html'
+        'favoris.html',
+        favoris = requetes.get_favoris(session['user'][0])
     )
 
 @app.route('/billets',methods=['GET','POST'])
 def billets():
     return render_template(
-        'billets.html'
+        'billets.html',
+        billets = requetes.get_billets(session['user'][0])
     )
 
 @app.route('/informations',methods=['GET','POST'])
 def informations():
     return render_template(
-        'informations.html'
+        'informations.html',
+        informations = requetes.get_user(session['user'][0])
+    )
+
+@app.route('/module-admin',methods=['GET','POST'])
+def admin():
+    return render_template(
+        'admin.html'
     )

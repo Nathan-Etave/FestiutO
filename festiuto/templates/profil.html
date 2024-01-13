@@ -12,9 +12,14 @@
         <h1>profil</h1>
 
         <div class="btns">
+            {% if session['user'][1] == 3 %}
             <a href="{{ url_for('informations') }}">mes informations</a>
             <a href="{{ url_for('billets') }}">mes billets</a>
             <a href="{{ url_for('favoris') }}">mes favoris</a>
+            {% endif %}
+            {% if session['user'][1] == 1 %}
+            <a href="{{ url_for('admin') }}">module administrateur</a>
+            {% endif %}
             <a href="{{ url_for('logout') }}">déconnexion</a>
         </div>
 

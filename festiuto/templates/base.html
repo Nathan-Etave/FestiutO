@@ -18,7 +18,7 @@
                 <ul>
                     <li><a href="{{ url_for('home') }}">accueil</a></li>
                     <li><a href="{{ url_for('programme') }}">programme</a></li>
-                    <li><a href="{{ url_for('billeterie') }}">billeterie</a></li>
+                    <li><a href="{{ url_for('billeterie') }}">billetterie</a></li>
                     {% if 'user' in session %}
                     <li><a href="{{ url_for('profil') }}">{{ session['user'][2] }}</a></li>
                     {% else %}
