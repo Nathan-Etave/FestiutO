@@ -45,6 +45,7 @@ p {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    margin-top: 30px;
 
     & .artists-container {
         font-family: black-italic;

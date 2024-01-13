@@ -11,7 +11,13 @@
 
         <h1>vos favoris</h1>
 
-        <p>{{ favoris }}</p>
+        <div class="groups-container">
+            {% for favori in favoris %}
+            <a href="{{ url_for('groupe',id=favori.GROUPE.idG) }}" class="group-card">
+                <h3>{{ favori.GROUPE.nomG }}</h3>
+            </a>
+            {% endfor %}
+        </div>
 
     </div>
 

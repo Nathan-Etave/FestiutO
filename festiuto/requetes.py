@@ -232,7 +232,7 @@ def ajouter_favori(idU,idG):
 def supprimer_favori(idU,idG):
     try:
         session = Session()
-        session.execute(FAVORIS.delete().where(idU==idU).where(idG==idG))
+        session.execute(FAVORIS.delete().where(idU==idU, idG==idG))
         session.commit()
     except:
         raise
