@@ -14,6 +14,13 @@ class RechercheGroupeForm(FlaskForm):
 
     def get_search(self):
         return None if self.search.data == "" else self.search.data
+    
+class RechercheForm(FlaskForm):
+    search = StringField('Recherche')
+    submit = SubmitField('rechercher')
+
+    def get_search(self):
+        return None if self.search.data == "" else self.search.data
 
 class BilletForm(FlaskForm):
     monday = BooleanField('lundi')
@@ -346,10 +353,25 @@ def groupe_management():
     )
 
 @app.route('/artiste-management',methods=['GET','POST'])
+@csrf.exempt
 def artiste_management():
+    print("management")
+    f = RechercheForm()
+    print(f.validate_on_submit())
+    print(f._fields)
+    if f.validate_on_submit():
+        search = f.get_search()
+        print(search)
+        if search != None:
+            return render_template(
+                'module_administrateur/artiste_management.html',
+                artistes = requetes.get_artiste_with_search(search),
+                RechercheForm = f
+            )
     return render_template(
         'module_administrateur/artiste_management.html',
-        artistes = requetes.get_artistes()
+        artistes = requetes.get_artistes(),
+        RechercheForm = f
     )
 
 @app.route('/spectateur-management',methods=['GET','POST'])

@@ -6,7 +6,6 @@
 
 {% block content %}
 <main>
-
     <div class="Container">
         
         <div class="header">
@@ -16,8 +15,20 @@
             <h1>gérer les artistes</h1>
         </div>
 
-    </div>
+        <form action="{{ url_for('artiste_management') }}" method="POST" role="search">
+            {{ RechercheForm.search(size=50, type="text", placeholder="artiste") }}
+            {{ RechercheForm.submit(type="submit") }}
+        </form>
 
+        <div class="artistes-container">
+            {% for artiste in artistes %}
+            <div class="artiste-card">
+                <h3>{{ artiste.nomA }} {{ artiste.prenomA }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
 </main>
 {% endblock %}
 

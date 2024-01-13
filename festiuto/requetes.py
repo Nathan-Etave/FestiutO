@@ -347,10 +347,31 @@ def get_groupes():
     finally:
         session.close()
 
+def get_groupes_with_search(search):
+    try:
+        session = Session()
+        groupes = session.query(GROUPE).filter(GROUPE.nomG.like("%" + search + "%")).all()
+        print(groupes)
+        return groupes
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_artistes():
     try:
         session = Session()
         artistes = session.query(ARTISTE).all()
+        return artistes
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_artiste_with_search(search):
+    try:
+        session = Session()
+        artistes = session.query(ARTISTE).filter(ARTISTE.nomA.like("%" + search + "%")).all()
         return artistes
     except:
         raise
@@ -419,6 +440,5 @@ def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGr
         raise
     finally:
         session.close()
-
 
 
