@@ -1,6 +1,7 @@
 import random
 from flask import jsonify, render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
+import scipy as sp
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired, NumberRange
 from festiuto import app, csrf
@@ -316,7 +317,7 @@ def favoris():
 
 @app.route('/billets',methods=['GET','POST'])
 def billets():
-    data_billets,total = requetes.get_billets(session['user'][0])
+    data_billets,total = requetes.get_billets_with_idU(session['user'][0])
     print(data_billets)
     return render_template(
         'billets.html',
@@ -340,31 +341,36 @@ def admin():
 @app.route('/groupe-management',methods=['GET','POST'])
 def groupe_management():
     return render_template(
-        'module_administrateur/groupe_management.html'
+        'module_administrateur/groupe_management.html',
+        groupes = requetes.get_groupes()
     )
 
 @app.route('/artiste-management',methods=['GET','POST'])
 def artiste_management():
     return render_template(
-        'module_administrateur/artiste_management.html'
+        'module_administrateur/artiste_management.html',
+        artistes = requetes.get_artistes()
     )
 
 @app.route('/spectateur-management',methods=['GET','POST'])
 def spectateur_management():
     return render_template(
-        'module_administrateur/spectateur_management.html'
+        'module_administrateur/spectateur_management.html',
+        spectateurs = requetes.get_spectateurs()
     )
 
 @app.route('/hebergement-management',methods=['GET','POST'])
 def hebergement_management():
     return render_template(
-        'module_administrateur/hebergement_management.html'
+        'module_administrateur/hebergement_management.html',
+        hebergements = requetes.get_hebergements()
     )
 
 @app.route('/billet-management',methods=['GET','POST'])
 def billet_management():
     return render_template(
-        'module_administrateur/billet_management.html'
+        'module_administrateur/billet_management.html',
+        billets = requetes.get_billets()
     )
 
 @app.route('/ajouter-concert',methods=['GET','POST'])

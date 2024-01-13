@@ -85,6 +85,42 @@ def get_last_idB():
     finally:
         session.close()
 
+def get_last_idG():
+    try:
+        session = Session()
+        result = session.query(GROUPE).order_by(GROUPE.idG.desc()).first()
+        if result is None:
+            return 0
+        return result.idG
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_last_idA():
+    try:
+        session = Session()
+        result = session.query(ARTISTE).order_by(ARTISTE.idA.desc()).first()
+        if result is None:
+            return 0
+        return result.idA
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_last_idC():
+    try:
+        session = Session()
+        result = session.query(CONCERT).order_by(CONCERT.idC.desc()).first()
+        if result is None:
+            return 0
+        return result.idC
+    except:
+        raise
+    finally:
+        session.close()
+
 def insert_user(mail,prenom,nom,mdp):
     try:
         session = Session()
@@ -266,18 +302,7 @@ def get_favoris(idU):
     finally:
         session.close()
 
-def get_groupes():
-    try:
-        session = Session()
-        groupes = session.query(GROUPE).all()
-        print(groupes)
-        return groupes
-    except:
-        raise
-    finally:
-        session.close()
-
-def get_billets(idU):
+def get_billets_with_idU(idU):
     try:
         session = Session()
         billets = session.query(BILLET, TYPE_BILLET, func.count(BILLET.idB).label('quantite'), (func.count(BILLET.idB) * TYPE_BILLET.prixT).label('sous_total')).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).group_by(BILLET.dateDebB, BILLET.idT).all()
@@ -310,3 +335,90 @@ def get_total_panier(idU):
         raise
     finally:
         session.close()
+
+def get_groupes():
+    try:
+        session = Session()
+        groupes = session.query(GROUPE).all()
+        print(groupes)
+        return groupes
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_artistes():
+    try:
+        session = Session()
+        artistes = session.query(ARTISTE).all()
+        return artistes
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_spectateurs():
+    try:
+        session = Session()
+        spectateurs = session.query(UTILISATEUR).filter(UTILISATEUR.idR == 3).all()
+        return spectateurs
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_hebergements():
+    try:
+        session = Session()
+        hebergements = session.query(HEBERGEMENT).all()
+        return hebergements
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_billets():
+    try:
+        session = Session()
+        billets = session.query(BILLET).all()
+        return billets
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_groupe(nomG,idS,descG):
+    try:
+        session = Session()
+        groupe = GROUPE(idG=get_last_idG() + 1, idS=idS, nomG=nomG, descriptionG=descG)
+        session.add(groupe)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_artiste(nomA,prenomA,idG):
+    try:
+        session = Session()
+        artiste = ARTISTE(idA=get_last_idA() + 1, nomA=nomA, prenomA=prenomA, idP="", idG=idG)
+        session.add(artiste)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGratuit):
+    try:
+        session = Session()
+        concert = CONCERT(idC=get_last_idC() + 1, idG=idG, idL=idL, dateDebC=dateDebC, dateFinC=dateFinC, dureeMontageC=dureeMontageC, dureeDemontageC=dureeDemontageC, estGratuit=estGratuit)
+        session.add(concert)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+
+
