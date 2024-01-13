@@ -9,9 +9,18 @@
 
     <div class="Container">
 
-        <h1>vos billets</h1>
+        <h1>votre panier</h1>
 
-        <p>{{ billets }}</p>
+        <div class="billets-container">
+            {% for billet in billets %}
+            <a href="#" class="billet-card">
+                <p>{{ billet.BILLET.dateDebB }}</p>
+                <p>{{ billet.BILLET.dateFinB }}</p>
+                <p>{{ billet.BILLET.quantite }}</p>
+
+            </a>
+            {% endfor %}
+        </div>
 
     </div>
 

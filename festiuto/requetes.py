@@ -232,7 +232,7 @@ def ajouter_favori(idU,idG):
 def supprimer_favori(idU,idG):
     try:
         session = Session()
-        session.execute(FAVORIS.delete().where(idU==idU, idG==idG))
+        session.query(FAVORIS).filter_by(idU=idU).filter_by(idG=idG).delete()
         session.commit()
     except:
         raise
@@ -269,6 +269,12 @@ def get_billets(idU):
     try:
         session = Session()
         billets = session.query(BILLET, TYPE_BILLET).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).all()
+
+        # SELECT idT,idB,idU,idF,dateDebB,dateFinB,prixT,descriptionT,count(*) quantite, prixT*count(*) sous_total
+        # FROM BILLET NATURAL JOIN TYPEBILLET
+        # GROUP BY dateDebB,idT;
+        # billets = session.query(BILLET, TYPE_BILLET,[func.count()]).select_from(BILLET).join(TYPE_BILLET).group_by(BILLET.dateDebB, BILLET.idT).filter(BILLET.idU == idU).all()
+
         return billets
     except:
         raise
