@@ -355,10 +355,7 @@ def groupe_management():
 @app.route('/artiste-management',methods=['GET','POST'])
 @csrf.exempt
 def artiste_management():
-    print("management")
     f = RechercheForm()
-    print(f.validate_on_submit())
-    print(f._fields)
     if f.validate_on_submit():
         search = f.get_search()
         print(search)
@@ -368,6 +365,7 @@ def artiste_management():
                 artistes = requetes.get_artiste_with_search(search),
                 RechercheForm = f
             )
+
     return render_template(
         'module_administrateur/artiste_management.html',
         artistes = requetes.get_artistes(),
