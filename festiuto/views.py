@@ -8,6 +8,18 @@ from festiuto import app, csrf
 from festiuto import requetes
 from sqlalchemy import inspect
 
+class AjouterArtisteForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()], validators=[DataRequired()])
+    submit = SubmitField("ajouter l'artiste")
+
+    def get_information(self):
+        nom = self.nom.data
+        prenom = self.prenom.data
+        groupe = self.groupe.data
+        return nom, prenom, groupe
+
 class RechercheGroupeForm(FlaskForm):
     search = StringField('Recherche')
     submit = SubmitField('rechercher')
@@ -371,6 +383,27 @@ def artiste_management():
         artistes = requetes.get_artistes(),
         RechercheForm = f
     )
+
+@app.route('/ajouter_artiste',methods=['GET','POST'])
+def ajouter_artiste():
+    f = AjouterArtisteForm()
+    return render_template(
+        'module_administrateur/ajouter_artiste.html',
+        AjouterArtisteForm = f
+    )
+
+@app.route('/ajouter_artiste_submit',methods=['GET','POST'])
+def ajouter_artiste_submit():
+    nom = request.form.get('nom')
+    prenom = request.form.get('prenom')
+    groupe = request.form.get('groupe')
+    requetes.ajouter_artiste(nom, prenom, groupe)
+    return redirect(url_for('artiste_management'))
+
+@app.route('/supprimer-artiste/<int:id>',methods=['GET','POST'])
+def supprimer_artiste(id:int):
+    requetes.supprimer_artiste(id)
+    return redirect(url_for('artiste_management'))
 
 @app.route('/spectateur-management',methods=['GET','POST'])
 def spectateur_management():

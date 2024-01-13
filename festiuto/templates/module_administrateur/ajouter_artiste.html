@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/module_administrateur/ajouter_artiste.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        
+        <div class="header">
+            <a href="{{ url_for('artiste_management') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>ajouter un artiste</h1>
+        </div>
+
+        <form action="{{ url_for('ajouter_artiste_submit') }}" method="POST">
+            {{ AjouterArtisteForm.hidden_tag() }}
+            <div class="config">
+                <label for="nom">nom</label>
+                {{ AjouterArtisteForm.nom(class="form-control", id="nom") }}
+            </div>
+            <div class="config">
+                <label for="prenom">prenom</label>
+                {{ AjouterArtisteForm.prenom(class="form-control", id="prenom") }}
+            </div>
+            <div class="config">
+                <label for="groupe">groupe</label>
+                {{ AjouterArtisteForm.groupe(class="form-control", id="groupe") }}
+            </div>
+            <div id="submit-container">
+                {{ AjouterArtisteForm.submit(id="submit-form") }}
+            </div>
+        </form>
+
+    </div>
+
+</main>
+{% endblock %}
+
