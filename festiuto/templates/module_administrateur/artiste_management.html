@@ -16,6 +16,7 @@
         </div>
 
         <form action="{{ url_for('artiste_management') }}" method="POST" role="search">
+            {{ RechercheForm.hidden_tag() }}
             {{ RechercheForm.search(size=50, type="text", placeholder="artiste") }}
             {{ RechercheForm.submit(type="submit") }}
         </form>
