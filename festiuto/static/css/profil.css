@@ -37,17 +37,31 @@ main {
     }
 }
 
+.btns-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
 .btns {
     display: flex;
-    justify-content: space-between;
-    padding: 10% 0;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 500px;
     font-size: 30px;
     
     & a {
+        width: 200px;
+        height: 200px;
         border: var(--accent) 1px solid;
-        padding: 10px 50px;
+        padding: 1%;
         color: var(--accent);
         transition: .2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
 
         &:hover {
             background-color: var(--accent);

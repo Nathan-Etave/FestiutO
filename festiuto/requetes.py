@@ -266,6 +266,17 @@ def get_favoris(idU):
     finally:
         session.close()
 
+def get_groupes():
+    try:
+        session = Session()
+        groupes = session.query(GROUPE).all()
+        print(groupes)
+        return groupes
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_billets(idU):
     try:
         session = Session()

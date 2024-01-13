@@ -1,0 +1,38 @@
+main {
+    min-height: 100vh; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+
+    & a {
+        display: flex;
+        width: 60px;
+        justify-content: center;
+        align-items: center;
+        transition: .2s;
+
+        &:hover {
+            cursor: pointer;
+            scale: 1.1;
+            transition: .2s;
+        }
+    }
+}

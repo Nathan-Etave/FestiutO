@@ -284,7 +284,8 @@ def profil():
 @app.route('/about',methods=['GET','POST'])
 def about():
     return render_template(
-        'about.html'
+        'about.html',
+        groupes = requetes.get_groupes()
     )
 
 @app.route('/search',methods=['GET','POST'])
@@ -334,4 +335,46 @@ def informations():
 def admin():
     return render_template(
         'admin.html'
+    )
+
+@app.route('/groupe-management',methods=['GET','POST'])
+def groupe_management():
+    return render_template(
+        'module_administrateur/groupe_management.html'
+    )
+
+@app.route('/artiste-management',methods=['GET','POST'])
+def artiste_management():
+    return render_template(
+        'module_administrateur/artiste_management.html'
+    )
+
+@app.route('/spectateur-management',methods=['GET','POST'])
+def spectateur_management():
+    return render_template(
+        'module_administrateur/spectateur_management.html'
+    )
+
+@app.route('/hebergement-management',methods=['GET','POST'])
+def hebergement_management():
+    return render_template(
+        'module_administrateur/hebergement_management.html'
+    )
+
+@app.route('/billet-management',methods=['GET','POST'])
+def billet_management():
+    return render_template(
+        'module_administrateur/billet_management.html'
+    )
+
+@app.route('/ajouter-concert',methods=['GET','POST'])
+def ajouter_concert():
+    return render_template(
+        'module_administrateur/ajouter_concert.html'
+    )
+
+@app.route('/ajouter-groupe',methods=['GET','POST'])
+def ajouter_groupe():
+    return render_template(
+        'module_administrateur/ajouter_groupe.html'
     )

@@ -20,23 +20,27 @@
             <ul>
                 <li class="question">
                     <h3 onclick="toggle_info(1)">qui sommes-nous ?</h3>
-                    <p id="1" style="display: none">festiut'o est un festival de musique qui se déroule chaque année dans la ville de Toulouse. Il a pour but de faire découvrir de nouveaux artistes et de faire vivre la musique dans la ville rose.</p>
+                    <div id="1" style="display: none">festiut'o est un festival de musique qui se déroule chaque année dans la ville de Toulouse. Il a pour but de faire découvrir de nouveaux artistes et de faire vivre la musique dans la ville rose.</div>
                 </li>
                 <li class="question">
                     <h3 onclick="toggle_info(2)">quelles sont les dates du festival ?</h3>
-                    <p id="2" style="display: none">17 mai 2024 au 24 mai 2024</p>
+                    <div id="2" style="display: none">13 mai 2024 au 29 mai 2024</div>
                 </li>
                 <li class="question">
-                    <h3 onclick="toggle_info(3)">quelles sont les dates du festival ?</h3>
-                    <p id="3" style="display: none">17 mai 2024 au 24 mai 2024</p>
+                    <h3 onclick="toggle_info(3)">quels artistes ?</h3>
+                    <div id="3" style="display: none" class="groupes">
+                        {% for groupe in groupes %}
+                            <p>{{ groupe.nomG }}</p>
+                        {% endfor %}
+                    </div>
                 </li>
                 <li class="question">
-                    <h3 onclick="toggle_info(4)">quelles sont les dates du festival ?</h3>
-                    <p id="4" style="display: none">17 mai 2024 au 24 mai 2024</p>
+                    <h3 onclick="toggle_info(4)">les billets sont-ils remboursables ?</h3>
+                    <div id="4" style="display: none">les billets ne sont ni remboursables ni échangeables</div>
                 </li>
                 <li class="question">
-                    <h3 onclick="toggle_info(4)">quelles sont les dates du festival ?</h3>
-                    <p id="4" style="display: none">17 mai 2024 au 24 mai 2024</p>
+                    <h3 onclick="toggle_info(5)">quelles sont les modalités d'entrées ?</h3>
+                    <div id="5" style="display: none">veillez à imprimer vos billets, toute sortie est définitive</div>
                 </li>
             </ul>
         </section>
