@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT, FAVORIS, FESTIVAL, GROUPE, HEBERGEMENT,
                              IMAGER_GROUPE, INSTRUMENT, JOUER, LIEU, LOGER, PHOTO, RESEAU_SOCIAL, RESEAU_SOCIAL_GROUPE,
@@ -268,13 +269,7 @@ def get_favoris(idU):
 def get_billets(idU):
     try:
         session = Session()
-        billets = session.query(BILLET, TYPE_BILLET).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).all()
-
-        # SELECT idT,idB,idU,idF,dateDebB,dateFinB,prixT,descriptionT,count(*) quantite, prixT*count(*) sous_total
-        # FROM BILLET NATURAL JOIN TYPEBILLET
-        # GROUP BY dateDebB,idT;
-        # billets = session.query(BILLET, TYPE_BILLET,[func.count()]).select_from(BILLET).join(TYPE_BILLET).group_by(BILLET.dateDebB, BILLET.idT).filter(BILLET.idU == idU).all()
-
+        billets = session.query(BILLET, TYPE_BILLET, func.count(BILLET.idB).label('quantite'), (func.count(BILLET.idB) * TYPE_BILLET.prixT).label('sous_total')).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).group_by(BILLET.dateDebB, BILLET.idT).all()
         return billets
     except:
         raise
