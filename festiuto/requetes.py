@@ -270,7 +270,9 @@ def get_billets(idU):
     try:
         session = Session()
         billets = session.query(BILLET, TYPE_BILLET, func.count(BILLET.idB).label('quantite'), (func.count(BILLET.idB) * TYPE_BILLET.prixT).label('sous_total')).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).group_by(BILLET.dateDebB, BILLET.idT).all()
-        return billets
+        total = 0
+        for billet in billets: total += billet[-1]
+        return billets,total
     except:
         raise
     finally:
@@ -280,7 +282,19 @@ def get_user(idU):
     try:
         session = Session()
         user = session.query(UTILISATEUR).filter(UTILISATEUR.idU == idU).first()
+        print(user)
         return user
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_total_panier(idU):
+    try:
+        session = Session()
+        total = session.query(func.sum(BILLET.idB).label('total')).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).first()
+        print(total)
+        return total
     except:
         raise
     finally:

@@ -24,7 +24,7 @@ class BilletForm(FlaskForm):
     sunday = BooleanField('dimanche')
     tel = TelField('telephone', validators=[DataRequired()])
     quantite = IntegerField('quantite', validators=[DataRequired(), NumberRange(min=1)], default=1)
-    submit = SubmitField('commander')
+    submit = SubmitField('ajouter au panier')
     next = HiddenField()
 
     def get_information(self):
@@ -143,17 +143,28 @@ def groupe(id:int):
     artistes = requetes.get_artistes_with_idG(id)
     concerts_associated = requetes.get_concerts_with_idG(id)
     groupes_related = requetes.get_groupe_related(id)
-    favori = requetes.is_favori(session['user'][0],id)
+    if 'user' in session:
+        favori = requetes.is_favori(session['user'][0],id)
+        
+        return render_template(
+            'groupe.html',
+            id = id,
+            artistes = artistes,
+            groupe = groupe,
+            concerts_associated = concerts_associated,
+            groupes_related = groupes_related,
+            favori = favori
+        )
+    else:
+        return render_template(
+                'groupe.html',
+                id = id,
+                artistes = artistes,
+                groupe = groupe,
+                concerts_associated = concerts_associated,
+                groupes_related = groupes_related,
+            )
     
-    return render_template(
-        'groupe.html',
-        id = id,
-        artistes = artistes,
-        groupe = groupe,
-        concerts_associated = concerts_associated,
-        groupes_related = groupes_related,
-        favori = favori
-    )
 
 @app.route('/ajouter-favori/<int:id>',methods=['GET','POST'])
 def ajouter_fav(id:int):
@@ -205,7 +216,7 @@ def config_billet(id):
                     error = "Vous devez choisir au moins deux jours"
                 )
         else:
-            requetes.insert_billet(id,session['user'][0],"2023-05-12","2023-05-19",data[1])
+            requetes.insert_billet(id,session['user'][0],"2024-05-13","2023-04-19",data[1])
             return redirect(url_for('home'))
 
     return render_template(
@@ -304,9 +315,12 @@ def favoris():
 
 @app.route('/billets',methods=['GET','POST'])
 def billets():
+    data_billets,total = requetes.get_billets(session['user'][0])
+    print(data_billets)
     return render_template(
         'billets.html',
-        billets = requetes.get_billets(session['user'][0])
+        billets = data_billets,
+        total = total
     )
 
 @app.route('/informations',methods=['GET','POST'])
