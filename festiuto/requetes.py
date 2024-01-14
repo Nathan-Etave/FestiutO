@@ -395,6 +395,16 @@ def get_artiste_with_search(search):
     finally:
         session.close()
 
+def get_artiste_with_idA(idA):
+    try:
+        session = Session()
+        artiste = session.query(ARTISTE).filter(ARTISTE.idA == idA).first()
+        return artiste
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_spectateurs():
     try:
         session = Session()

@@ -388,6 +388,14 @@ def groupe_management():
         nb_resultat = len(requetes.get_groupes())
     )
 
+@app.route('/modifier_groupe/<int:id>',methods=['GET','POST'])
+def modifier_groupe(id):
+    print(id)
+    return render_template(
+        'module_administrateur/modifier_groupe.html',
+        groupe = requetes.get_groupe_with_idG(id)
+    )
+
 @app.route('/ajouter_groupe',methods=['GET','POST'])
 def ajouter_groupe():
     f = AjouterGroupeForm()
@@ -428,6 +436,14 @@ def artiste_management():
         artistes = requetes.get_artistes(),
         RechercheForm = f,
         nb_resultat = len(requetes.get_artistes())
+    )
+
+@app.route('/modifier_artiste/<int:id>',methods=['GET','POST'])
+def modifier_artiste(id):
+    print(id)
+    return render_template(
+        'module_administrateur/modifier_artiste.html',
+        artiste = requetes.get_artiste_with_idA(id)
     )
 
 @app.route('/ajouter_artiste',methods=['GET','POST'])

@@ -123,6 +123,12 @@ form {
             font-family: black-italic;
         }
 
+        & div {
+            display: flex;
+            flex-direction: row;
+            gap: 20px
+        }
+
         & a {
             display: flex;
             align-items: center;
