@@ -359,6 +359,8 @@ def get_groupes():
     try:
         session = Session()
         groupes = session.query(GROUPE).all()
+        for groupe in groupes:
+            print(groupe.nomG)
         return groupes
     except:
         raise

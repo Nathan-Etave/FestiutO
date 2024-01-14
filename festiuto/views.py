@@ -522,6 +522,7 @@ def modifier_artiste_submit(id):
 @app.route('/ajouter_artiste',methods=['GET','POST'])
 def ajouter_artiste():
     f = AjouterArtisteForm()
+    f.groupe.choices = [(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()]
     return render_template(
         'module_administrateur/ajouter_artiste.html',
         AjouterArtisteForm = f
