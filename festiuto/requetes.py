@@ -1,4 +1,4 @@
-from sqlalchemy import func
+from sqlalchemy import func, null
 from sqlalchemy.orm import joinedload
 from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT, FAVORIS, FESTIVAL, GROUPE, HEBERGEMENT,
                              IMAGER_GROUPE, INSTRUMENT, JOUER, LIEU, LOGER, PHOTO, RESEAU_SOCIAL, RESEAU_SOCIAL_GROUPE,
@@ -329,7 +329,6 @@ def get_total_panier(idU):
     try:
         session = Session()
         total = session.query(func.sum(BILLET.idB).label('total')).select_from(BILLET).join(TYPE_BILLET).filter(BILLET.idU == idU).first()
-        print(total)
         return total
     except:
         raise
@@ -340,7 +339,6 @@ def get_groupes():
     try:
         session = Session()
         groupes = session.query(GROUPE).all()
-        print(groupes)
         return groupes
     except:
         raise
@@ -351,7 +349,6 @@ def get_groupes_with_search(search):
     try:
         session = Session()
         groupes = session.query(GROUPE).filter(GROUPE.nomG.like("%" + search + "%")).all()
-        print(groupes)
         return groupes
     except:
         raise
@@ -371,7 +368,7 @@ def get_artistes():
 def get_artiste_with_search(search):
     try:
         session = Session()
-        artistes = session.query(ARTISTE).filter(ARTISTE.nomA.like("%" + search + "%")).all()
+        artistes = session.query(ARTISTE).filter(ARTISTE.nomA.like("%" + search + "%") | ARTISTE.prenomA.like("%" + search + "%")).all()
         return artistes
     except:
         raise
@@ -419,11 +416,31 @@ def insert_groupe(nomG,idS,descG):
     finally:
         session.close()
 
+def delete_groupe(idG):
+    try:
+        session = Session()
+        session.query(GROUPE).filter_by(idG=idG).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
 def insert_artiste(nomA,prenomA,idG):
     try:
         session = Session()
-        artiste = ARTISTE(idA=get_last_idA() + 1, nomA=nomA, prenomA=prenomA, idP="", idG=idG)
+        artiste = ARTISTE(idA=get_last_idA() + 1, nomA=nomA, prenomA=prenomA, idP=1, idG=idG)
         session.add(artiste)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_artiste(idA):
+    try:
+        session = Session()
+        session.query(ARTISTE).filter_by(idA=idA).delete()
         session.commit()
     except:
         raise
@@ -492,6 +509,16 @@ def get_prix_billet(idT):
         session = Session()
         billet = session.query(TYPE_BILLET).filter(TYPE_BILLET.idT == idT).first()
         return billet.prixT
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_styles():
+    try:
+        session = Session()
+        styles = session.query(STYLE_MUSICAL).all()
+        return styles
     except:
         raise
     finally:

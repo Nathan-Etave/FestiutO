@@ -47,8 +47,8 @@ form {
 
     & > .config {
         display: grid;
-        grid-template-columns: 2fr 4fr;
-        gap: 2px;
+        grid-template-columns: 5rem 1fr;
+        gap: 80px;
 
         & > label {
             font-family: black-italic;
@@ -96,27 +96,6 @@ form {
                     background-color: var(--accent-hover);  
                     color: var(--accent);
                 }
-            }
-        }
-
-        & textarea {
-            width: 400px;
-            height: 200px;
-            padding: 5px 15px;
-            background-color: transparent;
-            border: 1px var(--text) solid;
-            outline: .125rem solid transparent;
-            outline-offset: 0;   
-            font-size: 25px;
-            color: var(--text);
-            font-weight: 700;
-            transition: all .2s;
-
-            &:hover, &:focus-visible, &:active {
-                border-color: transparent;
-                outline: .125rem solid currentColor;
-                outline-offset: .1rem;
-                transition: all .2s;
             }
         }
     }
