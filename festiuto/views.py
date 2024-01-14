@@ -522,12 +522,6 @@ def ajouter_concert():
         'module_administrateur/ajouter_concert.html'
     )
 
-@app.route('/ajouter-groupe',methods=['GET','POST'])
-def ajouter_groupe():
-    return render_template(
-        'module_administrateur/ajouter_groupe.html'
-    )
-
 @app.route('/decrementer-billet',methods=['GET','POST'])
 @csrf.exempt
 def decrementer_billet():
