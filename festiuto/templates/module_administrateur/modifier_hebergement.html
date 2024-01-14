@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/module_administrateur/modifier_hebergement.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        
+        <div class="header">
+            <a href="{{ url_for('hebergement_management') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>réservations de {{ hebergement.nomH }}</h1>
+        </div>
+
+        <div id="adresse-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M15 11.586V6h2V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2h2v5.586l-2.707 1.707A.996.996 0 0 0 6 14v2a1 1 0 0 0 1 1h4v3l1 2 1-2v-3h4a1 1 0 0 0 1-1v-2a.996.996 0 0 0-.293-.707L15 11.586z"></path></svg>
+            <p>{{ hebergement.adresseH }}</p>
+        </div>
+
+        <div id="ajouter_hebergement">
+            <a href="{{ url_for('ajouter_groupe_hebergement',id=hebergement.idH) }}">ajouter un groupe</a>
+        </div>  
+
+        <div class="reservations-container">
+            {% for reservation in reservations %}
+            <div class="reservation-card">
+                <h3>{{ reservation.GROUPE.nomG }}</h3>
+                <div>
+                    <p>{{ reservation.LOGER.dateDebH }}</p>
+                    <p>{{ reservation.LOGER.dateFinH}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
+

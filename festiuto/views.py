@@ -633,9 +633,44 @@ def supprimer_spectateur(id:int):
 
 @app.route('/hebergement-management',methods=['GET','POST'])
 def hebergement_management():
+    f = RechercheForm()
+    if f.validate_on_submit():
+        search = f.get_search()
+        if search != None:
+            return render_template(
+                'module_administrateur/hebergement_management.html',
+                hebergements = requetes.get_hebergements_with_search(search),
+                RechercheForm = f,
+                nb_resultat = len(requetes.get_hebergements_with_search(search))
+            )
     return render_template(
         'module_administrateur/hebergement_management.html',
-        hebergements = requetes.get_hebergements()
+        hebergements = requetes.get_hebergements(),
+        RechercheForm = f,
+        nb_resultat = len(requetes.get_hebergements())
+    )
+
+@app.route('/ajouter-hebergement',methods=['GET','POST'])
+def ajouter_hebergement():
+    return render_template(
+        'module_administrateur/ajouter_hebergement.html',
+    )
+
+@app.route('/modifier-hebergement/<int:id>',methods=['GET','POST'])
+def modifier_hebergement(id):
+    hebergement = requetes.get_hebergement_with_idH(id)
+    reservations = requetes.get_lodging_with_idH(id)
+    return render_template(
+        'module_administrateur/modifier_hebergement.html',
+        hebergement = hebergement,
+        reservations = reservations
+    )
+
+@app.route('/ajouter-groupe-hebergement/<int:id>',methods=['GET','POST'])
+def ajouter_groupe_hebergement(id):
+    return render_template(
+        'module_administrateur/ajouter_groupe_hebergement.html',
+        idH = id
     )
 
 @app.route('/billet-management',methods=['GET','POST'])
