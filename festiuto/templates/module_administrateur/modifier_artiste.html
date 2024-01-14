@@ -16,6 +16,25 @@
             <h1>modifier {{ artiste.nomA }} {{ artiste.prenomA }}</h1>
         </div>
 
+        <form action="{{ url_for('modifier_artiste_submit') }}" method="POST">
+            {{ ModifierArtisteForm.hidden_tag() }}
+            <div class="config">
+                <label for="nom">nom</label>
+                {{ ModifierArtisteForm.nom(class="form-control", id="nom", value=artiste.nomA) }}
+            </div>
+            <div class="config">
+                <label for="prenom">prenom</label>
+                {{ ModifierArtisteForm.prenom(class="form-control", id="prenom", value=artiste.prenomA) }}
+            </div>
+            <div class="config">
+                <label for="groupe">groupe</label>
+                {{ ModifierArtisteForm.groupe(class="form-control", id="groupe") }}
+            </div>
+            <div id="submit-container">
+                {{ ModifierArtisteForm.submit(id="submit-form") }}
+            </div>
+        </form>
+
     </div>
 
 </main>

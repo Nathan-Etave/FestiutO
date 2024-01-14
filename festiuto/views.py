@@ -19,6 +19,18 @@ class AjouterArtisteForm(FlaskForm):
         prenom = self.prenom.data
         groupe = self.groupe.data
         return nom, prenom, groupe
+
+class ModifierArtisteForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    prenom = StringField('prenom', validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()], validators=[DataRequired()])
+    submit = SubmitField("ajouter l'artiste")
+
+    def get_information(self):
+        nom = self.nom.data
+        prenom = self.prenom.data
+        groupe = self.groupe.data
+        return nom, prenom, groupe
     
 class AjouterGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
@@ -462,11 +474,22 @@ def artiste_management():
 
 @app.route('/modifier_artiste/<int:id>',methods=['GET','POST'])
 def modifier_artiste(id):
-    print(id)
+    f = ModifierArtisteForm()
     return render_template(
         'module_administrateur/modifier_artiste.html',
-        artiste = requetes.get_artiste_with_idA(id)
+        artiste = requetes.get_artiste_with_idA(id),
+        ModifierArtisteForm = f
     )
+
+@app.route('/modifier_artiste',methods=['GET','POST'])
+def modifier_artiste_submit():
+    nom = request.form.get('nom')
+    prenom = request.form.get('prenom')
+    groupe = request.form.get('groupe')
+    print(nom,prenom,groupe)
+    # requetes.update_artiste(id,nom,prenom,groupe)
+    return redirect(url_for('spectateur_management'))
+
 
 @app.route('/ajouter_artiste',methods=['GET','POST'])
 def ajouter_artiste():
