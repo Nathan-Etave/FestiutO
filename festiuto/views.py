@@ -32,6 +32,18 @@ class AjouterGroupeForm(FlaskForm):
         style = self.style.data
         return nom, description, style
 
+class ModifierGroupeForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    description = TextAreaField('description', validators=[DataRequired()])
+    style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.get_styles()], validators=[DataRequired()])
+    submit = SubmitField("modifier le groupe")
+
+    def get_information(self):
+        nom = self.nom.data
+        description = self.description.data
+        style = self.style.data
+        return nom, description, style
+
 class RechercheGroupeForm(FlaskForm):
     search = StringField('Recherche')
     submit = SubmitField('rechercher')
@@ -390,11 +402,21 @@ def groupe_management():
 
 @app.route('/modifier_groupe/<int:id>',methods=['GET','POST'])
 def modifier_groupe(id):
-    print(id)
+    f = ModifierGroupeForm()
     return render_template(
         'module_administrateur/modifier_groupe.html',
-        groupe = requetes.get_groupe_with_idG(id)
+        groupe = requetes.get_groupe_with_idG(id),
+        ModifierGroupeForm = f
     )
+
+@app.route('/modifier_groupe',methods=['GET','POST'])
+def modifier_groupe_submit():
+    nom = request.form.get('nom')
+    style = request.form.get('style')
+    description = request.form.get('description')
+    print(nom,style,description)
+    # requetes.update_groupe(id,nom,style,description)
+    return redirect(url_for('groupe_management'))
 
 @app.route('/ajouter_groupe',methods=['GET','POST'])
 def ajouter_groupe():

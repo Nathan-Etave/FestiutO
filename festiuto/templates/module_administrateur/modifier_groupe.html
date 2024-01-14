@@ -16,8 +16,24 @@
             <h1>modifier {{ groupe.GROUPE.nomG }}</h1>
         </div>
 
-
-
+        <form action="{{ url_for('modifier_groupe_submit') }}" method="POST">
+            {{ ModifierGroupeForm.hidden_tag() }}
+            <div class="config">
+                <label for="nom">nom</label>
+                {{ ModifierGroupeForm.nom(class="form-control", id="nom", value=groupe.GROUPE.nomG) }}
+            </div>
+            <div class="config">
+                <label for="style">style musical</label>
+                {{ ModifierGroupeForm.style(class="form-control", id="style") }}
+            </div>
+            <div class="config">
+                <label for="description">description</label>
+                {{ ModifierGroupeForm.description(class="form-control", id="description") }}
+            </div>
+            <div id="submit-container">
+                {{ ModifierGroupeForm.submit(id="submit-form") }}
+            </div>
+        </form>
     </div>
 
 </main>
