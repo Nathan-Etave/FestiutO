@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/module_administrateur/modifier_groupe_concert.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        
+        <div class="header">
+            <a href="{{ url_for('concert_management') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>ajouter un concert à {{ groupe.GROUPE.nomG }}</h1>
+        </div>
+
+        <form action="{{ url_for('modifier_groupe_concert',id=groupe.GROUPE.idG) }}" method="POST">
+            {{ AjouterConcertForm.hidden_tag() }}
+            <div class="config">
+                <label for="lieu">lieu</label>
+                {{ AjouterConcertForm.lieu(class="form-control", id="lieu") }}
+            </div>
+            <div class="config">
+                <label for="dateDebC">date de début</label>
+                {{ AjouterConcertForm.dateDeb(class="form-control", id="dateDebC") }}
+            </div>
+            <div class="config">
+                <label for="heureDebC">heure de début</label>
+                {{ AjouterConcertForm.heureDeb(class="form-control", id="heureDebC") }}
+            </div>
+            <div class="config">
+                <label for="dateFinC">date de fin</label>
+                {{ AjouterConcertForm.dateFin(class="form-control", id="dateFinC") }}
+            </div>
+            <div class="config">
+                <label for="heureFinC">heure de fin</label>
+                {{ AjouterConcertForm.heureFin(class="form-control", id="heureFinC") }}
+            </div>
+            <div class="config">
+                <label for="montage">durée de montage</label>
+                {{ AjouterConcertForm.dureeMontage(class="form-control", id="montage") }}
+            </div>
+            <div class="config">
+                <label for="demontage">durée de démontage</label>
+                {{ AjouterConcertForm.dureeDemontage(class="form-control", id="demontage") }}
+            </div>
+            <div class="config">
+                <label for="gratuit">gratuit</label>
+                {{ AjouterConcertForm.estGratuit(class="form-control", id="gratuit") }}
+            </div>
+            <div id="submit-container">
+                {{ AjouterConcertForm.submit(id="submit-form") }}
+            </div>
+        </form>
+    </div>
+
+</main>
+{% endblock %}
+

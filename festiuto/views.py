@@ -1,8 +1,9 @@
 import random
+from re import T
 from flask import jsonify, render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 import scipy as sp
-from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField, TextAreaField
+from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField, TextAreaField, TimeField
 from wtforms.validators import DataRequired, NumberRange
 from festiuto import app, csrf
 from festiuto import requetes
@@ -62,6 +63,28 @@ class RechercheGroupeForm(FlaskForm):
 
     def get_search(self):
         return None if self.search.data == "" else self.search.data
+    
+class AjouterConcertForm(FlaskForm):
+    lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.get_lieux()], validators=[DataRequired()])
+    dateDeb = DateField('dateDeb', validators=[DataRequired()])
+    heureDeb = TimeField('heureDeb', validators=[DataRequired()])
+    dateFin = DateField('dateFin', validators=[DataRequired()])
+    heureFin = TimeField('heureFin', validators=[DataRequired()])
+    dureeMontage = TimeField('dureeMontage', validators=[DataRequired()])
+    dureeDemontage = TimeField('dureeDemontage', validators=[DataRequired()])
+    estGratuit = BooleanField('estGratuit')
+    submit = SubmitField("ajouter le concert")
+
+    def get_information(self):
+        lieu = self.lieu.data
+        dateDeb = self.dateDeb.data
+        heureDeb = self.heureDeb.data
+        dateFin = self.dateFin.data
+        heureFin = self.heureFin.data
+        dureeMontage = self.dureeMontage.data
+        dureeDemontage = self.dureeDemontage.data
+        estGratuit = self.estGratuit.data
+        return lieu, dateDeb, heureDeb, dateFin, heureFin, dureeMontage, dureeDemontage, estGratuit
     
 class RechercheForm(FlaskForm):
     search = StringField('Recherche')
@@ -515,6 +538,44 @@ def ajouter_artiste_submit():
 def supprimer_artiste(id:int):
     requetes.delete_artiste(id)
     return redirect(url_for('artiste_management'))
+
+@app.route('/concert-management',methods=['GET','POST'])
+def concert_management():
+    f = RechercheForm()
+    if f.validate_on_submit():
+        search = f.get_search()
+        if search != None:
+            return render_template(
+                'module_administrateur/concert_management.html',
+                groupes = requetes.get_groupes_with_search(search),
+                RechercheForm = f,
+                nb_resultat = len(requetes.get_groupes_with_search(search))
+            )
+    return render_template(
+        'module_administrateur/concert_management.html',
+        groupes = requetes.get_groupes(),
+        RechercheForm = f,
+        nb_resultat = len(requetes.get_groupes())
+    )
+
+@app.route('/modifier_groupe_concert/<int:id>',methods=['GET','POST'])
+def modifier_groupe_concert(id):
+    f = AjouterConcertForm()
+    groupe = requetes.get_groupe_with_idG(id)
+    concerts = requetes.get_concerts_with_idG(id)
+    if f.validate_on_submit():
+        data = f.get_information()
+        print(data)
+        # requetes.insert_concert(id,data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7])
+        return redirect(url_for('concert_management'))
+    return render_template(
+        'module_administrateur/modifier_groupe_concert.html',
+        groupe = groupe,
+        concerts = concerts,
+        AjouterConcertForm = f
+    )
+
+
 
 @app.route('/spectateur-management',methods=['GET','POST'])
 @csrf.exempt

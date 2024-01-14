@@ -589,3 +589,13 @@ def get_styles():
         raise
     finally:
         session.close()
+
+def get_lieux():
+    try:
+        session = Session()
+        lieux = session.query(LIEU).all()
+        return lieux
+    except:
+        raise
+    finally:
+        session.close()
