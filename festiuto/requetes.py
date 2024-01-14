@@ -466,6 +466,19 @@ def delete_groupe(idG):
     finally:
         session.close()
 
+def update_groupe(idG,nomG,idS,descG):
+    try:
+        session = Session()
+        groupe = session.query(GROUPE).filter_by(idG=idG).first()
+        groupe.nomG = nomG
+        groupe.idS = idS
+        groupe.descriptionG = descG
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
 def insert_artiste(nomA,prenomA,idG):
     try:
         session = Session()
@@ -481,6 +494,19 @@ def delete_artiste(idA):
     try:
         session = Session()
         session.query(ARTISTE).filter_by(idA=idA).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def update_artiste(idA,nomA,prenomA,idG):
+    try:
+        session = Session()
+        artiste = session.query(ARTISTE).filter_by(idA=idA).first()
+        artiste.nomA = nomA
+        artiste.prenomA = prenomA
+        artiste.idG = idG
         session.commit()
     except:
         raise

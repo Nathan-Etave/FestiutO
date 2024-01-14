@@ -24,7 +24,7 @@ class ModifierArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
     groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()], validators=[DataRequired()])
-    submit = SubmitField("ajouter l'artiste")
+    submit = SubmitField("modifier l'artiste")
 
     def get_information(self):
         nom = self.nom.data
@@ -425,13 +425,12 @@ def modifier_groupe(id):
         ModifierGroupeForm = f
     )
 
-@app.route('/modifier_groupe',methods=['GET','POST'])
-def modifier_groupe_submit():
+@app.route('/modifier_groupe_submit/<int:id>',methods=['GET','POST'])
+def modifier_groupe_submit(id):
     nom = request.form.get('nom')
     style = request.form.get('style')
     description = request.form.get('description')
-    print(nom,style,description)
-    # requetes.update_groupe(id,nom,style,description)
+    requetes.update_groupe(id,nom,style,description)
     return redirect(url_for('groupe_management'))
 
 @app.route('/ajouter_groupe',methods=['GET','POST'])
@@ -479,21 +478,22 @@ def artiste_management():
 @app.route('/modifier_artiste/<int:id>',methods=['GET','POST'])
 def modifier_artiste(id):
     f = ModifierArtisteForm()
+    artiste = requetes.get_artiste_with_idA(id)
+    f.groupe.default = artiste.idG
+    f.process()
     return render_template(
         'module_administrateur/modifier_artiste.html',
-        artiste = requetes.get_artiste_with_idA(id),
+        artiste = artiste,
         ModifierArtisteForm = f
     )
 
-@app.route('/modifier_artiste',methods=['GET','POST'])
-def modifier_artiste_submit():
+@app.route('/modifier_artiste_submit/<int:id>',methods=['GET','POST'])
+def modifier_artiste_submit(id):
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
     groupe = request.form.get('groupe')
-    print(nom,prenom,groupe)
-    # requetes.update_artiste(id,nom,prenom,groupe)
-    return redirect(url_for('spectateur_management'))
-
+    requetes.update_artiste(id,nom,prenom,groupe)
+    return redirect(url_for('artiste_management'))
 
 @app.route('/ajouter_artiste',methods=['GET','POST'])
 def ajouter_artiste():
