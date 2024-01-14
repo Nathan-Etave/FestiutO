@@ -441,4 +441,39 @@ def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGr
     finally:
         session.close()
 
+def get_last_idP():
+    try:
+        session = Session()
+        result = session.query(PHOTO).order_by(PHOTO.idP.desc()).first()
+        if result is None:
+            return 0
+        return result.idP
+    except:
+        raise
+    finally:
+        session.close()
 
+def update_photo_artiste(idA, photo):
+    try:
+        session = Session()
+        photo = PHOTO(idP=get_last_idP() + 1, img=photo)
+        session.add(photo)
+        session.commit()
+        artiste = session.query(ARTISTE).filter(ARTISTE.idA == idA).first()
+        artiste.idP = photo.idP
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_photo_artiste(idA):
+    try:
+        session = Session()
+        artiste = session.query(ARTISTE).filter(ARTISTE.idA == idA).first()
+        photo = session.query(PHOTO).filter(PHOTO.idP == artiste.idP).first()
+        return photo
+    except:
+        raise
+    finally:
+        session.close()

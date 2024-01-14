@@ -1,0 +1,9 @@
+<form method="POST" enctype="multipart/form-data">
+    {{ AddFileToDatabaseForm.hidden_tag() }}
+    {{ AddFileToDatabaseForm.id() }}
+    {{ AddFileToDatabaseForm.file() }}
+    {{ AddFileToDatabaseForm.submit() }}
+    <object data="data:image/jpeg;base64,{{ photo.img.decode('utf-8') }}" type="image/jpeg"></object>
+</form>
+
+

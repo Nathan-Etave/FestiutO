@@ -1,8 +1,9 @@
+import base64
 import random
 from flask import jsonify, render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
 import scipy as sp
-from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
+from wtforms import BooleanField, DateField, DateTimeField, EmailField, FileField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField
 from wtforms.validators import DataRequired, NumberRange
 from festiuto import app, csrf
 from festiuto import requetes
@@ -81,6 +82,11 @@ class RegisterForm(FlaskForm):
     mdpConfirm = PasswordField('password', validators=[DataRequired()])
     submit = SubmitField("s'enregistrer")
     next = HiddenField()
+
+class AddFileToDatabaseForm(FlaskForm):
+    id = IntegerField('id', validators=[DataRequired()])
+    file = FileField()
+    submit = SubmitField('Modifier')
 
     def get_information(self):
         nom = self.nom.data
@@ -405,4 +411,20 @@ def ajouter_concert():
 def ajouter_groupe():
     return render_template(
         'module_administrateur/ajouter_groupe.html'
+    )
+
+@app.route('/blob',methods=['GET','POST'])
+@csrf.exempt
+def blob():
+    form = AddFileToDatabaseForm()
+    if form.validate_on_submit():
+        file = form.file.data
+        file = base64.b64encode(file.read())
+        id = form.id.data
+        requetes.update_photo_artiste(id, file)
+        return redirect(url_for('blob'))
+    return render_template(
+        'blob.html',
+        AddFileToDatabaseForm = form,
+        photo = requetes.get_photo_artiste(1)
     )
