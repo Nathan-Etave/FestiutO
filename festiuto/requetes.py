@@ -132,6 +132,26 @@ def insert_user(mail,prenom,nom,mdp):
     finally:
         session.close()
 
+def delete_billet_by_idU(idU):
+    try:
+        session = Session()
+        session.query(BILLET).filter_by(idU=idU).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_user(idU):
+    try:
+        session = Session()
+        session.query(UTILISATEUR).filter_by(idU=idU).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
 def insert_billet(idT,idU,dateDebB, dateFinB, quantite):
     try:
         session = Session()
@@ -379,6 +399,16 @@ def get_spectateurs():
     try:
         session = Session()
         spectateurs = session.query(UTILISATEUR).filter(UTILISATEUR.idR == 3).all()
+        return spectateurs
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_spectateurs_with_search(search):
+    try:
+        session = Session()
+        spectateurs = session.query(UTILISATEUR).filter(UTILISATEUR.nomU.like("%" + search + "%") | UTILISATEUR.prenomU.like("%" + search + "%")).filter(UTILISATEUR.idR == 3).all()
         return spectateurs
     except:
         raise

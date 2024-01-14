@@ -103,7 +103,7 @@ class RegisterForm(FlaskForm):
     mail = StringField('email', validators=[DataRequired()])
     mdp = PasswordField('password', validators=[DataRequired()])
     mdpConfirm = PasswordField('password', validators=[DataRequired()])
-    submit = SubmitField("s'enregistrer")
+    submit = SubmitField("créer le compte")
     next = HiddenField()
 
     def get_information(self):
@@ -453,11 +453,55 @@ def supprimer_artiste(id:int):
     return redirect(url_for('artiste_management'))
 
 @app.route('/spectateur-management',methods=['GET','POST'])
+@csrf.exempt
 def spectateur_management():
+    f = RechercheForm()
+    if f.validate_on_submit():
+        search = f.get_search()
+        if search != None:
+            return render_template(
+                'module_administrateur/spectateur_management.html',
+                spectateurs = requetes.get_spectateurs_with_search(search),
+                RechercheForm = f,
+                nb_resultat = len(requetes.get_spectateurs_with_search(search))
+            )
+
     return render_template(
         'module_administrateur/spectateur_management.html',
-        spectateurs = requetes.get_spectateurs()
+        spectateurs = requetes.get_spectateurs(),
+        RechercheForm = f,
+        nb_resultat = len(requetes.get_spectateurs())
     )
+
+@app.route('/ajouter_spectateur',methods=['GET','POST'])
+def ajouter_spectateur():
+    f = RegisterForm()
+    return render_template(
+        'module_administrateur/ajouter_spectateur.html',
+        RegisterForm = f
+    )
+
+@app.route('/ajouter_spectateur_submit',methods=['GET','POST'])
+def ajouter_spectateur_submit():
+    nom = request.form.get('nom')
+    prenom = request.form.get('prenom')
+    mail = request.form.get('mail')
+    mdp = requetes.hasher_mdp(request.form.get('mdp'))
+    mdpConfirm = requetes.hasher_mdp(request.form.get('mdpConfirm'))
+    if mdp == mdpConfirm:
+            requetes.insert_user(mail, prenom, nom, mdp)
+            return redirect(url_for('spectateur_management'))
+    else:
+        return render_template(
+            'module_administrateur/ajouter_spectateur.html',
+            RegisterForm = RegisterForm()
+        )
+
+@app.route('/supprimer-spectateur/<int:id>',methods=['GET','POST'])
+def supprimer_spectateur(id:int):
+    requetes.delete_billet_by_idU(id)
+    requetes.delete_user(id)
+    return redirect(url_for('spectateur_management'))
 
 @app.route('/hebergement-management',methods=['GET','POST'])
 def hebergement_management():
