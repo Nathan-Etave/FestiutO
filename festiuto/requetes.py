@@ -488,6 +488,62 @@ def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGr
     finally:
         session.close()
 
+def get_billet_by_idB(idB):
+    try:
+        session = Session()
+        billet = session.query(BILLET).filter(BILLET.idB == idB).first()
+        return billet
+    except:
+        raise
+    finally:
+        session.close()
+
+def is_user_billet(idU, idB):
+    try:
+        session = Session()
+        billet = session.query(BILLET).filter(BILLET.idB == idB).first()
+        if billet.idU == idU:
+            return True
+        return False
+    except:
+        raise
+    finally:
+        session.close()
+
+def remove_billet_from_panier(idU, idT, dateDebB, dateFinB):
+    try:
+        session = Session()
+        billets = session.query(BILLET).filter(BILLET.idU == idU).filter(BILLET.idT == idT).filter(BILLET.dateDebB == dateDebB).filter(BILLET.dateFinB == dateFinB).all()
+        session.delete(billets[0])
+        session.commit()
+        return len(billets) - 1, billets[1].idB if len(billets) > 1 else None
+    except:
+        return 0
+    finally:
+        session.close()
+
+def add_billet_to_panier(idU, idT, dateDebB, dateFinB):
+    try:
+        session = Session()
+        billet = BILLET(idB=get_last_idB() + 1, idT=idT, idU=idU, idF=1, dateDebB=dateDebB, dateFinB=dateFinB)
+        session.add(billet)
+        session.commit()
+        return len(session.query(BILLET).filter(BILLET.idU == idU).filter(BILLET.idT == idT).filter(BILLET.dateDebB == dateDebB).filter(BILLET.dateFinB == dateFinB).all()), billet.idB
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_prix_billet(idT):
+    try:
+        session = Session()
+        billet = session.query(TYPE_BILLET).filter(TYPE_BILLET.idT == idT).first()
+        return billet.prixT
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_styles():
     try:
         session = Session()

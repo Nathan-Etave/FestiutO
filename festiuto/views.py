@@ -349,7 +349,6 @@ def favoris():
 @app.route('/billets',methods=['GET','POST'])
 def billets():
     data_billets,total = requetes.get_billets_with_idU(session['user'][0])
-    print(data_billets)
     return render_template(
         'billets.html',
         billets = data_billets,
@@ -522,3 +521,35 @@ def ajouter_concert():
     return render_template(
         'module_administrateur/ajouter_concert.html'
     )
+
+@app.route('/ajouter-groupe',methods=['GET','POST'])
+def ajouter_groupe():
+    return render_template(
+        'module_administrateur/ajouter_groupe.html'
+    )
+
+@app.route('/decrementer-billet',methods=['GET','POST'])
+@csrf.exempt
+def decrementer_billet():
+    json = request.get_json()
+    billet = requetes.get_billet_by_idB(json['idB'])
+    if billet is None or not requetes.is_user_billet(session['user'][0], billet.idB):
+        return jsonify(-1, -1)
+    else:
+        return jsonify(requetes.remove_billet_from_panier(billet.idU, billet.idT, billet.dateDebB, billet.dateFinB), requetes.get_prix_billet(billet.idT), billet.idT, billet.idU, str(billet.dateDebB), str(billet.dateFinB))
+
+@app.route('/incrementer-billet',methods=['GET','POST'])
+@csrf.exempt
+def incrementer_billet():
+    json = request.get_json()
+    billet = requetes.get_billet_by_idB(json['idB'])
+    if billet is None or not requetes.is_user_billet(session['user'][0], billet.idB):
+        return jsonify(-1, -1)
+    else:
+        return jsonify(requetes.add_billet_to_panier(billet.idU, billet.idT, billet.dateDebB, billet.dateFinB), requetes.get_prix_billet(billet.idT))
+    
+@app.route('/incrementer-nouveau-billet',methods=['GET','POST'])
+@csrf.exempt
+def incrementer_nouveau_billet():
+    json = request.get_json()
+    return jsonify(requetes.add_billet_to_panier(session['user'][0], json['idT'], json['dateD'], json['dateF']), requetes.get_prix_billet(json['idT']))
