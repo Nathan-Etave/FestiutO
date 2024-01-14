@@ -1,3 +1,4 @@
+import datetime
 import random
 from re import T
 from flask import jsonify, render_template, session, redirect, url_for, request
@@ -565,8 +566,9 @@ def modifier_groupe_concert(id):
     concerts = requetes.get_concerts_with_idG(id)
     if f.validate_on_submit():
         data = f.get_information()
-        print(data)
-        # requetes.insert_concert(id,data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7])
+        datetimeDeb = datetime.datetime.combine(data[1], data[2])
+        datetimeFin = datetime.datetime.combine(data[3], data[4])
+        requetes.insert_concert(id,data[0],datetimeDeb,datetimeFin,data[5],data[6],data[7])
         return redirect(url_for('concert_management'))
     return render_template(
         'module_administrateur/modifier_groupe_concert.html',

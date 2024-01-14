@@ -516,7 +516,7 @@ def update_artiste(idA,nomA,prenomA,idG):
 def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGratuit):
     try:
         session = Session()
-        concert = CONCERT(idC=get_last_idC() + 1, idG=idG, idL=idL, dateDebC=dateDebC, dateFinC=dateFinC, dureeMontageC=dureeMontageC, dureeDemontageC=dureeDemontageC, estGratuit=estGratuit)
+        concert = CONCERT(idC=get_last_idC() + 1, idF=1, idG=idG, idL=idL, dateDebC=dateDebC, dateFinC=dateFinC, dureeMontageC=dureeMontageC, dureeDemontageC=dureeDemontageC, estGratuit=estGratuit)
         session.add(concert)
         session.commit()
     except:
