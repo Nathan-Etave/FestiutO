@@ -359,8 +359,6 @@ def get_groupes():
     try:
         session = Session()
         groupes = session.query(GROUPE).all()
-        for groupe in groupes:
-            print(groupe.nomG)
         return groupes
     except:
         raise
@@ -436,6 +434,37 @@ def get_hebergements():
         raise
     finally:
         session.close()
+
+def get_hebergement_with_idH(idH):
+    try:
+        session = Session()
+        hebergement = session.query(HEBERGEMENT).filter(HEBERGEMENT.idH == idH).first()
+        return hebergement
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_hebergements_with_search(search):
+    try:
+        session = Session()
+        hebergements = session.query(HEBERGEMENT).filter(HEBERGEMENT.nomH.like("%" + search + "%")).all()
+        return hebergements
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_lodging_with_idH(idH):
+    try:
+        session = Session()
+        lodging = session.query(LOGER, GROUPE).select_from(LOGER).join(GROUPE).filter(LOGER.idH == idH).all()
+        return lodging
+    except:
+        raise
+    finally:
+        session.close()
+
 
 def get_billets():
     try:
@@ -597,6 +626,16 @@ def get_lieux():
         session = Session()
         lieux = session.query(LIEU).all()
         return lieux
+    except:
+        raise
+    finally:
+        session.close()
+
+def nb_artiste_with_idG(idG):
+    try:
+        session = Session()
+        nb_artiste = session.query(ARTISTE).filter(ARTISTE.idG == idG).count()
+        return nb_artiste
     except:
         raise
     finally:
