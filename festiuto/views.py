@@ -403,9 +403,13 @@ def groupe_management():
 @app.route('/modifier_groupe/<int:id>',methods=['GET','POST'])
 def modifier_groupe(id):
     f = ModifierGroupeForm()
+    groupe = requetes.get_groupe_with_idG(id)
+    f.style.default = groupe.STYLEMUSICAL.idS
+    f.description.default = groupe.GROUPE.descriptionG
+    f.process()
     return render_template(
         'module_administrateur/modifier_groupe.html',
-        groupe = requetes.get_groupe_with_idG(id),
+        groupe = groupe,
         ModifierGroupeForm = f
     )
 
