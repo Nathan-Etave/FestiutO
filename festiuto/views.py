@@ -122,6 +122,17 @@ class BilletForm(FlaskForm):
         sunday = self.sunday.data
         return (monday, tuesday, wednesday, thursday, friday, saturday, sunday)
 
+class ConfigReservationForm(FlaskForm):
+    dateD = DateField('dateD', validators=[DataRequired()])
+    dateF = DateField('dateF', validators=[DataRequired()])
+    submit = SubmitField("ajouter l'hébergement")
+    next = HiddenField()
+
+    def get_information(self):
+        dateD = self.dateD.data
+        dateF = self.dateF.data
+        return (dateD, dateF)
+
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
@@ -701,10 +712,15 @@ def ajouter_concert():
 
 @app.route('/config-reservation/<int:id>',methods=['GET','POST'])
 def config_reservation(id):
-    # f = ConfigReservationForm()
+    f = ConfigReservationForm()
+    if f.validate_on_submit():
+        data = f.get_information()
+        # requetes.insert_reservation(session['user'][0],id,data[0],data[1])
+        return redirect(url_for('home'))
     return render_template(
         'module_administrateur/config_reservation.html',
-        idG = id
+        idG = id,
+        ConfigReservationForm = f
     )
 
 

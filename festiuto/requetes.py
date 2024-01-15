@@ -510,6 +510,9 @@ def update_groupe(idG,nomG,idS,descG):
     finally:
         session.close()
 
+def insert_reservation(idG,dateDeb,dateFin):
+    pass
+
 def insert_artiste(nomA,prenomA,idG):
     try:
         session = Session()
