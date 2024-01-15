@@ -710,8 +710,8 @@ def ajouter_concert():
         'module_administrateur/ajouter_concert.html'
     )
 
-@app.route('/config-reservation/<int:id>',methods=['GET','POST'])
-def config_reservation(id):
+@app.route('/config-reservation/<int:idH>/<int:idG>',methods=['GET','POST'])
+def config_reservation(idG, idH):
     f = ConfigReservationForm()
     if f.validate_on_submit():
         data = f.get_information()
@@ -719,7 +719,7 @@ def config_reservation(id):
         return redirect(url_for('home'))
     return render_template(
         'module_administrateur/config_reservation.html',
-        idG = id,
+        idG = idG,
         ConfigReservationForm = f
     )
 
