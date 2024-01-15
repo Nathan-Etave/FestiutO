@@ -668,11 +668,24 @@ def modifier_hebergement(id):
 
 @app.route('/ajouter-groupe-hebergement/<int:id>',methods=['GET','POST'])
 def ajouter_groupe_hebergement(id):
+    f = RechercheForm()
+    if f.validate_on_submit():
+        search = f.get_search()
+        if search != None:
+            return render_template(
+                'module_administrateur/ajouter_groupe_hebergement.html',
+                idH = id,
+                groupes = requetes.get_groupes_with_search(search),
+                RechercheForm = f,
+                nb_resultat = len(requetes.get_groupes_with_search(search))
+            )
     return render_template(
         'module_administrateur/ajouter_groupe_hebergement.html',
-        idH = id
+        groupes = requetes.get_groupes(),
+        idH = id,
+        RechercheForm = f,
+        nb_resultat = len(requetes.get_groupes())
     )
-
 @app.route('/billet-management',methods=['GET','POST'])
 def billet_management():
     return render_template(
@@ -685,6 +698,15 @@ def ajouter_concert():
     return render_template(
         'module_administrateur/ajouter_concert.html'
     )
+
+@app.route('/config-reservation/<int:id>',methods=['GET','POST'])
+def config_reservation(id):
+    # f = ConfigReservationForm()
+    return render_template(
+        'module_administrateur/config_reservation.html',
+        idG = id
+    )
+
 
 @app.route('/decrementer-billet',methods=['GET','POST'])
 @csrf.exempt
