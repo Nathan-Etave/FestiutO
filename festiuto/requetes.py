@@ -73,6 +73,18 @@ def get_last_idU():
     finally:
         session.close()
 
+def get_last_idH():
+    try:
+        session = Session()
+        result = session.query(HEBERGEMENT).order_by(HEBERGEMENT.idH.desc()).first()
+        if result is None:
+            return 0
+        return result.idH
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_last_idB():
     try:
         session = Session()
@@ -450,6 +462,17 @@ def get_hebergements_with_search(search):
         session = Session()
         hebergements = session.query(HEBERGEMENT).filter(HEBERGEMENT.nomH.like("%" + search + "%")).all()
         return hebergements
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_hebergement(nomH,adresseH,nbPlacesH):
+    try:
+        session = Session()
+        hebergement = HEBERGEMENT(idH=get_last_idH() + 1, nomH=nomH, adresseH=adresseH, nbPlacesH=nbPlacesH)
+        session.add(hebergement)
+        session.commit()
     except:
         raise
     finally:

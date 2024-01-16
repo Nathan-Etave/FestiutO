@@ -15,8 +15,26 @@
             </a>
             <h1>ajouter un hébergement</h1>
         </div>
-    </div>
 
+        <form action="{{ url_for('ajouter_hebergement') }}" method="POST">
+            {{ AjouterHebergement.hidden_tag() }}
+            <div class="config">
+                <label for="nom">nom</label>
+                {{ AjouterHebergement.nom(class="form-control", id="nom") }}
+            </div>
+            <div class="config">
+                <label for="addresse">adresse</label>
+                {{ AjouterHebergement.addresse(class="form-control", id="addresse") }}
+            </div>
+            <div class="config">
+                <label for="nb">nombre de place</label>
+                {{ AjouterHebergement.nbPlace(class="form-control", id="nb") }}
+            </div>
+            <div id="submit-container">
+                {{ AjouterHebergement.submit(id="submit-form") }}
+            </div>
+        </form>
+    </div>
 </main>
 {% endblock %}
 
