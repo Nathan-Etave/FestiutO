@@ -109,6 +109,18 @@ def get_last_idA():
     finally:
         session.close()
 
+def get_last_idAct():
+    try:
+        session = Session()
+        result = session.query(ACTIVITE_ANNEXE).order_by(ACTIVITE_ANNEXE.idAct.desc()).first()
+        if result is None:
+            return 0
+        return result.idAct
+    except:
+        raise
+    finally:
+        session.close()
+
 def get_last_idC():
     try:
         session = Session()
@@ -240,6 +252,16 @@ def get_concerts_with_idG(idG):
         session = Session()
         concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL, LIEU).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).join(LIEU).filter(GROUPE.idG == idG).all()
         return concerts
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_activites_with_idG(idG):
+    try:
+        session = Session()
+        activites = session.query(ACTIVITE_ANNEXE, GROUPE, STYLE_MUSICAL, LIEU).select_from(ACTIVITE_ANNEXE).join(GROUPE).join(STYLE_MUSICAL).join(LIEU).filter(ACTIVITE_ANNEXE.idG == idG).all()
+        return activites
     except:
         raise
     finally:
@@ -549,6 +571,17 @@ def update_artiste(idA,nomA,prenomA,idG):
         artiste.nomA = nomA
         artiste.prenomA = prenomA
         artiste.idG = idG
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_activite(idG,nomA,descA,idL,dateDebA,dateFinA,estPublique):
+    try:
+        session = Session()
+        activite = ACTIVITE_ANNEXE(idAct=get_last_idAct() + 1, nomAct=nomA, descriptionAct=descA, dateDebAct=dateDebA, dateFinAct=dateFinA, idL=idL, idF=1, idG=idG, estPublique=estPublique)
+        session.add(activite)
         session.commit()
     except:
         raise

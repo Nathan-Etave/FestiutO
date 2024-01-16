@@ -97,7 +97,7 @@ p {
     }
 }
 
-.all-concert-container {
+.all-concert-container, .all-activites-container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -105,7 +105,7 @@ p {
     gap: 30px;
 }
 
-.concert-props {
+.concert-props, .activite-props {
     width: 375px;
     height: auto;
     background-color: var(--secondary-hover);
@@ -118,17 +118,16 @@ p {
     gap: 20px;
     font-size: 25px;
 
-    /* &:hover {
-        background-color: var(--accent);
-        color: var(--text);
-        transition: .2s;
-        cursor: pointer;
-    } */
-
     & .lieu {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    & h4 {
+        font-family: black-italic;
+        font-size: 30px;
+        color: var(--accent);
     }
 
     & .date {

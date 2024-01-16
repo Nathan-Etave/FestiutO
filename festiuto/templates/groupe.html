@@ -54,6 +54,24 @@
                 </div>
                 {% endfor %}
             </div>
+            <h3>les activitées associées</h3>
+            <div class="all-activites-container">
+                {% for activite in activites_associated %}
+                <div class="activite-props" id="{{ activite.ACTIVITEANNEXE.idAct }}">
+                    <h4>{{ activite.ACTIVITEANNEXE.nomAct }}</h4>
+                    <div class="date">
+                        <p>{{ activite.ACTIVITEANNEXE.dateDebAct.strftime('%d %m %Y') }}</p>
+                        <div>
+                            <p>{{ activite.ACTIVITEANNEXE.dateDebAct.strftime('%H:%M') }}</p>
+                            <p>-</p>
+                            <p>{{ activite.ACTIVITEANNEXE.dateFinAct.strftime('%H:%M') }}</p>
+                        </div>
+                    </div>
+                    <p>{{ activite.LIEU.adresseL }}</p>
+                    <p>{{ activite.LIEU.nomL }}</p>    
+                </div>
+                {% endfor %}
+            </div>
             
             <h3>dans le même style que {{ groupe.GROUPE.nomG }}</h3>
             <div class="related-group">

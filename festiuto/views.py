@@ -57,6 +57,28 @@ class ModifierGroupeForm(FlaskForm):
         description = self.description.data
         style = self.style.data
         return nom, description, style
+    
+class AjouterActivitesForm(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    description = TextAreaField('description', validators=[DataRequired()])
+    lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.get_lieux()], validators=[DataRequired()])
+    dateDeb = DateField('dateDeb', validators=[DataRequired()])
+    heureDeb = TimeField('heureDeb', validators=[DataRequired()])
+    dateFin = DateField('dateFin', validators=[DataRequired()])
+    heureFin = TimeField('heureFin', validators=[DataRequired()])
+    estPublique = BooleanField('estPublique')
+    submit = SubmitField("ajouter l'activité")
+
+    def get_information(self):
+        nom = self.nom.data
+        description = self.description.data
+        lieu = self.lieu.data
+        dateDeb = self.dateDeb.data
+        heureDeb = self.heureDeb.data
+        dateFin = self.dateFin.data
+        heureFin = self.heureFin.data
+        estPublique = self.estPublique.data
+        return nom, description, lieu, dateDeb, heureDeb, dateFin, heureFin, estPublique
 
 class RechercheGroupeForm(FlaskForm):
     search = StringField('Recherche')
@@ -233,6 +255,7 @@ def groupe(id:int):
     groupe = requetes.get_groupe_with_idG(id)
     artistes = requetes.get_artistes_with_idG(id)
     concerts_associated = requetes.get_concerts_with_idG(id)
+    activites_associated = requetes.get_activites_with_idG(id)
     groupes_related = requetes.get_groupe_related(id)
     if 'user' in session:
         favori = requetes.is_favori(session['user'][0],id)
@@ -243,6 +266,7 @@ def groupe(id:int):
             artistes = artistes,
             groupe = groupe,
             concerts_associated = concerts_associated,
+            activites_associated = activites_associated,
             groupes_related = groupes_related,
             favori = favori
         )
@@ -253,6 +277,7 @@ def groupe(id:int):
                 artistes = artistes,
                 groupe = groupe,
                 concerts_associated = concerts_associated,
+                activites_associated = activites_associated,
                 groupes_related = groupes_related,
             )
     
@@ -282,7 +307,7 @@ def config_billet(id):
                         date_d = f"2024-05-{day+13}"
                         date_f = f"2024-05-{day+13}"
                 requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
-                return redirect(url_for('home'))
+                return redirect(url_for('billets'))
             else:
                 return render_template(
                     'config_billet.html',
@@ -405,7 +430,7 @@ def favoris():
         favoris = requetes.get_favoris(session['user'][0])
     )
 
-@app.route('/billets',methods=['GET','POST'])
+@app.route('/panier',methods=['GET','POST'])
 def billets():
     data_billets,total = requetes.get_billets_with_idU(session['user'][0])
     return render_template(
@@ -571,6 +596,22 @@ def concert_management():
         nb_resultat = len(requetes.get_groupes())
     )
 
+@app.route('/modifier_groupe_activites/<int:id>',methods=['GET','POST'])
+def modifier_groupe_activites(id):
+    f = AjouterActivitesForm()
+    groupe = requetes.get_groupe_with_idG(id)
+    if f.validate_on_submit():
+        data = f.get_information()
+        datetimeDeb = datetime.datetime.combine(data[3], data[4])
+        datetimeFin = datetime.datetime.combine(data[5], data[6])
+        requetes.insert_activite(id,data[0],data[1],data[2],datetimeDeb,datetimeFin,data[-1])
+        return redirect(url_for('concert_management'))
+    return render_template(
+        'module_administrateur/modifier_groupe_activites.html',
+        AjouterActivitesForm = f,
+        groupe = groupe
+    )
+
 @app.route('/modifier_groupe_concert/<int:id>',methods=['GET','POST'])
 def modifier_groupe_concert(id):
     f = AjouterConcertForm()
@@ -588,8 +629,6 @@ def modifier_groupe_concert(id):
         concerts = concerts,
         AjouterConcertForm = f
     )
-
-
 
 @app.route('/spectateur-management',methods=['GET','POST'])
 @csrf.exempt

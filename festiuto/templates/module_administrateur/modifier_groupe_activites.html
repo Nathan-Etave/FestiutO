@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/module_administrateur/modifier_groupe_activites.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        
+        <div class="header">
+            <a href="{{ url_for('concert_management') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>ajouter une activitée à {{ groupe.GROUPE.nomG }}</h1>
+        </div>
+
+        <form action="{{ url_for('modifier_groupe_activites',id=groupe.GROUPE.idG) }}" method="POST">
+            {{ AjouterActivitesForm.hidden_tag() }}
+            <div class="config">
+                <label for="nom">nom de l'activitée</label>
+                {{ AjouterActivitesForm.nom(class="form-control", id="nom") }}
+            </div>
+            <div class="config">
+                <label for="description">lieu de l'activitée</label>
+                {{ AjouterActivitesForm.lieu(class="form-control", id="lieu") }}
+            </div>
+            <div class="config">
+                <label for="dated">date de début</label>
+                {{ AjouterActivitesForm.dateDeb(class="form-control", id="dated") }}
+            </div>
+            <div class="config">
+                <label for="heured">heure de début</label>
+                {{ AjouterActivitesForm.heureDeb(class="form-control", id="heured") }}
+            </div>
+            <div class="config">
+                <label for="datef">date de fin</label>
+                {{ AjouterActivitesForm.dateFin(class="form-control", id="datef") }}
+            </div>
+            <div class="config">
+                <label for="heuref">heure de fin</label>
+                {{ AjouterActivitesForm.heureFin(class="form-control", id="heuref") }}
+            </div>
+            <div class="config">
+                <label for="publique">activitée publique</label>
+                {{ AjouterActivitesForm.estPublique(class="form-control", id="publique") }}
+            </div>
+            <div class="config">
+                <label for="description">description de l'activitée</label>
+                {{ AjouterActivitesForm.description(class="form-control", id="description") }}
+            </div>         
+            <div id="submit-container">
+                {{ AjouterActivitesForm.submit(id="submit-form") }}
+            </div>
+        </form>
+
+    </div>
+
+</main>
+{% endblock %}
+

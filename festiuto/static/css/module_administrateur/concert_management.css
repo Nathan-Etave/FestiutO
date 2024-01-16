@@ -139,6 +139,14 @@ form {
                 scale: 1.1;
                 transition: .2s;
             }
+
+            p {
+                font-family: black-italic;
+                font-size: 25px;
+                color: var(--accent);
+                margin-right: 10px;
+            
+            }
         }
         
         & > p {
