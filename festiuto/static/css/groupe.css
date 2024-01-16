@@ -92,6 +92,7 @@ p {
 
     & h3 {
         font-family: black-italic;
+        margin-top: 60px;
         font-size: 35px;
         color: var(--accent);
     }
@@ -117,12 +118,6 @@ p {
     padding: 2%;
     gap: 20px;
     font-size: 25px;
-
-    & .lieu {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
 
     & h4 {
         font-family: black-italic;
@@ -152,6 +147,17 @@ p {
             border-left: 2px dotted var(--text);
             border-right: 2px dotted var(--text);
         }
+    }
+
+    & .lieu {
+        display: flex;
+        gap: 10px;
+
+        & div {
+            display: flex;
+            align-items: center;
+        }
+
     }
 }
 
