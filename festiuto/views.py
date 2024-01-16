@@ -87,6 +87,18 @@ class RechercheGroupeForm(FlaskForm):
     def get_search(self):
         return None if self.search.data == "" else self.search.data
     
+class AjouterHebergement(FlaskForm):
+    nom = StringField('nom', validators=[DataRequired()])
+    addresse = StringField('addresse', validators=[DataRequired()])
+    nbPlace = IntegerField('nbPlace', validators=[DataRequired(), NumberRange(min=1)], default=1)
+    submit = SubmitField("ajouter l'hébergement")
+
+    def get_information(self):
+        nom = self.nom.data
+        addresse = self.addresse.data
+        nbPlace = self.nbPlace.data
+        return nom, addresse, nbPlace
+
 class AjouterConcertForm(FlaskForm):
     lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.get_lieux()], validators=[DataRequired()])
     dateDeb = DateField('dateDeb', validators=[DataRequired()])
@@ -702,8 +714,14 @@ def hebergement_management():
 
 @app.route('/ajouter-hebergement',methods=['GET','POST'])
 def ajouter_hebergement():
+    f = AjouterHebergement()
+    if f.validate_on_submit():
+        data = f.get_information()
+        requetes.insert_hebergement(data[0],data[1],data[2])
+        return redirect(url_for('hebergement_management'))
     return render_template(
         'module_administrateur/ajouter_hebergement.html',
+        AjouterHebergement = f
     )
 
 @app.route('/modifier-hebergement/<int:id>',methods=['GET','POST'])
