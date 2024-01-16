@@ -510,8 +510,16 @@ def update_groupe(idG,nomG,idS,descG):
     finally:
         session.close()
 
-def insert_reservation(idG,dateDeb,dateFin):
-    pass
+def insert_reservation(idH,idG,dateDeb,dateFin):
+    try:
+        session = Session()
+        reservation = LOGER(idH=idH, idG=idG, dateDebH=dateDeb, dateFinH=dateFin)
+        session.add(reservation)
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
 
 def insert_artiste(nomA,prenomA,idG):
     try:

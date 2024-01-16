@@ -16,7 +16,7 @@
             <h1>ajouter un groupe à l'hébergement</h1>
         </div>
 
-        <form action="{{ url_for('concert_management') }}" method="POST" role="search">
+        <form action="{{ url_for('ajouter_groupe_hebergement',id=idH) }}" method="POST" role="search">
             {{ RechercheForm.hidden_tag() }}
             {{ RechercheForm.search(size=50, type="text", placeholder="groupe") }}
             {{ RechercheForm.submit(type="submit") }}

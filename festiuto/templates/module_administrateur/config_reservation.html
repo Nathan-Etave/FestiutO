@@ -10,11 +10,26 @@
     <div class="Container">
         
         <div class="header">
-            <a href="{{ url_for('hebergement_management') }}">
+            <a href="{{ url_for('ajouter_groupe_hebergement',id=idH) }}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
             </a>
             <h1>configuration de la réservation</h1>
         </div>
+
+        <form action="{{ url_for('config_reservation', idG=idG, idH=idH) }}" method="POST">
+            {{ ConfigReservationForm.hidden_tag() }}
+            <div class="config">
+                <label for="dated">date de début</label>
+                {{ ConfigReservationForm.dateD(class="form-control", id="dated") }}
+            </div>
+            <div class="config">
+                <label for="datef">date de fin</label>
+                {{ ConfigReservationForm.dateF(class="form-control", id="datef") }}
+            </div>
+            <div id="submit-container">
+                {{ ConfigReservationForm.submit(id="submit-form") }}
+            </div>
+        </form>
     </div>
 
 </main>

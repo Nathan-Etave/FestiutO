@@ -715,11 +715,12 @@ def config_reservation(idG, idH):
     f = ConfigReservationForm()
     if f.validate_on_submit():
         data = f.get_information()
-        # requetes.insert_reservation(session['user'][0],id,data[0],data[1])
-        return redirect(url_for('home'))
+        requetes.insert_reservation(idH,idG,data[0],data[1])
+        return redirect(url_for('modifier_hebergement',id=idH))
     return render_template(
         'module_administrateur/config_reservation.html',
         idG = idG,
+        idH = idH,
         ConfigReservationForm = f
     )
 
