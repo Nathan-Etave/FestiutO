@@ -34,10 +34,36 @@
 
         <footer>
             <div class="main-content">
-            
+                <a href="{{ url_for('home') }}" id="name">
+                    <img src="../static/images/icon.png" alt="icon" id="icon">
+                    <p>festiut'o©</p>
+                </a>
+                <div>
+                    <h3>aide</h3>
+                    <a href="{{ url_for('about') }}">en savoir plus</a>
+                    <a href="#">contact</a>
+                </div>
+                <div>
+                    <h3>a propos</h3>
+                    <a href="{{ url_for('home') }}">accueil</a>
+                    <a href="{{ url_for('programme') }}">programme</a>
+                    <a href="{{ url_for('billeterie') }}">billeterie</a>
+                    <a href="{{ url_for('login') }}">connexion</a>
+                </div>
+                <div>
+                    <h3>rejoignez nous</h3>
+                    <p>instagram</p>
+                    <p>twitter</p>
+                </div>
             </div>
             <div class="footer-content">
                 <p>© 2023 - 2024 festiut'o. tous droits réservés</p>
+                <div id="auteurs">
+                    <p>etave nathan</p>
+                    <p>lavenant jordan</p>
+                    <p>lebeaupin louis</p>
+                    <p>rousselet juliette</p>
+                </div>
             </div>
         </footer>
 
