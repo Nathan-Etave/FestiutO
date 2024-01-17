@@ -773,6 +773,9 @@ def delete_activites_with_idG(idG):
 def delete_artistes_with_idG(idG):
     try:
         session = Session()
+        artistes = session.query(ARTISTE).filter_by(idG=idG).all()
+        for artiste in artistes:
+            session.query(JOUER).filter_by(idA=artiste.idA).delete()
         session.query(ARTISTE).filter_by(idG=idG).delete()
         session.commit()
     except:
@@ -790,12 +793,12 @@ def delete_revervation_with_idG(idG):
     finally:
         session.close()
 
-# def delete_favoris_with_idG(idG):
-#     try:
-#         session = Session()
-#         session.execute(FAVORIS.delete().values(idG=idG))
-#         session.commit()
-#     except:
-#         raise
-#     finally:
-#         session.close()
+def delete_favoris_with_idG(id):
+    try:
+        session = Session()
+        session.query(FAVORIS).filter_by(idG=id).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
