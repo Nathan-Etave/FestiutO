@@ -23,7 +23,7 @@ class AjouterArtisteForm(FlaskForm):
         return nom, prenom, groupe
 
 class AjouterInstrument(FlaskForm):
-    instrument = SelectField('instruments', choices=[(instrument.idI, instrument.nomI) for instrument in requetes.get_instruments()], validators=[DataRequired()])
+    instrument = SelectField('instruments', validators=[DataRequired()])
     submit = SubmitField("ajouter l'instrument")
 
     def get_information(self):
@@ -799,10 +799,16 @@ def instrument_management(id):
     artiste = requetes.get_artiste_with_idA(id)
     instrument_idA = requetes.get_instrument_with_idA(id)
     instruments = requetes.get_instruments()
-    f = AjouterInstrument() 
+    f = AjouterInstrument()
+    for instrument_2 in instrument_idA:
+        for instrument in instruments:
+            if instrument.idI == instrument_2.idI:
+                instruments.remove(instrument)
+    f.instrument.choices = [(instrument.idI, instrument.nomI) for instrument in instruments]
     if f.validate_on_submit():
         requetes.insert_instrument(id,f.get_information())
         return redirect(url_for('instrument_management',id=id))
+    f.process()
     return render_template(
         'module_administrateur/instrument_management.html',
         artiste = artiste,
@@ -814,19 +820,7 @@ def instrument_management(id):
 @app.route('/supprimer_instrument/<int:idA>/<int:idI>',methods=['GET','POST'])
 def supprimer_instrument(idA,idI): 
     requetes.delete_instrument(idA,idI)
-    artiste = requetes.get_artiste_with_idA(idA)
-    instrument_idA = requetes.get_instrument_with_idA(idA)
-    nomInstrumentidA = []
-    for instrument in instrument_idA:
-        nomInstrumentidA.append(requetes.get_instrument_with_idI(instrument.idI))
-    instruments = requetes.get_instruments()
-    return render_template(
-        'module_administrateur/instrument_management.html',
-        artiste = artiste,
-        instrument_idA = nomInstrumentidA,
-        instruments = instruments,
-        AjouterInstrument = AjouterInstrument()
-    )
+    return redirect(url_for('instrument_management',id=idA))
 
 
 @app.route('/decrementer-billet',methods=['GET','POST'])

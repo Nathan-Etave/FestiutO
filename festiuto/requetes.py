@@ -1,5 +1,5 @@
 from sqlalchemy import func, null
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, aliased
 from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT, FAVORIS, FESTIVAL, GROUPE, HEBERGEMENT,
                              IMAGER_GROUPE, INSTRUMENT, JOUER, LIEU, LOGER, PHOTO, RESEAU_SOCIAL, RESEAU_SOCIAL_GROUPE,
                              RESERVATION_ACTIVITE_ANNEXE, RESERVATION_CONCERT, ROLE_UTILISATEUR, STYLE_MUSICAL, TYPE_BILLET,
@@ -721,10 +721,9 @@ def get_instruments():
 def get_instrument_with_idA(idA):
     try:
         session = Session()
-        instruments = session.query(JOUER).select_from(JOUER).filter_by(idA=idA).all()
-        result = []
-        for instrument in instruments: result.append(instrument)
-        return result
+        instrument_alias = aliased(INSTRUMENT)
+        instruments = session.query(JOUER, instrument_alias).select_from(JOUER).join(instrument_alias, JOUER.c.idI == instrument_alias.idI).filter(JOUER.c.idA == idA).all()
+        return instruments
     except:
         raise
     finally:
