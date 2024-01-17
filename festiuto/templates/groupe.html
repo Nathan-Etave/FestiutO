@@ -37,6 +37,11 @@
                 <p>{{ groupe.GROUPE.descriptionG }}</p>
                 <p>style musical : {{ groupe.STYLEMUSICAL.nomS }}</p>
             </div>
+            <div class="group-images">
+                {% for image in images %}
+                    <object data="data:image/jpeg;base64,{{ image[-1].img.decode('utf-8') }}" type="image/jpeg"></object>
+                {% endfor %}
+            </div>
             <h3>où les voir ?</h3>
             <div class="all-concert-container">
                 {% for concert in concerts_associated %}

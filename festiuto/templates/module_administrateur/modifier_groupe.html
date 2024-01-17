@@ -16,7 +16,7 @@
             <h1>modifier {{ groupe.GROUPE.nomG }}</h1>
         </div>
 
-        <form action="{{ url_for('modifier_groupe_submit',id=groupe.GROUPE.idG) }}" method="POST">
+        <form action="{{ url_for('modifier_groupe_submit',id=groupe.GROUPE.idG) }}" method="POST" enctype="multipart/form-data">
             {{ ModifierGroupeForm.hidden_tag() }}
             <div class="config">
                 <label for="nom">nom</label>
@@ -25,6 +25,10 @@
             <div class="config">
                 <label for="style">style musical</label>
                 {{ ModifierGroupeForm.style(class="form-control", id="style") }}
+            </div>
+            <div class="config">
+                <label for="images">images</label>
+                {{ ModifierGroupeForm.images(class="form-control", id="images", multiple="multiple") }}
             </div>
             <div class="config">
                 <label for="description">description</label>
