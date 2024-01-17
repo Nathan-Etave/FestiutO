@@ -749,3 +749,53 @@ def insert_instrument(idA,idI):
         raise
     finally:
         session.close()
+
+def delete_concert_with_idG(idG):
+    try:
+        session = Session()
+        session.query(CONCERT).filter_by(idG=idG).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_activites_with_idG(idG):
+    try:
+        session = Session()
+        session.query(ACTIVITE_ANNEXE).filter_by(idG=idG).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_artistes_with_idG(idG):
+    try:
+        session = Session()
+        session.query(ARTISTE).filter_by(idG=idG).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_revervation_with_idG(idG):
+    try:
+        session = Session()
+        session.query(LOGER).filter_by(idG=idG).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+# def delete_favoris_with_idG(idG):
+#     try:
+#         session = Session()
+#         session.execute(FAVORIS.delete().values(idG=idG))
+#         session.commit()
+#     except:
+#         raise
+#     finally:
+#         session.close()

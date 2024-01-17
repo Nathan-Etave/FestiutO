@@ -112,8 +112,9 @@ footer {
             justify-content: center;
             align-items: center;
             gap: 30px;
+
             & img {
-                width: 150px;
+                width: 100px;
             }
 
             & p {
