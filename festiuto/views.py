@@ -22,6 +22,14 @@ class AjouterArtisteForm(FlaskForm):
         groupe = self.groupe.data
         return nom, prenom, groupe
 
+class AjouterInstrument(FlaskForm):
+    instrument = SelectField('instruments', choices=[(instrument.idI, instrument.nomI) for instrument in requetes.get_instruments()], validators=[DataRequired()])
+    submit = SubmitField("ajouter l'instrument")
+
+    def get_information(self):
+        instrument = self.instrument.data
+        return instrument
+
 class ModifierArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
@@ -784,11 +792,37 @@ def config_reservation(idG, idH):
 @app.route('/instrument_management/<int:id>',methods=['GET','POST'])
 def instrument_management(id):
     artiste = requetes.get_artiste_with_idA(id)
-    # instruments = requetes.get_instruments_with_idA(id)
+    instrument_idA = requetes.get_instrument_with_idA(id)
+    instruments = requetes.get_instruments()
+    f = AjouterInstrument() 
+    if f.validate_on_submit():
+        requetes.insert_instrument(id,f.get_information())
+        return redirect(url_for('instrument_management',id=id))
     return render_template(
         'module_administrateur/instrument_management.html',
-        artiste = artiste
+        artiste = artiste,
+        instrument_idA = instrument_idA,
+        instruments = instruments,
+        AjouterInstrument = f
     )
+
+@app.route('/supprimer_instrument/<int:idA>/<int:idI>',methods=['GET','POST'])
+def supprimer_instrument(idA,idI): 
+    requetes.delete_instrument(idA,idI)
+    artiste = requetes.get_artiste_with_idA(idA)
+    instrument_idA = requetes.get_instrument_with_idA(idA)
+    nomInstrumentidA = []
+    for instrument in instrument_idA:
+        nomInstrumentidA.append(requetes.get_instrument_with_idI(instrument.idI))
+    instruments = requetes.get_instruments()
+    return render_template(
+        'module_administrateur/instrument_management.html',
+        artiste = artiste,
+        instrument_idA = nomInstrumentidA,
+        instruments = instruments,
+        AjouterInstrument = AjouterInstrument()
+    )
+
 
 @app.route('/decrementer-billet',methods=['GET','POST'])
 @csrf.exempt

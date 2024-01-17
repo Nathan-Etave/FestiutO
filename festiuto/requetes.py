@@ -707,3 +707,45 @@ def nb_artiste_with_idG(idG):
         raise
     finally:
         session.close()
+
+def get_instruments():
+    try:
+        session = Session()
+        instruments = session.query(INSTRUMENT).all()
+        return instruments
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_instrument_with_idA(idA):
+    try:
+        session = Session()
+        instruments = session.query(JOUER).select_from(JOUER).filter_by(idA=idA).all()
+        result = []
+        for instrument in instruments: result.append(instrument)
+        return result
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_instrument(idA,idI):
+    try:
+        session = Session()
+        session.query(JOUER).filter_by(idA=idA,idI=idI).delete()
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def insert_instrument(idA,idI):
+    try:
+        session = Session()
+        session.execute(JOUER.insert().values(idA=idA,idI=idI)) 
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()

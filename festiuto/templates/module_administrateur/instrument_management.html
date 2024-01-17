@@ -15,6 +15,26 @@
             <h1>gérer les instruments de {{ artiste.nomA }} {{ artiste.prenomA }}</h1>
         </div>
 
+        <div class="instruments-container">
+            {% for instrument in instrument_idA %}
+            <a href="{{ url_for('supprimer_instrument',idA=artiste.idA,idI=instrument.idI) }}">
+                <p>{{ instrument.idI }}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+            </a>
+            {% endfor %}
+        </div>
+
+        <form action="{{ url_for('instrument_management',id=artiste.idA) }}" method="POST">
+            {{ AjouterInstrument.hidden_tag() }}
+            <div class="config">
+                <label for="instrument">instrument</label>
+                {{ AjouterInstrument.instrument(class="form-control", id="instrument") }}
+            </div>
+            <div id="submit-container">
+                {{ AjouterInstrument.submit(id="submit-form") }}
+            </div>
+        </form>
+
     </div>
 </main>
 {% endblock %}
