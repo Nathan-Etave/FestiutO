@@ -781,6 +781,14 @@ def config_reservation(idG, idH):
         ConfigReservationForm = f
     )
 
+@app.route('/instrument_management/<int:id>',methods=['GET','POST'])
+def instrument_management(id):
+    artiste = requetes.get_artiste_with_idA(id)
+    # instruments = requetes.get_instruments_with_idA(id)
+    return render_template(
+        'module_administrateur/instrument_management.html',
+        artiste = artiste
+    )
 
 @app.route('/decrementer-billet',methods=['GET','POST'])
 @csrf.exempt
