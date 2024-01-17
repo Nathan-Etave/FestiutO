@@ -83,6 +83,7 @@ p {
     & .group-assets {
         display: flex;
         flex-direction: row;
+        gap: 30px;
         justify-content: space-between;
 
         & p {
