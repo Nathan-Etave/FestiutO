@@ -1,3 +1,4 @@
+import base64
 from sqlalchemy import func, null
 from sqlalchemy.orm import joinedload, aliased
 from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT, FAVORIS, FESTIVAL, GROUPE, HEBERGEMENT,
@@ -222,17 +223,24 @@ def get_concerts_by_day(day):
         session.close()
 
 def get_concerts_with_search(search):
+    session = Session()
     try:
-        session = Session()
         concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL) \
-            .options(joinedload(CONCERT.lieu), joinedload(CONCERT.groupe), \
-                     joinedload(CONCERT.festival), joinedload(CONCERT.reservation_concert_collection), \
-                     joinedload(GROUPE.stylemusical), joinedload(GROUPE.utilisateur_collection),
-                     joinedload(GROUPE.reseausocial_collection), joinedload(GROUPE.concert_collection), \
-                     joinedload(GROUPE.video_collection), joinedload(GROUPE.photo_collection),
-                     joinedload(GROUPE.artiste_collection), joinedload(GROUPE.loger_collection),
-                     joinedload(GROUPE.activiteannexe_collection), joinedload(STYLE_MUSICAL.groupe_collection)) \
-                                   .select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.nomG.like("%" + search + "%")).order_by(CONCERT.dateDebC).all()
+            .options(joinedload(CONCERT.lieu), joinedload(CONCERT.groupe)) \
+            .select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(GROUPE.nomG.like("%" + search + "%")).order_by(CONCERT.dateDebC).all()
+        for concert in concerts:
+            _ = concert.CONCERT.festival
+            _ = concert.CONCERT.reservation_concert_collection
+            _ = concert.GROUPE.stylemusical
+            _ = concert.GROUPE.utilisateur_collection
+            _ = concert.GROUPE.reseausocial_collection
+            _ = concert.GROUPE.concert_collection
+            _ = concert.GROUPE.video_collection
+            _ = concert.GROUPE.photo_collection
+            _ = concert.GROUPE.artiste_collection
+            _ = concert.GROUPE.loger_collection
+            _ = concert.GROUPE.activiteannexe_collection
+            _ = concert.STYLEMUSICAL.groupe_collection
         return concerts
     except:
         raise
@@ -542,9 +550,31 @@ def delete_groupe(idG):
     finally:
         session.close()
 
-def update_groupe(idG,nomG,idS,descG):
+def get_last_idP():
     try:
         session = Session()
+        result = session.query(PHOTO).order_by(PHOTO.idP.desc()).first()
+        if result is None:
+            return 0
+        return result.idP
+    except:
+        raise
+    finally:
+        session.close()
+
+def update_groupe(idG,nomG,idS,descG, images):
+    try:
+        session = Session()
+        liste_images = [] 
+        for image in images:
+            photo = PHOTO(idP=get_last_idP() + 1, img=base64.b64encode(image.read()))
+            liste_images.append(photo)
+            session.add(photo)
+            session.commit()
+        session.query(IMAGER_GROUPE).filter_by(idG=idG).delete()
+        session.commit()
+        for image in liste_images:
+            session.execute(IMAGER_GROUPE.insert().values(idG=idG,idP=image.idP))
         groupe = session.query(GROUPE).filter_by(idG=idG).first()
         groupe.nomG = nomG
         groupe.idS = idS
@@ -789,12 +819,23 @@ def delete_revervation_with_idG(idG):
     finally:
         session.close()
 
-# def delete_favoris_with_idG(idG):
-#     try:
-#         session = Session()
-#         session.execute(FAVORIS.delete().values(idG=idG))
-#         session.commit()
-#     except:
-#         raise
-#     finally:
-#         session.close()
+def delete_favoris_with_idG(idG):
+    try:
+        session = Session()
+        session.execute(FAVORIS.delete().values(idG=idG))
+        session.commit()
+    except:
+        raise
+    finally:
+        session.close()
+
+def get_images_with_idG(idG):
+    try:
+        session = Session()
+        photo_alias = aliased(PHOTO)
+        images = session.query(IMAGER_GROUPE, photo_alias).select_from(IMAGER_GROUPE).join(photo_alias, IMAGER_GROUPE.c.idP == photo_alias.idP).filter(IMAGER_GROUPE.c.idG == idG).all()
+        return images
+    except:
+        raise
+    finally:
+        session.close()

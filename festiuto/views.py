@@ -3,6 +3,7 @@ import random
 from re import T
 from flask import jsonify, render_template, session, redirect, url_for, request
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField
 import scipy as sp
 from wtforms import BooleanField, DateField, DateTimeField, EmailField, HiddenField, IntegerField, SelectField, StringField, SubmitField, TelField, PasswordField, TextAreaField, TimeField
 from wtforms.validators import DataRequired, NumberRange
@@ -57,6 +58,7 @@ class AjouterGroupeForm(FlaskForm):
 class ModifierGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     description = TextAreaField('description', validators=[DataRequired()])
+    images = FileField('images', validators=[FileAllowed(['jpeg', 'jpg'])])
     style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.get_styles()], validators=[DataRequired()])
     submit = SubmitField("modifier le groupe")
 
@@ -277,6 +279,7 @@ def groupe(id:int):
     concerts_associated = requetes.get_concerts_with_idG(id)
     activites_associated = requetes.get_activites_with_idG(id)
     groupes_related = requetes.get_groupe_related(id)
+    images = requetes.get_images_with_idG(id)
     if 'user' in session:
         favori = requetes.is_favori(session['user'][0],id)
         
@@ -288,7 +291,8 @@ def groupe(id:int):
             concerts_associated = concerts_associated,
             activites_associated = activites_associated,
             groupes_related = groupes_related,
-            favori = favori
+            favori = favori,
+            images = images
         )
     else:
         return render_template(
@@ -509,8 +513,9 @@ def modifier_groupe(id):
 def modifier_groupe_submit(id):
     nom = request.form.get('nom')
     style = request.form.get('style')
+    files = request.files.getlist('images')
     description = request.form.get('description')
-    requetes.update_groupe(id,nom,style,description)
+    requetes.update_groupe(id, nom, style, description, files)
     return redirect(url_for('groupe_management'))
 
 @app.route('/ajouter_groupe',methods=['GET','POST'])

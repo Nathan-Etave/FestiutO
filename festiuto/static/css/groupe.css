@@ -196,3 +196,24 @@ p {
         width: 250px;
     }
 }
+
+.group-images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1vh;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+.group-images object {
+    height: 30vh;
+    border: 1px var(--accent) solid;
+    transition: .2s;
+    cursor: pointer;
+
+    &:hover {
+        border: 1px var(--text) solid;
+        transition: .2s;
+    }
+}
