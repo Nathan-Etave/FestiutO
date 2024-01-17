@@ -513,7 +513,7 @@ def modifier_groupe(id):
 def modifier_groupe_submit(id):
     nom = request.form.get('nom')
     style = request.form.get('style')
-    files = request.files.getlist('images')
+    files = [f for f in request.files.getlist('images') if f.filename != '']
     description = request.form.get('description')
     requetes.update_groupe(id, nom, style, description, files)
     return redirect(url_for('groupe_management'))

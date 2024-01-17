@@ -571,8 +571,9 @@ def update_groupe(idG,nomG,idS,descG, images):
             liste_images.append(photo)
             session.add(photo)
             session.commit()
-        session.query(IMAGER_GROUPE).filter_by(idG=idG).delete()
-        session.commit()
+        if len(liste_images) > 0:
+            session.query(IMAGER_GROUPE).filter_by(idG=idG).delete()
+            session.commit()
         for image in liste_images:
             session.execute(IMAGER_GROUPE.insert().values(idG=idG,idP=image.idP))
         groupe = session.query(GROUPE).filter_by(idG=idG).first()
