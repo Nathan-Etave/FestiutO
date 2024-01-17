@@ -540,8 +540,8 @@ def supprimer_groupe(id:int):
     requetes.delete_activites_with_idG(id)
     requetes.delete_artistes_with_idG(id)
     requetes.delete_revervation_with_idG(id)
+    requetes.delete_favoris_with_idG(id)
     requetes.delete_groupe(id)
-    # requetes.delete_favoris_with_idG(id)
     return redirect(url_for('groupe_management'))
 
 @app.route('/artiste-management',methods=['GET','POST'])
