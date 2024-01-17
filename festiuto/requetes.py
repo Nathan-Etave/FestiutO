@@ -638,7 +638,7 @@ def insert_activite(idG,nomA,descA,idL,dateDebA,dateFinA,estPublique):
         session.add(activite)
         session.commit()
     except:
-        raise
+        print("Erreur lors de l'insertion de l'activité")
     finally:
         session.close()
 
@@ -649,7 +649,7 @@ def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGr
         session.add(concert)
         session.commit()
     except:
-        raise
+        print("Erreur lors de l'insertion du concert")
     finally:
         session.close()
 
