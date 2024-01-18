@@ -260,7 +260,8 @@ def get_concerts_with_id(id):
 def get_concerts_idC():
     try:
         session = Session()
-        concerts = session.query(CONCERT.idC).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).all()
+        c_alias = aliased(CONCERT)
+        concerts = session.query(CONCERT.idC).select_from(c_alias).join(GROUPE).join(STYLE_MUSICAL).all()
         return concerts
     except:
         raise
@@ -839,6 +840,16 @@ def get_images_with_idG(idG):
         photo_alias = aliased(PHOTO)
         images = session.query(IMAGER_GROUPE, photo_alias).select_from(IMAGER_GROUPE).join(photo_alias, IMAGER_GROUPE.c.idP == photo_alias.idP).filter(IMAGER_GROUPE.c.idG == idG).all()
         return images
+    except:
+        raise
+    finally:
+        session.close()
+
+def delete_photos_with_idG(idG):
+    try:
+        session = Session()
+        session.query(IMAGER_GROUPE).filter_by(idG=idG).delete()
+        session.commit()
     except:
         raise
     finally:

@@ -4,7 +4,8 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import Table
 
-engine = create_engine("mysql+pymysql://lavenant_fest:lavenant@mysql-lavenant.alwaysdata.net/lavenant_3")
+#engine = create_engine("mysql+pymysql://lavenant_fest:lavenant@mysql-lavenant.alwaysdata.net/lavenant_3")
+engine = create_engine("mysql+pymysql://etave:etave@servinfo-maria/DBetave")
 Base = automap_base()
 Base.prepare(autoload_with=engine)
 metadata = MetaData()

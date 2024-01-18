@@ -11,3 +11,4 @@ csrf.init_app(app)
 import festiuto.views
 import festiuto.models
 import festiuto.requetes
+import festiuto.forms
