@@ -7,6 +7,14 @@ from festiuto.models import (Session, ACTIVITE_ANNEXE, ARTISTE, BILLET, CONCERT,
                              UTILISATEUR, VIDEO, VIDEO_GROUPE)
 
 def get_user_by_email(email):
+    """Récupère un utilisateur par son email
+
+    Args:
+        email (str): Email de l'utilisateur
+
+    Returns:
+        UTILISATEUR: Utilisateur correspondant à l'email
+    """
     try:
         session = Session()
         user = session.query(UTILISATEUR).filter(UTILISATEUR.mailU == email).first()
@@ -18,6 +26,14 @@ def get_user_by_email(email):
         session.close()
 
 def get_mdp_by_email(email):
+    """Récupère le mot de passe d'un utilisateur par son email
+    
+    Args:
+        email (str): Email de l'utilisateur
+        
+    Returns:
+        str: Mot de passe de l'utilisateur
+    """
     try:
         session = Session()
         user = session.query(UTILISATEUR).filter(UTILISATEUR.mailU == email).first()
@@ -29,10 +45,17 @@ def get_mdp_by_email(email):
         session.close()
 
 def hasher_mdp(mdp):
+    """Hash le mot de passe en SHA256
+    """
     import hashlib
     return hashlib.sha256(mdp.encode()).hexdigest()
 
 def get_all_concerts():
+    """Récupère tous les concerts
+
+    Returns:
+        List: Liste des concerts
+    """
     try:
         session = Session()
         concerts = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).order_by(CONCERT.dateDebC).all()
@@ -43,6 +66,14 @@ def get_all_concerts():
         session.close()
 
 def get_groupe_by_idC(idC):
+    """Récupère le groupe d'un concert
+
+    Args:
+        idC (int): Identifiant du concert
+
+    Returns:
+        GROUPE: Groupe du concert
+    """
     try:
         session = Session()
         groupe = session.query(CONCERT, GROUPE, STYLE_MUSICAL).select_from(CONCERT).join(GROUPE).join(STYLE_MUSICAL).filter(CONCERT.idC == idC).first()
@@ -53,6 +84,11 @@ def get_groupe_by_idC(idC):
         session.close()
 
 def get_roles():
+    """Récupère tous les rôles
+
+    Returns:
+        List: Liste des rôles
+    """
     try:
         session = Session()
         roles = session.query(ROLE_UTILISATEUR).all()
@@ -63,6 +99,11 @@ def get_roles():
         session.close()
 
 def get_last_idU():
+    """Récupère le dernier identifiant utilisateur
+
+    Returns:
+        int: Dernier identifiant utilisateur
+    """
     try:
         session = Session()
         result = session.query(UTILISATEUR).order_by(UTILISATEUR.idU.desc()).first()
@@ -75,6 +116,11 @@ def get_last_idU():
         session.close()
 
 def get_last_idH():
+    """Récupère le dernier identifiant hébergement
+
+    Returns:
+        int: Dernier identifiant hébergement
+    """
     try:
         session = Session()
         result = session.query(HEBERGEMENT).order_by(HEBERGEMENT.idH.desc()).first()
@@ -87,6 +133,11 @@ def get_last_idH():
         session.close()
 
 def get_last_idB():
+    """Récupère le dernier identifiant billet
+
+    Returns:
+        int: Dernier identifiant billet
+    """
     try:
         session = Session()
         result = session.query(BILLET).order_by(BILLET.idB.desc()).first()
@@ -147,6 +198,14 @@ def get_last_idC():
         session.close()
 
 def insert_user(mail,prenom,nom,mdp):
+    """Insertion d'un utilisateur
+
+    Args:
+        mail (str): Adresse e-mail de l'utilisateur
+        prenom (str): Prénom de l'utilisateur
+        nom (str): Nom de l'utilisateur
+        mdp (str): Mot de passe de l'utilisateur
+    """
     try:
         session = Session()
         user = UTILISATEUR(idU=get_last_idU() + 1, nomU=nom, prenomU=prenom, mailU=mail, mdpU=mdp, idR=3)
@@ -158,6 +217,11 @@ def insert_user(mail,prenom,nom,mdp):
         session.close()
 
 def delete_billet_by_idU(idU):
+    """Supprime les billets d'un utilisateur
+
+    Args:
+        idU (int): Identifiant de l'utilisateur
+    """
     try:
         session = Session()
         session.query(BILLET).filter_by(idU=idU).delete()
@@ -168,6 +232,11 @@ def delete_billet_by_idU(idU):
         session.close()
 
 def delete_user(idU):
+    """Supprime un utilisateur
+
+    Args:
+        idU (int): Identifiant de l'utilisateur
+    """
     try:
         session = Session()
         session.query(UTILISATEUR).filter_by(idU=idU).delete()
@@ -178,6 +247,15 @@ def delete_user(idU):
         session.close()
 
 def insert_billet(idT,idU,dateDebB, dateFinB, quantite):
+    """Insertion d'un billet
+
+    Args:
+        idT (int): Identifiant du type de billet
+        idU (int): Identifiant de l'utilisateur
+        dateDebB (datetime): Date et heure de début du billet
+        dateFinB (datetime): Date et heure de fin du billet
+        quantite (int): Quantité de billets
+    """
     try:
         session = Session()
         for i in range(quantite):

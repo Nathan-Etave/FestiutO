@@ -10,6 +10,8 @@ from sqlalchemy import inspect
 @app.route('/',methods=['GET','POST'])
 @csrf.exempt
 def home():
+    """Méthode de la page d'accueil
+    """
     f = RechercheGroupeForm()
     mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "aout","septembre", "octobre", "novembre", "décembre"],
     search = f.get_search()
@@ -38,12 +40,16 @@ def home():
 
 @app.route('/billeterie')
 def billeterie():
+    """Méthode de la page de billeterie
+    """
     return render_template(
         'billeterie.html'
     )
 
 @app.route('/programme')
 def programme():
+    """Méthode de la page du programme
+    """
     monday_concerts = requetes.get_concerts_by_day(13)
     tuesday_concerts = requetes.get_concerts_by_day(14)
     wednesday_concerts = requetes.get_concerts_by_day(15)
@@ -64,6 +70,11 @@ def programme():
 
 @app.route('/groupe/<int:id>',methods=['GET','POST'])
 def groupe(id:int):
+    """Méthode de la page d'un groupe
+
+    Args:
+        id (int): id du groupe
+    """
     groupe = requetes.get_groupe_with_idG(id)
     artistes = requetes.get_artistes_with_idG(id)
     concerts_associated = requetes.get_concerts_with_idG(id)
@@ -99,6 +110,11 @@ def groupe(id:int):
 
 @app.route('/ajouter-favori/<int:id>',methods=['GET','POST'])
 def ajouter_fav(id:int):
+    """Méthode pour ajouter un favori
+
+    Args:
+        id (int): id du groupe
+    """
     requetes.ajouter_favori(session['user'][0],id)
     return redirect(url_for('groupe',id=id))
 
@@ -109,6 +125,11 @@ def supprimer_fav(id:int):
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
 def config_billet(id):
+    """Méthode pour configurer un billet
+
+    Args:
+        id (int): id du type de billet
+    """
     f = BilletForm()
     if f.validate_on_submit():
         data = f.get_information()

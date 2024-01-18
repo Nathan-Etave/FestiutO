@@ -60,7 +60,10 @@
                         </div>
                         <p>{{ concert.LIEU.adresseL }}</p>
                     </div>
-                    <p>{{ concert.LIEU.nomL }}</p>    
+                    <p>{{ concert.LIEU.nomL }}</p>
+                    {% if concert.CONCERT.estGratuit %}
+                    <p><b>gratuit</b></p>
+                    {% endif %}  
                 </div>
                 {% endfor %}
             </div>
@@ -84,7 +87,10 @@
                         </div>
                         <p>{{ activite.LIEU.adresseL }}</p>
                     </div>
-                    <p>{{ activite.LIEU.nomL }}</p>    
+                    <p>{{ activite.LIEU.nomL }}</p>
+                    {% if activite.ACTIVITEANNEXE.estPublique %}
+                    <p><b>publique</b></p>  
+                    {% endif %}  
                 </div>
                 {% endfor %}
             </div>
