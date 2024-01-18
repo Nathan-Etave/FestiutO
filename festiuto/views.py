@@ -93,6 +93,7 @@ def groupe(id:int):
                 concerts_associated = concerts_associated,
                 activites_associated = activites_associated,
                 groupes_related = groupes_related,
+                images = images
             )
     
 
