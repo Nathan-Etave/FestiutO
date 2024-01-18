@@ -64,6 +64,10 @@
                     {% if concert.CONCERT.estGratuit %}
                     <p><b>gratuit</b></p>
                     {% endif %}  
+                    {% if admin %}
+                    <p>montage : {{ concert.CONCERT.dureeMontageC.strftime('%H:%M') }}</p>
+                    <p>démontage : {{ concert.CONCERT.dureeDemontageC.strftime('%H:%M') }}</p>
+                    {% endif %} 
                 </div>
                 {% endfor %}
             </div>
@@ -89,8 +93,8 @@
                     </div>
                     <p>{{ activite.LIEU.nomL }}</p>
                     {% if activite.ACTIVITEANNEXE.estPublique %}
-                    <p><b>publique</b></p>  
-                    {% endif %}  
+                    <p><b>publique</b></p>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

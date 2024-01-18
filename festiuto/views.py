@@ -81,7 +81,7 @@ def groupe(id:int):
     activites_associated = requetes.get_activites_with_idG(id)
     groupes_related = requetes.get_groupe_related(id)
     images = requetes.get_images_with_idG(id)
-    if 'user' in session:
+    if 'user' in session and not session['user'][1] == 1:
         favori = requetes.is_favori(session['user'][0],id)
         
         return render_template(
@@ -95,6 +95,18 @@ def groupe(id:int):
             favori = favori,
             images = images
         )
+    elif 'user' in session and session['user'][1] == 1:
+        return render_template(
+                'groupe.html',
+                id = id,
+                artistes = artistes,
+                groupe = groupe,
+                concerts_associated = concerts_associated,
+                activites_associated = activites_associated,
+                groupes_related = groupes_related,
+                images = images,
+                admin=True
+            )
     else:
         return render_template(
                 'groupe.html',
