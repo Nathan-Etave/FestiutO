@@ -20,7 +20,6 @@ def get_user_by_email(email):
         user = session.query(UTILISATEUR).filter(UTILISATEUR.mailU == email).first()
         return user
     except:
-        print("L'utilisateur n'existe pas")
         raise
     finally:
         session.close()
@@ -39,7 +38,6 @@ def get_mdp_by_email(email):
         user = session.query(UTILISATEUR).filter(UTILISATEUR.mailU == email).first()
         return user.mdpU
     except:
-        print("L'utilisateur n'existe pas")
         raise
     finally:
         session.close()
@@ -459,7 +457,6 @@ def get_user(idU):
     try:
         session = Session()
         user = session.query(UTILISATEUR).filter(UTILISATEUR.idU == idU).first()
-        print(user)
         return user
     except:
         raise
@@ -717,7 +714,7 @@ def insert_activite(idG,nomA,descA,idL,dateDebA,dateFinA,estPublique):
         session.add(activite)
         session.commit()
     except:
-        print("Erreur lors de l'insertion de l'activité")
+        raise
     finally:
         session.close()
 
@@ -728,7 +725,7 @@ def insert_concert(idG,idL,dateDebC,dateFinC,dureeMontageC,dureeDemontageC,estGr
         session.add(concert)
         session.commit()
     except:
-        print("Erreur lors de l'insertion du concert")
+        raise
     finally:
         session.close()
 

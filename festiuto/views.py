@@ -305,7 +305,6 @@ def groupe_management():
     f = RechercheForm()
     if f.validate_on_submit():
         search = f.get_search()
-        print(search)
         if search != None:
             return render_template(
                 'module_administrateur/groupe_management.html',
