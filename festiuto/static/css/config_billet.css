@@ -1,0 +1,253 @@
+main {
+    min-height: auto; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+
+/* définir ce container dans le css parent */
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+
+    & a {
+        display: flex;
+        width: 60px;
+        justify-content: center;
+        align-items: center;
+        transition: .2s;
+
+        &:hover {
+            cursor: pointer;
+            scale: 1.1;
+            transition: .2s;
+        }
+    }
+}
+
+.config-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* align-items: center; */
+    gap: 50px;
+    margin-top: 100px;
+
+    & .billet-card {
+        width: 325px;
+        height: 325px;
+        padding: 0 5%;
+        border: 1px solid var(--accent);
+        background-color: var(--accent-hover);
+        color: var(--text);
+        transition: .2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    
+        & h3 {
+            font-size: 30px;
+            font-family: black-italic;
+        }
+        
+        & p {
+            text-align: center;
+            font-family: regular;
+            color: var(--text);
+    
+            &:last-of-type {
+                font-family: black-italic;
+                font-size: 25px;
+            }
+        }
+    }
+
+    & > .props-billet {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+
+        & > h3 {
+            font-size: 30px;
+            font-family: black-italic;
+            color: var(--text);
+        }
+    }
+}
+
+.form-config-billet {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 20px;
+    justify-content: space-between;
+
+    & > .config {
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        gap: 80px;
+
+        & > label {
+            font-family: black-italic;
+            font-size: 25px;
+            color: var(--text);
+            align-self: center;
+            cursor: pointer;
+            width: auto;
+            user-select: none;
+            padding: 0 10px;
+        }
+
+        & input[type="tel"] {
+            padding: 5px 15px;
+            background-color: transparent;
+            border: 1px var(--text) solid;
+            outline: .125rem solid transparent;
+            outline-offset: 0;   
+            font-size: 25px;
+            color: var(--text);
+            font-weight: 700;
+            transition: all .2s;
+
+            &:hover, &:focus-visible, &:active {
+                border-color: transparent;
+                outline: .125rem solid currentColor;
+                outline-offset: .1rem;
+                transition: all .2s;
+            }
+
+            &[type="submit"] {
+                grid-column: 2;
+                background-color: var(--accent);
+                color: var(--secondary);
+                border: 1px var(--accent) solid;
+                font-size: 30px;
+                /* border-radius: 20px; */
+                padding: 10px 50px;
+                outline: none;           
+                cursor: pointer;
+                transition: .2s;
+                
+                &:hover {
+                    background-color: var(--accent-hover);  
+                    color: var(--accent);
+                }
+            }
+        }
+    }
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+
+    & > label {
+        font-family: black-italic;
+        font-size: 25px;
+        color: var(--text);
+        cursor: pointer;
+        width: auto;
+        user-select: none;
+        padding: 0 10px;
+    }
+}
+
+.day {
+    visibility: hidden;
+}
+
+.props-recap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+
+    & > .config {
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        gap: 80px;
+
+        & > label {
+            font-family: black-italic;
+            font-size: 25px;
+            color: var(--text);
+            align-self: center;
+            cursor: pointer;
+            width: auto;
+            user-select: none;
+            padding: 0 10px;
+        }
+
+        & input[type="number"] {
+            padding: 5px 15px;
+            background-color: transparent;
+            border: 1px var(--text) solid;
+            outline: .125rem solid transparent;
+            outline-offset: 0;   
+            font-size: 25px;
+            color: var(--text);
+            font-weight: 700;
+            transition: all .2s;
+
+            &:hover, &:focus-visible, &:active {
+                border-color: transparent;
+                outline: .125rem solid currentColor;
+                outline-offset: .1rem;
+                transition: all .2s;
+            }
+        }
+    }
+}
+
+#submit-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+#submit-form {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: 1px var(--accent) solid;
+    font-size: 30px;
+    /* border-radius: 20px; */
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#submit-form:hover {
+    background-color: var(--accent-hover);  
+    color: var(--accent);
+}
+
+#error-container {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+#error {
+    color: #D35252;
+    font-size: 30px;
+    font-family: medium-italic;
+}

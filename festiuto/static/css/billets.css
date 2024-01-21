@@ -1,0 +1,170 @@
+main {
+    min-height: 100vh; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+
+    & a {
+        display: flex;
+        width: 60px;
+        justify-content: center;
+        align-items: center;
+        transition: .2s;
+
+        &:hover {
+            cursor: pointer;
+            scale: 1.1;
+            transition: .2s;
+        }
+    }
+}
+
+.billets-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+
+    & .billet-card {
+        width: 100%;
+        height: auto;
+        background-color: var(--secondary-hover);
+        color: var(--accent);
+        border: 1px var(--accent) solid;
+        padding: 2%;
+        font-size: 25px;
+
+        & .header-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            
+            & h2 {
+                font-family: black-italic;
+                font-size: 35px;
+            }
+
+            & p {
+                font-family: medium-italic;
+                font-size: 30px;
+            }
+        }
+
+        & .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+
+            & .dates {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 30px;
+            }
+
+            & .quantite {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 20px;
+
+                & a {
+                    display: flex;
+                    align-items: center;
+                    transition: .2s;
+
+                    &:hover {
+                        scale: 1.1;
+                        transition: .2s;
+                    }
+                }
+            }
+        }
+
+        & p {
+            font-family: medium-italic;
+        }
+    }
+}
+
+
+.recap-billets {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+
+    .total {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    
+        & p {
+            font-family: black-italic;
+            font-size: 45px;
+        }
+    }  
+}
+
+.redirect-billeterie {
+    margin-top: 50px;
+}
+
+#billeterie-button {
+    color: var(--accent);
+    font-size: 30px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#billeterie-button:hover {
+    color: var(--primary);
+    text-decoration: underline;
+    transition: .2s;
+}
+
+#submit-command {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: 1px var(--accent) solid;
+    font-size: 30px;
+    /* border-radius: 20px; */
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#submit-command:hover {
+    background-color: var(--accent-hover);  
+    color: var(--accent);
+}
+
+p {
+    color: var(--text);
+}
+
+

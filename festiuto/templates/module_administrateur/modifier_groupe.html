@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/module_administrateur/modifier_groupe.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        
+        <div class="header">
+            <a href="{{ url_for('groupe_management') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>modifier {{ groupe.GROUPE.nomG }}</h1>
+        </div>
+
+        <form action="{{ url_for('modifier_groupe_submit',id=groupe.GROUPE.idG) }}" method="POST" enctype="multipart/form-data">
+            {{ ModifierGroupeForm.hidden_tag() }}
+            <div class="config">
+                <label for="nom">nom</label>
+                {{ ModifierGroupeForm.nom(class="form-control", id="nom", value=groupe.GROUPE.nomG) }}
+            </div>
+            <div class="config">
+                <label for="style">style musical</label>
+                {{ ModifierGroupeForm.style(class="form-control", id="style") }}
+            </div>
+            <div class="config">
+                <label for="images">images</label>
+                {{ ModifierGroupeForm.images(class="form-control", id="images", multiple="multiple") }}
+            </div>
+            <div class="config">
+                <label for="description">description</label>
+                {{ ModifierGroupeForm.description(class="form-control", id="description") }}
+            </div>
+            <div id="submit-container">
+                {{ ModifierGroupeForm.submit(id="submit-form") }}
+            </div>
+        </form>
+    </div>
+
+</main>
+{% endblock %}
+

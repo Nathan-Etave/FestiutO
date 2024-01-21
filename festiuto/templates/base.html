@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='./css/base.css') }}">
+    <link rel="icon" type="image/x-icon" href="../static/images/icon.png">
+    {% block styles %}
+    <!-- css -->
+    {% endblock %}
+    <title>Festiut'O</title>
+</head>
+    <body>
+        <header>
+            <a href="{{ url_for('home') }}"><img src="../static/images/icon.png" alt="icon" id="icon"></a>
+            <!-- <p>festiut'o©</p> -->
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">accueil</a></li>
+                    <li><a href="{{ url_for('programme') }}">programme</a></li>
+                    <li><a href="{{ url_for('billeterie') }}">billetterie</a></li>
+                    {% if 'user' in session %}
+                    <li><a href="{{ url_for('profil') }}">{{ session['user'][2] }}</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">connexion</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+         
+        {% block content %}
+        <!-- content -->
+        {% endblock %}
+
+        <footer>
+            <div class="main-content">
+                <a href="{{ url_for('home') }}" id="name">
+                    <img src="../static/images/icon.png" alt="icon" id="icon">
+                    <p>festiut'o©</p>
+                </a>
+                <div>
+                    <h3>aide</h3>
+                    <a href="{{ url_for('about') }}">en savoir plus</a>
+                    <a href="#">contact</a>
+                </div>
+                <div>
+                    <h3>a propos</h3>
+                    <a href="{{ url_for('home') }}">accueil</a>
+                    <a href="{{ url_for('programme') }}">programme</a>
+                    <a href="{{ url_for('billeterie') }}">billeterie</a>
+                    <a href="{{ url_for('login') }}">connexion</a>
+                </div>
+                <div>
+                    <h3>rejoignez nous</h3>
+                    <p>instagram</p>
+                    <p>twitter</p>
+                </div>
+            </div>
+            <div class="footer-content">
+                <p>© 2023 - 2024 festiut'o. tous droits réservés</p>
+                <div id="auteurs">
+                    <p>etave nathan</p>
+                    <p>lavenant jordan</p>
+                    <p>lebeaupin louis</p>
+                    <p>rousselet juliette</p>
+                </div>
+            </div>
+        </footer>
+
+        {% block scripts %}
+        <!-- js -->
+        {% endblock %}
+        
+    </body>
+</html>

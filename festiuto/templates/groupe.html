@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/groupe.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        <div class="title-fav">
+            <div class="header">
+                <a href="{{ url_for('programme') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+                </a>
+                <h1>{{ groupe.GROUPE.nomG}}</h1>
+            </div>
+            {% if 'user' in session %}
+                {% if favori %}
+                <a href="{{ url_for('supprimer_fav', id=groupe.GROUPE.idG) }}">
+                    <svg id="heart" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M20.205 4.791a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412L12 21.414l8.207-8.207c2.354-2.353 2.355-6.049-.002-8.416z"></path></svg>
+                </a>
+                {% else %}
+                <a href="{{ url_for('ajouter_fav', id=groupe.GROUPE.idG) }}">
+                    <svg id="heart" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M12 4.595a5.904 5.904 0 0 0-3.996-1.558 5.942 5.942 0 0 0-4.213 1.758c-2.353 2.363-2.352 6.059.002 8.412l7.332 7.332c.17.299.498.492.875.492a.99.99 0 0 0 .792-.409l7.415-7.415c2.354-2.354 2.354-6.049-.002-8.416a5.938 5.938 0 0 0-4.209-1.754A5.906 5.906 0 0 0 12 4.595zm6.791 1.61c1.563 1.571 1.564 4.025.002 5.588L12 18.586l-6.793-6.793c-1.562-1.563-1.561-4.017-.002-5.584.76-.756 1.754-1.172 2.799-1.172s2.035.416 2.789 1.17l.5.5a.999.999 0 0 0 1.414 0l.5-.5c1.512-1.509 4.074-1.505 5.584-.002z"></path></svg>
+                </a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="group-container">
+            <div class="artists-container">
+                {% for artiste in artistes %}
+                <p>{{ artiste.nomA }} {{ artiste.prenomA }}</p>
+                {% endfor %}
+            </div>
+            <div class="group-assets">
+                <p>{{ groupe.GROUPE.descriptionG }}</p>
+                <p>style musical : {{ groupe.STYLEMUSICAL.nomS }}</p>
+            </div>
+            <div class="group-images">
+                {% for image in images %}
+                    <object data="data:image/jpeg;base64,{{ image[-1].img.decode('utf-8') }}" type="image/jpeg"></object>
+                {% endfor %}
+            </div>
+            <h3>où les voir ?</h3>
+            <div class="all-concert-container">
+                {% for concert in concerts_associated %}
+                <div class="concert-props" id="{{ concert.CONCERT.idC }}">
+                    <div class="date">
+                        <p>{{ concert.CONCERT.dateDebC.strftime('%d %m %Y') }}</p>
+                        <div>
+                            <p>{{ concert.CONCERT.dateDebC.strftime('%H:%M') }}</p>
+                            <p>-</p>
+                            <p>{{ concert.CONCERT.dateFinC.strftime('%H:%M') }}</p>
+                        </div>
+                    </div>
+                    <div class="lieu">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M15 11.586V6h2V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2h2v5.586l-2.707 1.707A.996.996 0 0 0 6 14v2a1 1 0 0 0 1 1h4v3l1 2 1-2v-3h4a1 1 0 0 0 1-1v-2a.996.996 0 0 0-.293-.707L15 11.586z"></path></svg>
+                        </div>
+                        <p>{{ concert.LIEU.adresseL }}</p>
+                    </div>
+                    <p>{{ concert.LIEU.nomL }}</p>
+                    {% if concert.CONCERT.estGratuit %}
+                    <p><b>gratuit</b></p>
+                    {% endif %}  
+                    {% if admin %}
+                    <p>montage : {{ concert.CONCERT.dureeMontageC.strftime('%H:%M') }}</p>
+                    <p>démontage : {{ concert.CONCERT.dureeDemontageC.strftime('%H:%M') }}</p>
+                    {% endif %} 
+                </div>
+                {% endfor %}
+            </div>
+            <h3>les activitées associées</h3>
+            <div class="all-activites-container">
+                {% for activite in activites_associated %}
+                <div class="activite-props" id="{{ activite.ACTIVITEANNEXE.idAct }}">
+                    <h4>{{ activite.ACTIVITEANNEXE.nomAct }}</h4>
+                    <div class="date">
+                        <p>{{ activite.ACTIVITEANNEXE.dateDebAct.strftime('%d %m %Y') }}</p>
+                        <div>
+                            <p>{{ activite.ACTIVITEANNEXE.dateDebAct.strftime('%H:%M') }}</p>
+                            <p>-</p>
+                            <p>{{ activite.ACTIVITEANNEXE.dateFinAct.strftime('%H:%M') }}</p>
+                        </div>
+                    </div>
+                    <p>{{ activite.ACTIVITEANNEXE.descriptionAct }}</p>
+                    <div class="lieu">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M15 11.586V6h2V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2h2v5.586l-2.707 1.707A.996.996 0 0 0 6 14v2a1 1 0 0 0 1 1h4v3l1 2 1-2v-3h4a1 1 0 0 0 1-1v-2a.996.996 0 0 0-.293-.707L15 11.586z"></path></svg>
+                        </div>
+                        <p>{{ activite.LIEU.adresseL }}</p>
+                    </div>
+                    <p>{{ activite.LIEU.nomL }}</p>
+                    {% if activite.ACTIVITEANNEXE.estPublique %}
+                    <p><b>publique</b></p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            
+            <h3>dans le même style que {{ groupe.GROUPE.nomG }}</h3>
+            <div class="related-group">
+                {% for groupe_related in groupes_related %}
+                <a href="{{ url_for('groupe',id=groupe_related.idG) }}" class="other-group-card">
+                    <p>{{ groupe_related.nomG }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

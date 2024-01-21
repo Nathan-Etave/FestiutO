@@ -1,0 +1,216 @@
+@keyframes immersion {
+    0% {
+        text-shadow: 0 0 100px var(--primary);
+    }
+    50% {
+        text-shadow: 0 0 50px var(--primary);
+    }
+    100% {
+        text-shadow: 0 0 100px var(--primary);
+    }
+}
+
+.header-container {
+    height: 100vh;
+    padding-top: 15vh;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 150px;
+}
+
+.middle-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > h1 {
+        font-size: 300px;
+        /* color: var(--primary); */
+        font-family: black-italic;
+        /* background: linear-gradient(120deg,var(--primary),var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; */
+        background: url(../gif/template2.gif) no-repeat center center;
+        background-size: 100%;
+        -webkit-background-clip: text;   
+        -webkit-text-fill-color: transparent;
+    }
+
+    & > p {
+        font-size: 45px;
+        color: var(--text);
+        font-family: medium-italic;
+
+        & > span {
+            background: linear-gradient(-45deg,var(--accent),var(--text));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: black-italic;
+            animation: immersion 3s infinite ease-in-out;
+        }
+
+    }
+}
+
+.bottom-side {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    padding: 0 5% 5% 5%;
+    font-size: 30px;
+    color: var(--text);
+
+    & a {
+
+        border: var(--accent) 1px solid;
+        padding: 10px 50px;
+        color: var(--accent);
+        transition: .2s;
+
+        &:nth-of-type(2) {
+            background-color: var(--accent);
+            color: var(--background);
+        }
+
+        &:nth-of-type(1):hover {
+            background-color: var(--accent);
+            color: var(--background);
+            transition: .2s;
+        }
+
+        &:nth-of-type(2):hover {
+            background-color: var(--background);
+            color: var(--accent);
+            transition: .2s;
+        }
+    }
+}
+
+.search-container {
+    min-height: 400px;
+    background-color: var(--secondary);
+    display: flex;
+    justify-content: center;
+}
+
+.search-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
+
+.search-content > p {
+    color: var(--text);
+    font-size: 45px;
+    font-family: black-italic;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+form input[type="text"] {
+    width: 100%;
+    background-color: var(--accent-hover);
+    color: rgba(255,255,255,.5);
+    font-size: 30px;
+    padding: 10px 30px;
+    border: 1px var(--text) solid;
+    outline: none;
+}
+
+form input[type="text"]:focus {
+    color: var(--text)    ;
+}
+
+form input[type="text"]:focus::placeholder {
+    color: transparent;
+}
+form input[type="submit"] {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: 1px var(--accent) solid;
+    font-size: 30px;
+    /* border-radius: 20px; */
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+form input[type="submit"]:hover {
+    background-color: var(--accent-hover);  
+    color: var(--accent);
+}
+
+.result-container {
+    min-height: auto; /* temp */
+    padding: 0 0 100px;
+    background-color: var(--secondary);
+    display: flex;
+    justify-content: center;   
+}
+
+.cards-content {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.card {
+    width: 325px;
+    height: 325px;
+    background-color: var(--secondary-hover);
+    color: var(--accent);
+    border: 1px var(--accent) solid;
+    transition: .2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    &:hover {
+        background-color: var(--accent);
+        color: var(--text);
+        transition: .2s;
+    }
+
+    & > h3 {
+        text-align: center;
+        font-size: 40px;
+        font-family: black-italic;
+        color: var(--text);
+    }
+
+    & > p {
+        font-size: 25px;
+    }
+
+    & > .date > div {
+        display: flex;
+        justify-content: center;
+
+        & > span {
+            width: 50px;
+            height: 15px;
+            border-left: 2px dotted var(--text);
+            border-right: 2px dotted var(--text);
+        }
+    }
+
+    & > .date > p {
+        font-size: 25px;
+    }
+}

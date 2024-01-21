@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/billeterie.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+        <div class="header">
+            <a href="{{ url_for('home') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>réservez votre billet dès maintenant ! </h1>
+        </div>
+
+        <div class="type-billet-container">
+            {% if 'user' in session %}
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('config_billet',id=1) }}`">
+            {% else %}
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('login') }}`">
+            {% endif %}
+                <h3>1 jour</h3>
+                <p>accès au festival pour une journée de planning</p>
+                <p>20 €</p>
+            </div>
+
+            {% if 'user' in session %}
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('config_billet',id=2) }}`">
+            {% else %}
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('login') }}`">
+            {% endif %}
+                <h3>2 jours</h3>
+                <p>accès au festival pour 2 journées de planning</p>
+                <p>35 €</p>
+            </div>
+
+            {% if 'user' in session %}
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('config_billet',id=3) }}`">
+            {% else %}
+            <div class="billet-card" onclick = "window.location.href = `{{ url_for('login') }}`">
+            {% endif %}
+                <h3>illimité</h3>
+                <p>accès illimité au festival</p>
+                <p>90 €</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

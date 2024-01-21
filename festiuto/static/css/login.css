@@ -1,0 +1,134 @@
+main {
+    min-height: auto; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+
+    & a {
+        display: flex;
+        width: 60px;
+        justify-content: center;
+        align-items: center;
+        transition: .2s;
+
+        &:hover {
+            cursor: pointer;
+            scale: 1.1;
+            transition: .2s;
+        }
+    }
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    flex-grow: 1;
+    gap: 40px;
+    justify-content: space-between;
+
+    & > .config {
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        gap: 5px;
+
+        & > label {
+            font-family: black-italic;
+            font-size: 25px;
+            color: var(--text);
+            align-self: center;
+        }
+
+        & > input {
+            padding: 5px 15px;
+            background-color: transparent;
+            border: 1px var(--text) solid;
+            outline: .125rem solid transparent;
+            outline-offset: 0;   
+            font-size: 25px;
+            color: var(--text);
+            font-weight: 700;
+            transition: all .2s;
+
+            &:hover, &:focus-visible, &:active {
+                border-color: transparent;
+                outline: .125rem solid currentColor;
+                outline-offset: .1rem;
+                transition: all .2s;
+            }
+
+            &[type="submit"] {
+                grid-column: 2;
+                background-color: var(--accent);
+                color: var(--secondary);
+                border: 1px var(--accent) solid;
+                font-size: 30px;
+                /* border-radius: 20px; */
+                padding: 10px 50px;
+                outline: none;           
+                cursor: pointer;
+                transition: .2s;
+                
+                &:hover {
+                    background-color: var(--accent-hover);  
+                    color: var(--accent);
+                }
+            }
+        }
+    }
+}
+
+.submit-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+#register-button {
+    color: var(--accent);
+    font-size: 30px;
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#register-button:hover {
+    color: var(--primary);
+    text-decoration: underline;
+    transition: .2s;
+}
+
+#submit-form {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: 1px var(--accent) solid;
+    font-size: 30px;
+    padding: 10px 50px;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#submit-form:hover {
+    background-color: var(--accent-hover);  
+    color: var(--accent);
+}

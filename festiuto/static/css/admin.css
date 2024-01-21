@@ -1,0 +1,72 @@
+main {
+    min-height: 100vh; /*temp */
+    padding: 15vh 0;
+    background-color: var(--background);
+
+    & h1 {
+        font-family: black-italic;
+        font-size: 45px;
+        color: var(--text);
+    }
+}
+
+.Container {
+    width: min(100%, 80rem);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+
+    & a {
+        display: flex;
+        width: 60px;
+        justify-content: center;
+        align-items: center;
+        transition: .2s;
+
+        &:hover {
+            cursor: pointer;
+            scale: 1.1;
+            transition: .2s;
+        }
+    }
+}
+
+.btns-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 100%;
+    font-size: 30px;
+    
+    & a {
+        width: 200px;
+        height: 200px;
+        border: var(--accent) 1px solid;
+        padding: 1%;
+        color: var(--accent);
+        transition: .2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        &:hover {
+            background-color: var(--accent);
+            color: var(--background);
+            transition: .2s;
+        }
+    }
+}

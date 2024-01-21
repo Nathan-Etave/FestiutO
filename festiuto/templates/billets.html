@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static',filename='./css/billets.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+
+    <div class="Container">
+
+        <div class="header">
+            <a href="{{ url_for('profil') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: ;msFilter:;"><path d="M13.939 4.939 6.879 12l7.06 7.061 2.122-2.122L11.121 12l4.94-4.939z"></path></svg>
+            </a>
+            <h1>votre panier</h1>
+        </div>
+
+        <div class="billets-container">
+            {% for billet in billets %}
+            <div class="billet-card">
+                <div class="header-content">
+                    {% if billet.BILLET.idT == 1 %}
+                    <h2>pass 1 jour</h2>
+                    {% elif billet.BILLET.idT == 2 %}
+                    <h2>pass 2 jours</h2>
+                    {% else %}
+                    <h2>pass illimité</h2>
+                    {% endif %}
+                    <p>{{ billet.TYPEBILLET.descriptionT }}</p>
+                </div>
+                <div class="content">
+                    <div class="dates">
+                        <p>{{ billet.BILLET.dateDebB }}</p>
+                        <p>{{ billet.BILLET.dateFinB }}</p>
+                    </div>
+                    <div class="quantite">
+                        <a href="#" onclick="decrementBillet(this, {{ billet.BILLET.idB }})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: scaleY(-1);msFilter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);"><path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path></svg>
+                        </a>
+                        <p>{{ billet[2] }}</p>
+                        <a href="#" onclick="incrementBillet(this, {{ billet.BILLET.idB }})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill: rgba(75, 80, 180, 1);transform: rotate(180deg);msFilter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);"><path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path></svg>
+                        </a>
+                    </div>
+                    <p>sous-total : {{ billet[3]|int }} €</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="redirect-billeterie">
+            <a href="{{ url_for('billeterie') }}" id="billeterie-button">continuer mes achats</a>
+        </div>
+
+        <div class="recap-billets">
+            <div class="total">
+                <p>total : </p>
+                <p id="total">{{ total|int }} €</p>
+            </div>
+            <a href="#" id="submit-command">terminer ma commande</a>
+        </div>  
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static',filename='./js/billets.js') }}"></script>
+{% endblock %}
+
