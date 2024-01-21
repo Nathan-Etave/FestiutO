@@ -7,7 +7,7 @@ from festiuto import requetes
 class AjouterArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
-    groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()], validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.Groupe.Get.get_groupes()], validators=[DataRequired()])
     submit = SubmitField("ajouter l'artiste")
 
     def get_information(self):
@@ -27,7 +27,7 @@ class AjouterInstrument(FlaskForm):
 class ModifierArtisteForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     prenom = StringField('prenom', validators=[DataRequired()])
-    groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()], validators=[DataRequired()])
+    groupe = SelectField('groupe', choices=[(groupe.idG, groupe.nomG) for groupe in requetes.Groupe.Get.get_groupes()], validators=[DataRequired()])
     submit = SubmitField("modifier l'artiste")
 
     def get_information(self):
@@ -39,7 +39,7 @@ class ModifierArtisteForm(FlaskForm):
 class AjouterGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     description = TextAreaField('description', validators=[DataRequired()])
-    style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.get_styles()], validators=[DataRequired()])
+    style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.StyleMusical.Get.get_styles()], validators=[DataRequired()])
     submit = SubmitField("ajouter le groupe")
 
     def get_information(self):
@@ -52,7 +52,7 @@ class ModifierGroupeForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     description = TextAreaField('description', validators=[DataRequired()])
     images = FileField('images', validators=[FileAllowed(['jpeg', 'jpg'])])
-    style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.get_styles()], validators=[DataRequired()])
+    style = SelectField('groupe', choices=[(style.idS, style.nomS) for style in requetes.StyleMusical.Get.get_styles()], validators=[DataRequired()])
     submit = SubmitField("modifier le groupe")
 
     def get_information(self):
@@ -64,7 +64,7 @@ class ModifierGroupeForm(FlaskForm):
 class AjouterActivitesForm(FlaskForm):
     nom = StringField('nom', validators=[DataRequired()])
     description = TextAreaField('description', validators=[DataRequired()])
-    lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.get_lieux()], validators=[DataRequired()])
+    lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.Lieu.Get.get_lieux()], validators=[DataRequired()])
     dateDeb = DateField('dateDeb', validators=[DataRequired()])
     heureDeb = TimeField('heureDeb', validators=[DataRequired()])
     dateFin = DateField('dateFin', validators=[DataRequired()])
@@ -103,7 +103,7 @@ class AjouterHebergement(FlaskForm):
         return nom, addresse, nbPlace
 
 class AjouterConcertForm(FlaskForm):
-    lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.get_lieux()], validators=[DataRequired()])
+    lieu = SelectField('lieu', choices=[(lieu.idL, lieu.nomL) for lieu in requetes.Lieu.Get.get_lieux()], validators=[DataRequired()])
     dateDeb = DateField('dateDeb', validators=[DataRequired()])
     heureDeb = TimeField('heureDeb', validators=[DataRequired()])
     dateFin = DateField('dateFin', validators=[DataRequired()])
@@ -186,11 +186,11 @@ class LoginForm(FlaskForm):
         Returns:
             L'utilisateur authentifié si l'adresse e-mail et le mot de passe sont valides, sinon None.
         """
-        user = requetes.get_user_by_email(self.email.data)
-        mdp = requetes.get_mdp_by_email(self.email.data)
+        user = requetes.Utilisateur.Get.get_user_by_email(self.email.data)
+        mdp = requetes.Utilisateur.Get.get_mdp_by_email(self.email.data)
         if user is None:
             return None
-        passwd = requetes.hasher_mdp(self.password.data)
+        passwd = requetes.Utilisateur.Insert.hasher_mdp(self.password.data)
         return user if passwd == mdp else None
 
 class RegisterForm(FlaskForm):
@@ -206,6 +206,6 @@ class RegisterForm(FlaskForm):
         nom = self.nom.data
         prenom = self.prenom.data
         mail = self.mail.data
-        mdp = requetes.hasher_mdp(self.mdp.data)
-        mdpConfirm = requetes.hasher_mdp(self.mdpConfirm.data)
+        mdp = requetes.Utilisateur.Insert.hasher_mdp(self.mdp.data)
+        mdpConfirm = requetes.Utilisateur.Insert.hasher_mdp(self.mdpConfirm.data)
         return nom, prenom, mail, mdp, mdpConfirm
