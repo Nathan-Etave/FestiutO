@@ -20,16 +20,16 @@ def home():
             'home.html',
             mois = mois,
             RechercheGroupeForm = f,
-            concerts = requetes.get_concerts_with_search(search)
+            concerts = requetes.Concert.Get.get_concerts_with_search(search)
         )
     
     # Génération aléatoire de concert
     idCs = set()
-    all_idC = requetes.get_concerts_idC()
+    all_idC = requetes.Concert.Get.get_concerts_idC()
     while len(idCs) < 8: idCs.add(all_idC[random.randint(0,len(all_idC)-1)][0])
     concerts = []
     for id in idCs:
-        concerts.append(requetes.get_concerts_with_id(id))
+        concerts.append(requetes.Concert.Get.get_concerts_with_id(id))
 
     return render_template  (
         'home.html',
@@ -50,13 +50,13 @@ def billeterie():
 def programme():
     """Méthode de la page du programme
     """
-    monday_concerts = requetes.get_concerts_by_day(13)
-    tuesday_concerts = requetes.get_concerts_by_day(14)
-    wednesday_concerts = requetes.get_concerts_by_day(15)
-    thursday_concerts = requetes.get_concerts_by_day(16)
-    friday_concerts = requetes.get_concerts_by_day(17)
-    saturday_concerts = requetes.get_concerts_by_day(18)
-    sunday_concerts = requetes.get_concerts_by_day(19)
+    monday_concerts = requetes.Concert.Get.get_concerts_by_day(13)
+    tuesday_concerts = requetes.Concert.Get.get_concerts_by_day(14)
+    wednesday_concerts = requetes.Concert.Get.get_concerts_by_day(15)
+    thursday_concerts = requetes.Concert.Get.get_concerts_by_day(16)
+    friday_concerts = requetes.Concert.Get.get_concerts_by_day(17)
+    saturday_concerts = requetes.Concert.Get.get_concerts_by_day(18)
+    sunday_concerts = requetes.Concert.Get.get_concerts_by_day(19)
     # à optimiser
     concerts_day = [monday_concerts, tuesday_concerts, wednesday_concerts, thursday_concerts, friday_concerts, saturday_concerts, sunday_concerts]
     days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
@@ -75,14 +75,14 @@ def groupe(id:int):
     Args:
         id (int): id du groupe
     """
-    groupe = requetes.get_groupe_with_idG(id)
-    artistes = requetes.get_artistes_with_idG(id)
-    concerts_associated = requetes.get_concerts_with_idG(id)
-    activites_associated = requetes.get_activites_with_idG(id)
-    groupes_related = requetes.get_groupe_related(id)
-    images = requetes.get_images_with_idG(id)
+    groupe = requetes.Groupe.Get.get_groupe_with_idG(id)
+    artistes = requetes.Artiste.Get.get_artistes_with_idG(id)
+    concerts_associated = requetes.Concert.Get.get_concerts_with_idG(id)
+    activites_associated = requetes.Activites.Get.get_activites_with_idG(id)
+    groupes_related = requetes.Groupe.Get.get_groupe_related(id)
+    images = requetes.Photo.Get.get_images_with_idG(id)
     if 'user' in session and not session['user'][1] == 1:
-        favori = requetes.is_favori(session['user'][0],id)
+        favori = requetes.Favoris.Boolean.is_favori(session['user'][0],id)
         
         return render_template(
             'groupe.html',
@@ -97,27 +97,27 @@ def groupe(id:int):
         )
     elif 'user' in session and session['user'][1] == 1:
         return render_template(
-                'groupe.html',
-                id = id,
-                artistes = artistes,
-                groupe = groupe,
-                concerts_associated = concerts_associated,
-                activites_associated = activites_associated,
-                groupes_related = groupes_related,
-                images = images,
-                admin=True
-            )
+            'groupe.html',
+            id = id,
+            artistes = artistes,
+            groupe = groupe,
+            concerts_associated = concerts_associated,
+            activites_associated = activites_associated,
+            groupes_related = groupes_related,
+            images = images,
+            admin=True
+        )
     else:
         return render_template(
-                'groupe.html',
-                id = id,
-                artistes = artistes,
-                groupe = groupe,
-                concerts_associated = concerts_associated,
-                activites_associated = activites_associated,
-                groupes_related = groupes_related,
-                images = images
-            )
+            'groupe.html',
+            id = id,
+            artistes = artistes,
+            groupe = groupe,
+            concerts_associated = concerts_associated,
+            activites_associated = activites_associated,
+            groupes_related = groupes_related,
+            images = images
+        )
     
 
 @app.route('/ajouter-favori/<int:id>',methods=['GET','POST'])
@@ -127,12 +127,12 @@ def ajouter_fav(id:int):
     Args:
         id (int): id du groupe
     """
-    requetes.ajouter_favori(session['user'][0],id)
+    requetes.Favoris.Insert.ajouter_favori(session['user'][0],id)
     return redirect(url_for('groupe',id=id))
 
 @app.route('/supprimer_favori/<int:id>',methods=['GET','POST'])
 def supprimer_fav(id:int):
-    requetes.supprimer_favori(session['user'][0],id)
+    requetes.Favoris.Delete.supprimer_favori(session['user'][0],id)
     return redirect(url_for('groupe',id=id))
 
 @app.route('/config-billet/<int:id>',methods=['GET','POST'])
@@ -154,7 +154,7 @@ def config_billet(id):
                     if days[day] is True:
                         date_d = f"2024-05-{day+13}"
                         date_f = f"2024-05-{day+13}"
-                requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
+                requetes.Billet.Insert.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('billets'))
             else:
                 return render_template(
@@ -170,7 +170,7 @@ def config_billet(id):
                     if days[day] is True: indexs.append(day)
                 date_d = f"2024-05-{indexs[0]+13}"
                 date_f = f"2024-05-{indexs[1]+13}"
-                requetes.insert_billet(id,session['user'][0],date_d,date_f, data[1])
+                requetes.Billet.Insert.insert_billet(id,session['user'][0],date_d,date_f, data[1])
                 return redirect(url_for('billets'))
             else:
                 return render_template(
@@ -180,7 +180,7 @@ def config_billet(id):
                     error = "Vous devez choisir au moins deux jours"
                 )
         else:
-            requetes.insert_billet(id,session['user'][0],"2024-05-13","2023-04-19",data[1])
+            requetes.Billet.Insert.insert_billet(id,session['user'][0],"2024-05-13","2023-04-19",data[1])
             return redirect(url_for('billets'))
 
     return render_template(
@@ -212,7 +212,7 @@ def login():
 def register():
     return render_template(
         'register.html',
-        roles = requetes.get_roles(),
+        roles = requetes.Role.Get.get_roles(),
         RegisterForm = RegisterForm()
     )
 
@@ -221,10 +221,10 @@ def add_user():
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
     mail = request.form.get('mail')
-    mdp = requetes.hasher_mdp(request.form.get('mdp'))
-    mdpConfirm = requetes.hasher_mdp(request.form.get('mdpConfirm'))
+    mdp = requetes.Utilisateur.Insert.hasher_mdp(request.form.get('mdp'))
+    mdpConfirm = requetes.Utilisateur.Insert.hasher_mdp(request.form.get('mdpConfirm'))
     if mdp == mdpConfirm:
-        requetes.insert_user(mail, prenom, nom, mdp)
+        requetes.Utilisateur.Insert.insert_user(mail, prenom, nom, mdp)
         return redirect(url_for('login'))
     else:
         return render_template(
@@ -249,7 +249,7 @@ def profil():
 def about():
     return render_template(
         'about.html',
-        groupes = requetes.get_groupes()
+        groupes = requetes.Groupe.Get.get_groupes()
     )
 
 @app.route('/search',methods=['GET','POST'])
@@ -263,7 +263,7 @@ def search():
             'stylemusical': {attr: str(getattr(stylemusical, attr)) for attr in inspect(stylemusical).attrs.keys()},
         }
     search_term = request.get_json()['search_term']
-    concerts = requetes.get_concerts_with_search(search_term)
+    concerts = requetes.Concert.Get.get_concerts_with_search(search_term)
     if search_term == "":
         random_concerts = set()
         while len(random_concerts) < 8: random_concerts.add(concerts[random.randint(0,len(concerts)-1)])
@@ -275,12 +275,12 @@ def search():
 def favoris():
     return render_template(
         'favoris.html',
-        favoris = requetes.get_favoris(session['user'][0])
+        favoris = requetes.Favoris.Get.get_favoris(session['user'][0])
     )
 
 @app.route('/panier',methods=['GET','POST'])
 def billets():
-    data_billets,total = requetes.get_billets_with_idU(session['user'][0])
+    data_billets,total = requetes.Billet.Get.get_billets_with_idU(session['user'][0])
     return render_template(
         'billets.html',
         billets = data_billets,
@@ -291,7 +291,7 @@ def billets():
 def informations():
     return render_template(
         'informations.html',
-        informations = requetes.get_user(session['user'][0])
+        informations = requetes.Utilisateur.Get.get_user(session['user'][0])
     )
 
 @app.route('/module-admin',methods=['GET','POST'])
@@ -308,21 +308,21 @@ def groupe_management():
         if search != None:
             return render_template(
                 'module_administrateur/groupe_management.html',
-                groupes = requetes.get_groupes_with_search(search),
+                groupes = requetes.Groupe.Get.get_groupes_with_search(search),
                 RechercheForm = f,
-                nb_resultat = len(requetes.get_groupes_with_search(search))
+                nb_resultat = len(requetes.Groupe.Get.get_groupes_with_search(search))
             )
     return render_template(
         'module_administrateur/groupe_management.html',
-        groupes = requetes.get_groupes(),
+        groupes = requetes.Groupe.Get.get_groupes(),
         RechercheForm = f,
-        nb_resultat = len(requetes.get_groupes())
+        nb_resultat = len(requetes.Groupe.Get.get_groupes())
     )
 
 @app.route('/modifier_groupe/<int:id>',methods=['GET','POST'])
 def modifier_groupe(id):
     f = ModifierGroupeForm()
-    groupe = requetes.get_groupe_with_idG(id)
+    groupe = requetes.Groupe.Get.get_groupe_with_idG(id)
     f.style.default = groupe.STYLEMUSICAL.idS
     f.description.default = groupe.GROUPE.descriptionG
     f.process()
@@ -338,7 +338,7 @@ def modifier_groupe_submit(id):
     style = request.form.get('style')
     files = [f for f in request.files.getlist('images') if f.filename != '']
     description = request.form.get('description')
-    requetes.update_groupe(id, nom, style, description, files)
+    requetes.Groupe.Update.update_groupe(id, nom, style, description, files)
     return redirect(url_for('groupe_management'))
 
 @app.route('/ajouter_groupe',methods=['GET','POST'])
@@ -354,18 +354,18 @@ def ajouter_groupe_submit():
     nom = request.form.get('nom')
     style = request.form.get('style')
     description = request.form.get('description')
-    requetes.insert_groupe(nom,style,description)
+    requetes.Groupe.Insert.insert_groupe(nom,style,description)
     return redirect(url_for('groupe_management'))
 
 @app.route('/supprimer-groupe/<int:id>',methods=['GET','POST'])
 def supprimer_groupe(id:int):
-    requetes.delete_concert_with_idG(id)
-    requetes.delete_activites_with_idG(id)
-    requetes.delete_artistes_with_idG(id)
-    requetes.delete_revervation_with_idG(id)
-    requetes.delete_favoris_with_idG(id)
-    requetes.delete_photos_with_idG(id)
-    requetes.delete_groupe(id)
+    requetes.Concert.Delete.delete_concert_with_idG(id)
+    requetes.Activites.Delete.delete_activites_with_idG(id)
+    requetes.Artiste.Delete.delete_artistes_with_idG(id)
+    requetes.Loger.Delete.delete_revervation_with_idG(id)
+    requetes.Favoris.Delete.delete_favoris_with_idG(id)
+    requetes.Photo.Delete.delete_photos_with_idG(id)
+    requetes.Groupe.Delete.delete_groupe(id)
     return redirect(url_for('groupe_management'))
 
 @app.route('/artiste-management',methods=['GET','POST'])
@@ -377,22 +377,22 @@ def artiste_management():
         if search != None:
             return render_template(
                 'module_administrateur/artiste_management.html',
-                artistes = requetes.get_artiste_with_search(search),
+                artistes = requetes.Artiste.Get.get_artiste_with_search(search),
                 RechercheForm = f,
-                nb_resultat = len(requetes.get_artiste_with_search(search))
+                nb_resultat = len(requetes.Artiste.Get.get_artiste_with_search(search))
             )
 
     return render_template(
         'module_administrateur/artiste_management.html',
-        artistes = requetes.get_artistes(),
+        artistes = requetes.Artiste.Get.get_artistes(),
         RechercheForm = f,
-        nb_resultat = len(requetes.get_artistes())
+        nb_resultat = len(requetes.Artiste.Get.get_artistes())
     )
 
 @app.route('/modifier_artiste/<int:id>',methods=['GET','POST'])
 def modifier_artiste(id):
     f = ModifierArtisteForm()
-    artiste = requetes.get_artiste_with_idA(id)
+    artiste = requetes.Artiste.Get.get_artiste_with_idA(id)
     f.groupe.default = artiste.idG
     f.process()
     return render_template(
@@ -406,13 +406,13 @@ def modifier_artiste_submit(id):
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
     groupe = request.form.get('groupe')
-    requetes.update_artiste(id,nom,prenom,groupe)
+    requetes.Artiste.Update.update_artiste(id,nom,prenom,groupe)
     return redirect(url_for('artiste_management'))
 
 @app.route('/ajouter_artiste',methods=['GET','POST'])
 def ajouter_artiste():
     f = AjouterArtisteForm()
-    f.groupe.choices = [(groupe.idG, groupe.nomG) for groupe in requetes.get_groupes()]
+    f.groupe.choices = [(groupe.idG, groupe.nomG) for groupe in requetes.Groupe.Get.get_groupes()]
     return render_template(
         'module_administrateur/ajouter_artiste.html',
         AjouterArtisteForm = f
@@ -423,12 +423,12 @@ def ajouter_artiste_submit():
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
     groupe = request.form.get('groupe')
-    requetes.insert_artiste(nom, prenom, groupe)
+    requetes.Artiste.Insert.insert_artiste(nom, prenom, groupe)
     return redirect(url_for('artiste_management'))
 
 @app.route('/supprimer-artiste/<int:id>',methods=['GET','POST'])
 def supprimer_artiste(id:int):
-    requetes.delete_artiste(id)
+    requetes.Artiste.Delete.delete_artiste(id)
     return redirect(url_for('artiste_management'))
 
 @app.route('/concert-management',methods=['GET','POST'])
@@ -439,26 +439,26 @@ def concert_management():
         if search != None:
             return render_template(
                 'module_administrateur/concert_management.html',
-                groupes = requetes.get_groupes_with_search(search),
+                groupes = requetes.Groupe.Get.get_groupes_with_search(search),
                 RechercheForm = f,
-                nb_resultat = len(requetes.get_groupes_with_search(search))
+                nb_resultat = len(requetes.Groupe.Get.get_groupes_with_search(search))
             )
     return render_template(
         'module_administrateur/concert_management.html',
-        groupes = requetes.get_groupes(),
+        groupes = requetes.Groupe.Get.get_groupes(),
         RechercheForm = f,
-        nb_resultat = len(requetes.get_groupes())
+        nb_resultat = len(requetes.Groupe.Get.get_groupes())
     )
 
 @app.route('/modifier_groupe_activites/<int:id>',methods=['GET','POST'])
 def modifier_groupe_activites(id):
     f = AjouterActivitesForm()
-    groupe = requetes.get_groupe_with_idG(id)
+    groupe = requetes.Groupe.Get.get_groupe_with_idG(id)
     if f.validate_on_submit():
         data = f.get_information()
         datetimeDeb = datetime.datetime.combine(data[3], data[4])
         datetimeFin = datetime.datetime.combine(data[5], data[6])
-        requetes.insert_activite(id,data[0],data[1],data[2],datetimeDeb,datetimeFin,data[-1])
+        requetes.Activites.Insert.insert_activite(id,data[0],data[1],data[2],datetimeDeb,datetimeFin,data[-1])
         return redirect(url_for('concert_management'))
     return render_template(
         'module_administrateur/modifier_groupe_activites.html',
@@ -469,13 +469,13 @@ def modifier_groupe_activites(id):
 @app.route('/modifier_groupe_concert/<int:id>',methods=['GET','POST'])
 def modifier_groupe_concert(id):
     f = AjouterConcertForm()
-    groupe = requetes.get_groupe_with_idG(id)
-    concerts = requetes.get_concerts_with_idG(id)
+    groupe = requetes.Groupe.Get.get_groupe_with_idG(id)
+    concerts = requetes.Concert.Get.get_concerts_with_idG(id)
     if f.validate_on_submit():
         data = f.get_information()
         datetimeDeb = datetime.datetime.combine(data[1], data[2])
         datetimeFin = datetime.datetime.combine(data[3], data[4])
-        requetes.insert_concert(id,data[0],datetimeDeb,datetimeFin,data[5],data[6],data[7])
+        requetes.Concert.Insert.insert_concert(id,data[0],datetimeDeb,datetimeFin,data[5],data[6],data[7])
         return redirect(url_for('concert_management'))
     return render_template(
         'module_administrateur/modifier_groupe_concert.html',
@@ -493,16 +493,16 @@ def spectateur_management():
         if search != None:
             return render_template(
                 'module_administrateur/spectateur_management.html',
-                spectateurs = requetes.get_spectateurs_with_search(search),
+                spectateurs = requetes.Utilisateur.Get.get_spectateurs_with_search(search),
                 RechercheForm = f,
-                nb_resultat = len(requetes.get_spectateurs_with_search(search))
+                nb_resultat = len(requetes.Utilisateur.Get.get_spectateurs_with_search(search))
             )
 
     return render_template(
         'module_administrateur/spectateur_management.html',
-        spectateurs = requetes.get_spectateurs(),
+        spectateurs = requetes.Utilisateur.Get.get_spectateurs(),
         RechercheForm = f,
-        nb_resultat = len(requetes.get_spectateurs())
+        nb_resultat = len(requetes.Utilisateur.Get.get_spectateurs())
     )
 
 @app.route('/ajouter_spectateur',methods=['GET','POST'])
@@ -518,10 +518,10 @@ def ajouter_spectateur_submit():
     nom = request.form.get('nom')
     prenom = request.form.get('prenom')
     mail = request.form.get('mail')
-    mdp = requetes.hasher_mdp(request.form.get('mdp'))
-    mdpConfirm = requetes.hasher_mdp(request.form.get('mdpConfirm'))
+    mdp = requetes.Utilisateur.Insert.hasher_mdp(request.form.get('mdp'))
+    mdpConfirm = requetes.Utilisateur.Insert.hasher_mdp(request.form.get('mdpConfirm'))
     if mdp == mdpConfirm:
-            requetes.insert_user(mail, prenom, nom, mdp)
+            requetes.Utilisateur.Insert.insert_user(mail, prenom, nom, mdp)
             return redirect(url_for('spectateur_management'))
     else:
         return render_template(
@@ -531,8 +531,8 @@ def ajouter_spectateur_submit():
 
 @app.route('/supprimer-spectateur/<int:id>',methods=['GET','POST'])
 def supprimer_spectateur(id:int):
-    requetes.delete_billet_by_idU(id)
-    requetes.delete_user(id)
+    requetes.Billet.Delete.delete_billet_by_idU(id)
+    requetes.Utilisateur.Delete.delete_user(id)
     return redirect(url_for('spectateur_management'))
 
 @app.route('/hebergement-management',methods=['GET','POST'])
@@ -543,15 +543,15 @@ def hebergement_management():
         if search != None:
             return render_template(
                 'module_administrateur/hebergement_management.html',
-                hebergements = requetes.get_hebergements_with_search(search),
+                hebergements = requetes.Hebergement.Get.get_hebergements_with_search(search),
                 RechercheForm = f,
-                nb_resultat = len(requetes.get_hebergements_with_search(search))
+                nb_resultat = len(requetes.Hebergement.Get.get_hebergements_with_search(search))
             )
     return render_template(
         'module_administrateur/hebergement_management.html',
-        hebergements = requetes.get_hebergements(),
+        hebergements = requetes.Hebergement.Get.get_hebergements(),
         RechercheForm = f,
-        nb_resultat = len(requetes.get_hebergements())
+        nb_resultat = len(requetes.Hebergement.Get.get_hebergements())
     )
 
 @app.route('/ajouter-hebergement',methods=['GET','POST'])
@@ -559,7 +559,7 @@ def ajouter_hebergement():
     f = AjouterHebergement()
     if f.validate_on_submit():
         data = f.get_information()
-        requetes.insert_hebergement(data[0],data[1],data[2])
+        requetes.Hebergement.Insert.insert_hebergement(data[0],data[1],data[2])
         return redirect(url_for('hebergement_management'))
     return render_template(
         'module_administrateur/ajouter_hebergement.html',
@@ -568,8 +568,8 @@ def ajouter_hebergement():
 
 @app.route('/modifier-hebergement/<int:id>',methods=['GET','POST'])
 def modifier_hebergement(id):
-    hebergement = requetes.get_hebergement_with_idH(id)
-    reservations = requetes.get_lodging_with_idH(id)
+    hebergement = requetes.Hebergement.Get.get_hebergement_with_idH(id)
+    reservations = requetes.Loger.Get.get_lodging_with_idH(id)
     return render_template(
         'module_administrateur/modifier_hebergement.html',
         hebergement = hebergement,
@@ -585,22 +585,22 @@ def ajouter_groupe_hebergement(id):
             return render_template(
                 'module_administrateur/ajouter_groupe_hebergement.html',
                 idH = id,
-                groupes = requetes.get_groupes_with_search(search),
+                groupes = requetes.Groupe.Get.get_groupes_with_search(search),
                 RechercheForm = f,
-                nb_resultat = len(requetes.get_groupes_with_search(search))
+                nb_resultat = len(requetes.Groupe.Get.get_groupes_with_search(search))
             )
     return render_template(
         'module_administrateur/ajouter_groupe_hebergement.html',
-        groupes = requetes.get_groupes(),
+        groupes = requetes.Groupe.Get.get_groupes(),
         idH = id,
         RechercheForm = f,
-        nb_resultat = len(requetes.get_groupes())
+        nb_resultat = len(requetes.Groupe.Get.get_groupes())
     )
 @app.route('/billet-management',methods=['GET','POST'])
 def billet_management():
     return render_template(
         'module_administrateur/billet_management.html',
-        billets = requetes.get_billets()
+        billets = requetes.Billet.Get.get_billets()
     )
 
 @app.route('/ajouter-concert',methods=['GET','POST'])
@@ -614,7 +614,7 @@ def config_reservation(idG, idH):
     f = ConfigReservationForm()
     if f.validate_on_submit():
         data = f.get_information()
-        requetes.insert_reservation(idH,idG,data[0],data[1])
+        requetes.Loger.Insert.insert_reservation(idH,idG,data[0],data[1])
         return redirect(url_for('modifier_hebergement',id=idH))
     return render_template(
         'module_administrateur/config_reservation.html',
@@ -625,9 +625,9 @@ def config_reservation(idG, idH):
 
 @app.route('/instrument_management/<int:id>',methods=['GET','POST'])
 def instrument_management(id):
-    artiste = requetes.get_artiste_with_idA(id)
-    instrument_idA = requetes.get_instrument_with_idA(id)
-    instruments = requetes.get_instruments()
+    artiste = requetes.Artiste.Get.get_artiste_with_idA(id)
+    instrument_idA = requetes.Instrument.Get.get_instrument_with_idA(id)
+    instruments = requetes.Instrument.Get.get_instruments()
     f = AjouterInstrument()
     for instrument_2 in instrument_idA:
         for instrument in instruments:
@@ -635,7 +635,7 @@ def instrument_management(id):
                 instruments.remove(instrument)
     f.instrument.choices = [(instrument.idI, instrument.nomI) for instrument in instruments]
     if f.validate_on_submit():
-        requetes.insert_instrument(id,f.get_information())
+        requetes.Instrument.Insert.insert_instrument(id,f.get_information())
         return redirect(url_for('instrument_management',id=id))
     f.process()
     return render_template(
@@ -648,32 +648,31 @@ def instrument_management(id):
 
 @app.route('/supprimer_instrument/<int:idA>/<int:idI>',methods=['GET','POST'])
 def supprimer_instrument(idA,idI): 
-    requetes.delete_instrument(idA,idI)
+    requetes.Instrument.Delete.delete_instrument(idA,idI)
     return redirect(url_for('instrument_management',id=idA))
-
 
 @app.route('/decrementer-billet',methods=['GET','POST'])
 @csrf.exempt
 def decrementer_billet():
     json = request.get_json()
-    billet = requetes.get_billet_by_idB(json['idB'])
-    if billet is None or not requetes.is_user_billet(session['user'][0], billet.idB):
+    billet = requetes.Billet.Get.get_billet_by_idB(json['idB'])
+    if billet is None or not requetes.Billet.Boolean.is_user_billet(session['user'][0], billet.idB):
         return jsonify(-1, -1)
     else:
-        return jsonify(requetes.remove_billet_from_panier(billet.idU, billet.idT, billet.dateDebB, billet.dateFinB), requetes.get_prix_billet(billet.idT), billet.idT, billet.idU, str(billet.dateDebB), str(billet.dateFinB))
+        return jsonify(requetes.Billet.Delete.remove_billet_from_panier(billet.idU, billet.idT, billet.dateDebB, billet.dateFinB), requetes.Billet.Get.get_prix_billet(billet.idT), billet.idT, billet.idU, str(billet.dateDebB), str(billet.dateFinB))
 
 @app.route('/incrementer-billet',methods=['GET','POST'])
 @csrf.exempt
 def incrementer_billet():
     json = request.get_json()
-    billet = requetes.get_billet_by_idB(json['idB'])
-    if billet is None or not requetes.is_user_billet(session['user'][0], billet.idB):
+    billet = requetes.Billet.Get.get_billet_by_idB(json['idB'])
+    if billet is None or not requetes.Billet.Boolean.is_user_billet(session['user'][0], billet.idB):
         return jsonify(-1, -1)
     else:
-        return jsonify(requetes.add_billet_to_panier(billet.idU, billet.idT, billet.dateDebB, billet.dateFinB), requetes.get_prix_billet(billet.idT))
+        return jsonify(requetes.Billet.Insert.add_billet_to_panier(billet.idU, billet.idT, billet.dateDebB, billet.dateFinB), requetes.Billet.Get.get_prix_billet(billet.idT))
     
 @app.route('/incrementer-nouveau-billet',methods=['GET','POST'])
 @csrf.exempt
 def incrementer_nouveau_billet():
     json = request.get_json()
-    return jsonify(requetes.add_billet_to_panier(session['user'][0], json['idT'], json['dateD'], json['dateF']), requetes.get_prix_billet(json['idT']))
+    return jsonify(requetes.Billet.Insert.add_billet_to_panier(session['user'][0], json['idT'], json['dateD'], json['dateF']), requetes.Billet.Get.get_prix_billet(json['idT']))
