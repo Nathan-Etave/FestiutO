@@ -6,6 +6,7 @@ from sqlalchemy import Table
 
 engine = create_engine("mysql+pymysql://lavenant_fest:lavenant@mysql-lavenant.alwaysdata.net/lavenant_3")
 # engine = create_engine("mysql+pymysql://etave:etave@servinfo-maria/DBetave")
+# Moteur de base de données en local pour présentation ^
 Base = automap_base()
 Base.prepare(autoload_with=engine)
 metadata = MetaData()
