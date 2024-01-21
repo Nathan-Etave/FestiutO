@@ -288,7 +288,6 @@ class Concert:
     class Update:
         pass
 
-
 class Groupe:
 
     class Get:
@@ -414,7 +413,6 @@ class Groupe:
                 raise
             finally:
                 session.close()
-
 
 class Role:
 
@@ -947,7 +945,6 @@ class Loger:
 
     class Update:
         pass
-
 
 class Photo:
 
