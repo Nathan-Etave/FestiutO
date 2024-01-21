@@ -1,2 +1,1 @@
 FLASK_APP=festiuto
-FLASK_ENV=development
